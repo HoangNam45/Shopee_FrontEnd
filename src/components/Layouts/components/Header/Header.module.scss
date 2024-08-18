@@ -1,0 +1,153 @@
+.shopee-top {
+    background: linear-gradient(-180deg, #f53d2d, #f63);
+    .navbar-wrapper {
+        height: 34px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        .navbar-link {
+            display: flex;
+            align-items: center;
+            .navbar-link_text {
+                color: #fff;
+                font-size: 1.25rem;
+                font-weight: 400;
+                padding: 4px;
+                text-decoration: none;
+            }
+
+            .navbar-link_icon {
+                color: #fff;
+
+                .navbar-link_icon_ {
+                    height: 16px;
+                    margin-right: 10px;
+                }
+            }
+        }
+        .navbar-spacer {
+            flex: 1;
+        }
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            .navbar-user_text {
+                color: #fff;
+                font-size: 1.28rem;
+                font-weight: 300;
+                display: flex;
+                align-items: center;
+                .navbar-user_icon {
+                    height: 16px;
+                    margin-right: 5px;
+                }
+            }
+            .navbar-user_auth {
+                margin-left: 20px;
+                display: flex;
+                align-items: center;
+                .navbar-user_auth_ {
+                    padding: 0 10px;
+                    text-decoration: none;
+                    color: #fff;
+                    font-size: 1.25rem;
+                    font-weight: 400;
+                }
+                .navbar-user_auth_avt {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50px;
+                }
+                .navbar-user_auth_name {
+                    color: #fff;
+                    font-size: 1.35rem;
+                    margin-left: 5px;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .header-with-search-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1200px;
+        height: 85px;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        .header-with-search_logo {
+            margin-right: 40px;
+            .header-with-search_logo_ {
+                height: 50px;
+                width: 162px;
+                fill: #fff;
+            }
+        }
+        .header-with-search_input {
+            width: 840px;
+            height: 40px;
+            padding: 3px;
+            background: rgb(255, 255, 255);
+            border-radius: 2px;
+            display: flex;
+            justify-content: space-between;
+            .header-with-search_bar {
+                display: flex;
+                flex: 1 1 0%;
+                .header-with-search_bar_input {
+                    align-items: center;
+                    border: 0px;
+                    display: flex;
+                    flex: 1 1 0%;
+                    font-size: 1.5rem;
+                    outline: none;
+                    padding: 0 10px;
+                }
+            }
+        }
+        .header-with-search_cart {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            justify-content: center;
+            flex: 1;
+            .header-with-search_cart_ {
+                color: #fff;
+                height: 26px;
+                width: 26px;
+            }
+        }
+    }
+}
+
+.navbar_drawer {
+    margin-left: 10px;
+    position: relative;
+    &::before {
+        position: absolute;
+        content: '';
+        height: 80%;
+        width: 1px;
+        background-color: #fff;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -5px;
+    }
+}
+.header_user_option {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 160px;
+
+    .header_user_option_ {
+        font-size: 1.48rem;
+        padding: 8px;
+        cursor: pointer;
+        &:hover {
+            background-color: rgb(246, 246, 246);
+        }
+    }
+}

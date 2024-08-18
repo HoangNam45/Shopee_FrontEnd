@@ -1,0 +1,16 @@
+.auth_body_wrap {
+    width: 100%;
+    background-color: rgb(238, 78, 46);
+}
+.auth_body {
+    height: 600px;
+    width: 1040px;
+    margin: auto;
+    background-image: url('../../../public/images/authBackground.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}

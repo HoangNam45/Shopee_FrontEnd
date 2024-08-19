@@ -2,10 +2,28 @@ import { Container } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faStar, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faStar, faPlus, faMinus, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../components/Button';
+import { useState } from 'react';
 const cx = classNames.bind(styles);
 function ProductDetail() {
+    const [quantity, setQuantity] = useState(1);
+
+    const handleIncrease = () => {
+        setQuantity((prevQuantity) => prevQuantity + 1);
+    };
+
+    const handleDecrease = () => {
+        setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+    };
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            // Chỉ cho phép nhập số dương
+            setQuantity(Number(value) > 0 ? Number(value) : 1);
+        }
+    };
     return (
         <Container className={cx('custom_container_products')}>
             <div className={cx('card', 'product')}>
@@ -115,7 +133,10 @@ function ProductDetail() {
                             <div className={cx('product_info_choices_field_')}>Số lượng</div>
                             <div className={cx('product_info_choices_field_amout')}>
                                 <div className={cx('product_info_choices_field_amout_adjust')}>
-                                    <button className={cx('product_info_choices_field_amout_adjust_btn')}>
+                                    <button
+                                        className={cx('product_info_choices_field_amout_adjust_btn')}
+                                        onClick={handleDecrease}
+                                    >
                                         <FontAwesomeIcon
                                             className={cx('product_info_choices_field_amout_adjust_btn_icon')}
                                             icon={faMinus}
@@ -124,8 +145,13 @@ function ProductDetail() {
                                     <input
                                         type="number"
                                         className={cx('product_info_choices_field_amout_adjust_input')}
+                                        value={quantity}
+                                        onChange={handleChange}
                                     ></input>
-                                    <button className={cx('product_info_choices_field_amout_adjust_btn')}>
+                                    <button
+                                        className={cx('product_info_choices_field_amout_adjust_btn')}
+                                        onClick={handleIncrease}
+                                    >
                                         <FontAwesomeIcon
                                             className={cx('product_info_choices_field_amout_adjust_btn_icon')}
                                             icon={faPlus}
@@ -138,8 +164,11 @@ function ProductDetail() {
                     </div>
 
                     <div className={cx('product_info_actions')}>
-                        <Button>Thêm Vào Giỏ Hàng</Button>
-                        <Button size_auto primary>
+                        <Button large sub_primary className={cx('product_info_actions_btn')}>
+                            <FontAwesomeIcon icon={faCartShopping} className={cx('product_info_actions_icon')} />
+                            Thêm Vào Giỏ Hàng
+                        </Button>
+                        <Button large primary className={cx('product_info_actions_btn')}>
                             Mua Ngay
                         </Button>
                     </div>

@@ -8,6 +8,7 @@ function Button({
     to,
     href,
     primary = false,
+    sub_primary = false,
     small = false,
     medium = false,
     large = false,
@@ -45,6 +46,7 @@ function Button({
         dashed_border,
         size_auto,
         quite_small,
+        sub_primary,
         [className]: className,
     });
 

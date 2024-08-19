@@ -234,4 +234,13 @@ input[type='number'] {
 }
 .product_info_actions {
     margin-top: 5px;
+    display: flex;
+}
+.product_info_actions_btn {
+    font-size: 14px !important;
+    margin-right: 15px;
+    min-width: 180px !important;
+}
+.product_info_actions_icon {
+    margin-right: 10px;
 }

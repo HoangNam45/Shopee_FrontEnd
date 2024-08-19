@@ -24,10 +24,12 @@
         border-radius: 6px;
     }
 }
-// .large {
-//     width: 364px;
-//     font-size: 20px;
-// }
+.large {
+    height: 48px;
+    padding: 0 20px;
+    max-width: 250px;
+    min-width: 80px;
+}
 .medium {
     width: 165px;
     height: 40px;
@@ -58,6 +60,11 @@
 }
 .primary {
     background-color: var(--primary);
+}
+.sub_primary {
+    color: var(--primary);
+    background-color: rgba(255, 87, 34, 0.1);
+    border: 1px solid var(--primary);
 }
 .text {
     background-color: #fff;

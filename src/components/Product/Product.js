@@ -1,13 +1,11 @@
 import classNames from 'classnames/bind';
 import styles from './Product.module.scss';
 import { Link } from 'react-router-dom';
+import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
-function Product({ img, name, price, id }) {
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('vi-VN').format(price);
-    };
+function Product({ img, name, price, id, slug }) {
     return (
-        <Link to={`/product/${name}-${id}`} className={cx('product_wrap')}>
+        <Link to={`/products/${slug}`} className={cx('product_wrap')}>
             <div className={cx('product_image_wrap')}>
                 <img alt="product_img" className={cx('product_image')} src={img} />
             </div>

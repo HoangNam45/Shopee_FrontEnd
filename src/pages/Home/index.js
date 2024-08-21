@@ -36,6 +36,7 @@ function Home() {
                             name={product.Name}
                             price={product.Price}
                             id={product.Id}
+                            slug={product.Slug}
                         />
                     </Col>
                 ))}

@@ -2,11 +2,35 @@ import { Container } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faStar, faPlus, faMinus, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowLeft,
+    faArrowRight,
+    faStar,
+    faPlus,
+    faMinus,
+    faCartShopping,
+    faMessage,
+    faStore,
+} from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../components/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getProductDetail } from '../../services/productService';
+
+import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
 function ProductDetail() {
+    const { slug } = useParams();
+    const [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await getProductDetail(slug);
+            setProduct(response);
+        };
+        fetchData();
+    }, [slug]);
+
     const [quantity, setQuantity] = useState(1);
 
     const handleIncrease = () => {
@@ -24,6 +48,10 @@ function ProductDetail() {
             setQuantity(Number(value) > 0 ? Number(value) : 1);
         }
     };
+    console.log(product);
+    if (!product) {
+        return <div>Loading...</div>;
+    }
     return (
         <Container className={cx('custom_container_products')}>
             <div className={cx('card', 'product')}>
@@ -81,9 +109,7 @@ function ProductDetail() {
                 </div>
 
                 <div className={cx('product_info')}>
-                    <div className={cx('product_info_name')}>
-                        Bộ viên uống theo liệu trình Decumar - 3 hộp VCM01 DVCM3 alo
-                    </div>
+                    <div className={cx('product_info_name')}>{product.Name}</div>
                     <div className={cx('product_info_status')}>
                         <div className={cx('product_info_stars', 'line')}>
                             <div className={cx('product_info_stars_number')}>5.0</div>
@@ -115,7 +141,7 @@ function ProductDetail() {
                         </div>
                     </div>
                     <div className={cx('product_info_price')}>
-                        <span>₫138.000</span>
+                        <span>₫{formatPrice(product.Price)}</span>
                     </div>
                     <div className={cx('product_info_choices')}>
                         <div className={cx('product_info_choices_field')}>
@@ -158,7 +184,9 @@ function ProductDetail() {
                                         />
                                     </button>
                                 </div>
-                                <div className={cx('product_info_choices_field_amout_remain')}>6 sản phẩm có sẵn</div>
+                                <div className={cx('product_info_choices_field_amout_remain')}>
+                                    {product.Stock} sản phẩm có sẵn
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -172,6 +200,66 @@ function ProductDetail() {
                             Mua Ngay
                         </Button>
                     </div>
+                </div>
+            </div>
+
+            <div className={cx('card', 'shop')}>
+                <div className={cx('shop_info')}>
+                    <div className={cx('shop_info_interact')}>
+                        <div className={cx('shop_info_interact_avt_wrap')}>
+                            <img className={cx('shop_info_interact_avt')} src="/images/authBackground.png" />
+                        </div>
+                        <div className={cx('shop_info_interact_')}>
+                            <div className={cx('shop_info_interact_name')}>DƯƠNG SPORT</div>
+                            <div className={cx('shop_info_interact_last_onl')}>Online 52 Phút Trước</div>
+                            <div className={cx('shop_info_interact_actions')}>
+                                <Button small sub_primary className={cx('shop_info_interact_actions_btn')}>
+                                    <FontAwesomeIcon
+                                        className={cx('shop_info_interact_actions_icon')}
+                                        icon={faMessage}
+                                    />
+                                    Chat Ngay
+                                </Button>
+                                <Button small text>
+                                    <FontAwesomeIcon className={cx('shop_info_interact_actions_icon')} icon={faStore} />
+                                    Xem Shop
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cx('shop_info_more')}>
+                        <div className={cx('shop_info_more_satistics')}>
+                            <span>Đánh Giá</span>
+                            <span className={cx('shop_info_more_satistics_')}>0</span>
+                        </div>
+                        <div className={cx('shop_info_more_satistics')}>
+                            <span>Tỉ Lệ Phản Hồi</span>
+                            <span className={cx('shop_info_more_satistics_')}>0%</span>
+                        </div>
+                        <div className={cx('shop_info_more_satistics')}>
+                            <span>Tham Gia</span>
+                            <span className={cx('shop_info_more_satistics_')}>0 năm trước</span>
+                        </div>
+                        <div className={cx('shop_info_more_satistics')}>
+                            <span>Sản Phẩm</span>
+                            <span className={cx('shop_info_more_satistics_')}>0</span>
+                        </div>
+                        <div className={cx('shop_info_more_satistics')}>
+                            <span>Thời Gian Phản Hồi</span>
+                            <span className={cx('shop_info_more_satistics_')}>trong vài giờ</span>
+                        </div>
+                        <div className={cx('shop_info_more_satistics')}>
+                            <span>Người Theo Dõi</span>
+                            <span className={cx('shop_info_more_satistics_')}>0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={cx('card', 'product_description')}>
+                <div className={cx('product_description_')}>
+                    <div className={cx('product_description_header')}>MÔ TẢ SẢN PHẨM</div>
+                    <div className={cx('product_description_about')}>{product.Description}</div>
                 </div>
             </div>
         </Container>

@@ -13,11 +13,11 @@ input[type='number']::-webkit-inner-spin-button {
 input[type='number'] {
     -moz-appearance: textfield;
 }
-.card {
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
-}
+// .card {
+//     background: #fff;
+//     border-radius: 3px;
+//     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+// }
 .product {
     display: flex;
     margin-top: 20px;
@@ -47,12 +47,18 @@ input[type='number'] {
 }
 .product_img_preview {
     width: 20%;
-    // height: 92px;
+    height: 92px;
+
     display: inline-block;
     padding: 5px;
-}
-.product_img_preview_ {
-    width: 100%;
+
+    .product_img_preview_ {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        cursor: pointer;
+        position: relative;
+    }
 }
 .product_img_preview_move_left {
     background-color: rgba(0, 0, 0, 0.2);
@@ -64,6 +70,7 @@ input[type='number'] {
     transform: translateY(-50%);
     width: 20px;
     left: 0px;
+    z-index: 100;
 }
 .product_img_preview_move_right {
     background-color: rgba(0, 0, 0, 0.2);
@@ -75,6 +82,7 @@ input[type='number'] {
     transform: translateY(-50%);
     width: 20px;
     right: 0px;
+    z-index: 100;
 }
 .product_info {
     padding: 20px 35px 0 20px;
@@ -342,4 +350,9 @@ input[type='number'] {
 .product_description_about {
     margin: 30px 15px 15px 15px;
     font-size: 1.35rem;
+}
+
+.active {
+    position: absolute;
+    border: 2px solid var(--primary);
 }

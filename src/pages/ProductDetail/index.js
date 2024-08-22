@@ -1,5 +1,6 @@
 import { Container } from 'react-bootstrap';
 import classNames from 'classnames/bind';
+import '../../assets/styles/globalClass.scss';
 import styles from './ProductDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -22,16 +23,22 @@ const cx = classNames.bind(styles);
 function ProductDetail() {
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [startIndex, setStartIndex] = useState(0);
+
+    const [currentImage, setCurrentImage] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await getProductDetail(slug);
             setProduct(response);
+
+            if (response?.Images?.length > 0) {
+                setCurrentImage(response.Images[0]);
+            }
         };
         fetchData();
     }, [slug]);
-
-    const [quantity, setQuantity] = useState(1);
 
     const handleIncrease = () => {
         setQuantity((prevQuantity) => prevQuantity + 1);
@@ -48,63 +55,66 @@ function ProductDetail() {
             setQuantity(Number(value) > 0 ? Number(value) : 1);
         }
     };
-    console.log(product);
+
+    const imagesPerPage = 5;
+
+    const previewImage = product?.Images?.slice(startIndex, startIndex + imagesPerPage) || [];
+
+    const handleNext = () => {
+        if (startIndex + imagesPerPage < product.Images.length) {
+            setStartIndex(startIndex + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if (startIndex > 0) {
+            setStartIndex(startIndex - 1);
+        }
+    };
+
+    // Xử lý sự kiện onMouseEnter để thay đổi hình ảnh preview
+    const handleMouseEnter = (imageUrl) => {
+        setCurrentImage(imageUrl);
+    };
+
     if (!product) {
         return <div>Loading...</div>;
     }
+
     return (
         <Container className={cx('custom_container_products')}>
-            <div className={cx('card', 'product')}>
+            <div className={cx('board', 'product')}>
                 <div className={cx('product_img')}>
                     <div className={cx('product_img_current_wrap')}>
                         <img
                             alt="..."
                             className={cx('product_img_current')}
-                            src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
+                            src={`http://localhost:5000/uploads/images/productImages/${currentImage}`}
                         />
                     </div>
                     <div className={cx('product_img_preview_wrap')}>
-                        <button className={cx('product_img_preview_move_left')}>
-                            <FontAwesomeIcon icon={faArrowLeft} />
-                        </button>
-                        <button className={cx('product_img_preview_move_right')}>
-                            <FontAwesomeIcon icon={faArrowRight} />
-                        </button>
-                        <div className={cx('product_img_preview')}>
-                            <img
-                                className={cx('product_img_preview_')}
-                                src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
-                                alt="product_img_preview_"
-                            />
-                        </div>
-                        <div className={cx('product_img_preview')}>
-                            <img
-                                className={cx('product_img_preview_')}
-                                src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
-                                alt="product_img_preview_"
-                            />
-                        </div>
-                        <div className={cx('product_img_preview')}>
-                            <img
-                                className={cx('product_img_preview_')}
-                                src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
-                                alt="product_img_preview_"
-                            />
-                        </div>
-                        <div className={cx('product_img_preview')}>
-                            <img
-                                className={cx('product_img_preview_')}
-                                src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
-                                alt="product_img_preview_"
-                            />
-                        </div>
-                        <div className={cx('product_img_preview')}>
-                            <img
-                                className={cx('product_img_preview_')}
-                                src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
-                                alt="product_img_preview_"
-                            />
-                        </div>
+                        {product.Images.length > 5 && (
+                            <>
+                                <button onClick={handlePrev} className={cx('product_img_preview_move_left')}>
+                                    <FontAwesomeIcon icon={faArrowLeft} />
+                                </button>
+                                <button onClick={handleNext} className={cx('product_img_preview_move_right')}>
+                                    <FontAwesomeIcon icon={faArrowRight} />
+                                </button>
+                            </>
+                        )}
+                        {previewImage.map((imageUrl, index) => (
+                            <div key={index} className={cx('product_img_preview')}>
+                                <img
+                                    className={cx('product_img_preview_', {
+                                        active: imageUrl === currentImage,
+                                    })}
+                                    src={`http://localhost:5000/uploads/images/productImages/${imageUrl}`}
+                                    alt="product_img_preview_"
+                                    onMouseEnter={() => handleMouseEnter(imageUrl)}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -203,7 +213,7 @@ function ProductDetail() {
                 </div>
             </div>
 
-            <div className={cx('card', 'shop')}>
+            <div className={cx('board', 'shop')}>
                 <div className={cx('shop_info')}>
                     <div className={cx('shop_info_interact')}>
                         <div className={cx('shop_info_interact_avt_wrap')}>
@@ -256,7 +266,7 @@ function ProductDetail() {
                 </div>
             </div>
 
-            <div className={cx('card', 'product_description')}>
+            <div className={cx('board', 'product_description')}>
                 <div className={cx('product_description_')}>
                     <div className={cx('product_description_header')}>MÔ TẢ SẢN PHẨM</div>
                     <div className={cx('product_description_about')}>{product.Description}</div>

@@ -41,12 +41,8 @@ function SellerSidebar() {
                 <li className={cx('seller_sidebar_menu')}>
                     <input type="checkbox" className={cx('seller_sidebar_menu_checkbox')} id="menu2" />
                     <label className={cx('seller_sidebar_menu_item')} htmlFor="menu2">
-                        <img
-                            className={cx('seller_sidebar_menu_item_img')}
-                            alt="productImg"
-                            src="/images/productManagement.png"
-                        />
-                        <span className={cx('seller_sidebar_menu_item_text')}>Quản Lý Sản Phẩm</span>
+                        <img className={cx('seller_sidebar_menu_item_img')} alt="productImg" src="/images/Shop.png" />
+                        <span className={cx('seller_sidebar_menu_item_text')}>Quản Lý Shop</span>
                         <span className={cx('seller_sidebar_menu_item_space')}></span>
 
                         <i className={cx('seller_sidebar_menu_item_dropdown')}>
@@ -57,14 +53,8 @@ function SellerSidebar() {
                     </label>
                     <ul className={cx('seller_sidebar_submenu')}>
                         <li className={cx('seller_sidebar_submenu_item')}>
-                            <Link to="/seller/all_product" className={cx('seller_sidebar_submenu_item_')}>
-                                Tất Cả Sản Phẩm
-                            </Link>
-                        </li>
-                        <li className={cx('seller_sidebar_submenu_item')}>
-                            {' '}
-                            <Link to="/seller/add_product" className={cx('seller_sidebar_submenu_item_')}>
-                                Thêm Sản Phẩm
+                            <Link to="/seller/shop_profile" className={cx('seller_sidebar_submenu_item_')}>
+                                Hồ Sơ Shop
                             </Link>
                         </li>
                     </ul>

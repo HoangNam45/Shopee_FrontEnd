@@ -7,7 +7,7 @@ const publicRoutes = [
     { path: '/register', component: Auth, layout: DefaultLayout },
     { path: '/seller', component: SellerHome, layout: HeaderWithSidebar },
     { path: '/seller/add_product', component: ProductAddition, layout: HeaderOnly },
-    { path: '/seller/add_product', component: ProductAddition, layout: HeaderOnly },
+    { path: '/seller/shop_profile', component: ProductAddition, layout: HeaderOnly },
     { path: '/products/:slug', component: ProductDetail, layout: DefaultLayout },
 ];
 const privateRoutes = [];

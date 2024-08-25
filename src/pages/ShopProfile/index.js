@@ -16,8 +16,10 @@ function ShopProfile() {
         const fetchSellerInfo = async () => {
             try {
                 const response = await getSellerInfo();
+                const avatarPreview = `http://localhost:5000/uploads/images/sellerAvatar/${response.avatar}`;
                 console.log(response);
                 setShopName(response.name);
+                setShopAvtPreview(avatarPreview);
                 setShopAvt(response.avatar);
             } catch (error) {
                 console.error('Error fetching seller', error);

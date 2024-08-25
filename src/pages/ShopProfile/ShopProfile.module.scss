@@ -1,3 +1,90 @@
 .shop_profile_wrap {
     padding: 24px;
 }
+.shop_profile_header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+}
+.shop_profile_header_info_btn {
+    display: flex;
+    .shop_profile_header_info_btn_ {
+        font-size: 1.3rem;
+        margin-left: 8px;
+    }
+}
+.shop_profile_body {
+    margin-top: 24px;
+}
+.shop_profile_body_shop {
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    margin-bottom: 24px;
+}
+.shop_profile_body_shop_field {
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 16px;
+}
+.shop_profile_body_shop_input {
+    flex: 1;
+}
+.shop_profile_body_shop_input_img {
+    display: flex;
+    align-items: center;
+}
+.shop_profile_body_shop_input_img_upload_ {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+.shop_profile_body_shop_input_img_descript {
+    color: #999999;
+    font-size: 1.2rem;
+}
+.shop_profile_body_shop_input_ {
+    width: 600px;
+    height: 32px;
+    padding: 0px 12px;
+    font-size: 14px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 229, 229);
+    border-radius: 4px;
+    outline: none;
+}
+
+.shop_profile_body_shop_input_img_upload {
+    width: 96px;
+    height: 96px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.shop_profile_body_shop_input_img_upload_label {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 24px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+.shop_profile_button {
+    display: flex;
+    margin-left: 216px;
+    padding-top: 15px;
+}
+.shop_profile_button_ {
+    height: 32px;
+    padding: 0px 20px;
+    margin-right: 24px;
+}

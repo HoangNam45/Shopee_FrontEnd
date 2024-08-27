@@ -11,13 +11,16 @@ function ShopProfile() {
     const [shopName, setShopName] = useState('');
     const [shopAvtPreview, setShopAvtPreview] = useState('/images/DefaultUser.jpg');
     const [shopAvt, setShopAvt] = useState();
+    const [initialShopName, setInitialShopName] = useState('');
+    const [initialShopAvt, setInitialShopAvt] = useState('');
 
     useEffect(() => {
         const fetchSellerInfo = async () => {
             try {
                 const response = await getSellerInfo();
+                setInitialShopName(response.name);
+                setInitialShopAvt(response.avatar);
                 const avatarPreview = `http://localhost:5000/uploads/images/sellerAvatar/${response.avatar}`;
-                console.log(response);
                 setShopName(response.name);
                 setShopAvtPreview(avatarPreview);
                 setShopAvt(response.avatar);
@@ -41,7 +44,7 @@ function ShopProfile() {
     };
 
     const handleEditing = () => {
-        setIsEditing(!isEditing);
+        setIsEditing(true);
     };
 
     const handleChange = (e) => {
@@ -53,14 +56,20 @@ function ShopProfile() {
         const formData = new FormData();
         formData.append('shopName', shopName);
         formData.append('shopAvt', shopAvt);
-        formData.forEach((value, key) => {
-            console.log(`${key}:`, value);
-        });
         try {
-            await updateSellerInfo(formData);
+            const response = await updateSellerInfo(formData);
+            setInitialShopName(response.Name);
+            setInitialShopAvt(response.Avatar);
+            setIsEditing(false);
         } catch (error) {
             console.error('Error updating seller', error);
         }
+    };
+    const handleCancel = () => {
+        setShopName(initialShopName);
+        setShopAvtPreview(`http://localhost:5000/uploads/images/sellerAvatar/${initialShopAvt}`);
+        setShopAvt(initialShopAvt);
+        setIsEditing(false);
     };
 
     return (
@@ -121,10 +130,10 @@ function ShopProfile() {
                 </div>
                 {isEditing && (
                     <div className={cx('shop_profile_button')}>
-                        <Button primary small className={cx('shop_profile_button_')}>
+                        <Button type="submit" primary small className={cx('shop_profile_button_')}>
                             Lưu
                         </Button>
-                        <Button onClick={handleEditing} small className={cx('shop_profile_button_')} text>
+                        <Button onClick={handleCancel} small className={cx('shop_profile_button_')} text>
                             Hủy
                         </Button>
                     </div>

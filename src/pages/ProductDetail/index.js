@@ -217,10 +217,14 @@ function ProductDetail() {
                 <div className={cx('shop_info')}>
                     <div className={cx('shop_info_interact')}>
                         <div className={cx('shop_info_interact_avt_wrap')}>
-                            <img className={cx('shop_info_interact_avt')} src="/images/authBackground.png" />
+                            <img
+                                alt="?"
+                                className={cx('shop_info_interact_avt')}
+                                src={`http://localhost:5000/uploads/images/sellerAvatar/${product.SellerAvatar}`}
+                            />
                         </div>
                         <div className={cx('shop_info_interact_')}>
-                            <div className={cx('shop_info_interact_name')}>DƯƠNG SPORT</div>
+                            <div className={cx('shop_info_interact_name')}>{product.SellerName}</div>
                             <div className={cx('shop_info_interact_last_onl')}>Online 52 Phút Trước</div>
                             <div className={cx('shop_info_interact_actions')}>
                                 <Button small sub_primary className={cx('shop_info_interact_actions_btn')}>

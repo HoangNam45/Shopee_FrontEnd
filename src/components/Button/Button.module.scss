@@ -31,11 +31,13 @@
     min-width: 80px;
 }
 .medium {
-    width: 165px;
+    min-width: 165px;
+    max-width: 210px;
     height: 40px;
     font-size: 1.35rem;
     border: 1px solid rgba(0, 0, 0, 0.26);
     color: black;
+    padding: 0 16px;
 }
 .quite_small {
     width: 140px;
@@ -60,6 +62,8 @@
 }
 .primary {
     background-color: var(--primary);
+    color: #fff;
+    border: none;
 }
 .sub_primary {
     color: var(--primary);

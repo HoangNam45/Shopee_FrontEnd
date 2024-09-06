@@ -1,5 +1,9 @@
-import { SellerHome, ProductManagement, ProductAddition, ShopProfile } from '../pages';
+import { lazy } from 'react';
 import { HeaderWithSidebar, HeaderOnly } from '../components/Layouts';
+const SellerHome = lazy(() => import('../pages/SellerHome'));
+const ProductManagement = lazy(() => import('../pages/ProductManagement'));
+const ProductAddition = lazy(() => import('../pages/ProductAddition'));
+const ShopProfile = lazy(() => import('../pages/ShopProfile'));
 
 const sellerRoutes = [
     { path: '/seller', component: SellerHome, layout: HeaderWithSidebar },

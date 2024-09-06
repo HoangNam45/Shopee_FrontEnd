@@ -3,6 +3,7 @@ import { Fragment, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes, privateRoutes } from './routes';
 import { DefaultLayout } from './components/Layouts';
+import PrivateAccess from './components/PrivateAccess/PrivateAccess';
 
 function App() {
     return (
@@ -52,9 +53,11 @@ function App() {
                                     key={index}
                                     path={route.path}
                                     element={
-                                        <Layout>
-                                            <Page />
-                                        </Layout>
+                                        <PrivateAccess>
+                                            <Layout>
+                                                <Page />
+                                            </Layout>
+                                        </PrivateAccess>
                                     }
                                 />
                             );

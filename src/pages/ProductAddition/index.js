@@ -2,8 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './ProductAddition.module.scss';
 import ImageUploader from '../../components/ImageUploader/ImageUploader';
 import { Button } from '../../components/Button';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import PriceRange from '../../components/PriceRange/PriceRange';
 import { useState } from 'react';
 import { addProduct } from '../../services/productService';
@@ -11,6 +10,8 @@ import { addProduct } from '../../services/productService';
 const cx = classNames.bind(styles);
 
 function ProductAddition() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         productImages: [],
         productBackGroundImage: [],
@@ -43,26 +44,25 @@ function ProductAddition() {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, productStatus) => {
         e.preventDefault();
+        console.log(productStatus);
         const newFormData = new FormData();
-
-        // Thêm các tệp hình ảnh
         formData.productImages.forEach((image) => {
             newFormData.append('productImages', image);
         });
         newFormData.append('productBackGroundImage', formData.productBackGroundImage[0]); // Chỉ có 1 hình nền
-
-        // Thêm các trường khác
         newFormData.append('productName', formData.productName);
         newFormData.append('productDescription', formData.productDescription);
         newFormData.append('productPrice', formData.productPrice);
         newFormData.append('productStock', formData.productStock);
         newFormData.append('productPriceRange', JSON.stringify(formData.productPriceRange));
         newFormData.append('productSKU', formData.productSKU);
+        newFormData.append('productStatus', productStatus);
 
         try {
             await addProduct(newFormData);
+            navigate('/seller/all_product');
         } catch (error) {
             console.log(error);
         }
@@ -230,10 +230,20 @@ function ProductAddition() {
                 <Button text quite_small className={cx('product_add_save_btn')}>
                     Hủy
                 </Button>
-                <Button text quite_small className={cx('product_add_save_btn')}>
+                <Button
+                    onClick={(e) => handleSubmit(e, 'hidden')}
+                    text
+                    quite_small
+                    className={cx('product_add_save_btn')}
+                >
                     Lưu & Ẩn
                 </Button>
-                <Button type="submit" primary quite_small className={cx('product_add_save_btn')}>
+                <Button
+                    onClick={(e) => handleSubmit(e, 'active')}
+                    primary
+                    quite_small
+                    className={cx('product_add_save_btn')}
+                >
                     Lưu & Hiển thị
                 </Button>
             </div>

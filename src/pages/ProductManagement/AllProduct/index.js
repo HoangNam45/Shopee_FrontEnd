@@ -8,9 +8,7 @@ const cx = classNames.bind(styles);
 const AllProduct = () => {
     return (
         <>
-            <ProductManagementLayout>
-                <div className={cx('alo')}>Mayf laf thNgangangasdugeugfu ugugugug</div>
-            </ProductManagementLayout>
+            <ProductManagementLayout></ProductManagementLayout>
             <ProductList />
         </>
     );

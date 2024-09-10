@@ -5,17 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Button from '../Button/Button';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox } from '@mui/material';
+
 const cx = classNames.bind(styles);
 const ProductList = () => {
-    const products = [
-        {
-            id: 1,
-            name: 'Product 1',
-            sales: 100,
-            price: 100000,
-            stock: 50,
-        },
-    ];
     return (
         <div className={cx('board', 'product_list_container')}>
             <div className={cx('product_list_search')}>
@@ -92,9 +84,9 @@ const ProductList = () => {
                                             alo alo
                                         </div>
                                         <div className={cx('product_list_body_name_info_SKU')}>SKU sản phẩm: -</div>
-                                        <div className={cx('product_list_body_name_info_ID')}>
+                                        {/* <div className={cx('product_list_body_name_info_ID')}>
                                             ID Sản phẩm: 255123128379
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </TableCell>

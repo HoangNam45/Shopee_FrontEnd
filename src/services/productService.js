@@ -20,3 +20,16 @@ export const getProductDetail = async (slug) => {
     const response = await axios.get(`http://localhost:5000/products/${slug}`);
     return response.data;
 };
+
+export const getSellerLatestProducts = async () => {
+    const response = await axios.post(
+        'http://localhost:5000/products/seller/latest_products',
+        {},
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        },
+    );
+    return response.data;
+};

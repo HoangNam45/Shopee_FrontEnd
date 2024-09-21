@@ -21,13 +21,24 @@ const ProductManagementLayout = ({ children }) => {
             </div>
 
             <nav className={cx('productManagement_nav')}>
-                <NavLink to="/products/all" className={cx('productManagement_nav_')}>
+                <NavLink
+                    to="/seller/all_products"
+                    className={({ isActive }) => cx('productManagement_nav_', { active_link: isActive })}
+                >
                     Tất cả
                 </NavLink>
-                <NavLink to="/products/active" className={cx('productManagement_nav_')}>
+                <NavLink
+                    activeClassName={cx('active_link')}
+                    to="/seller/active_products"
+                    className={({ isActive }) => cx('productManagement_nav_', { active_link: isActive })}
+                >
                     Đang hoạt động
                 </NavLink>
-                <NavLink to="/products/inactive" className={cx('productManagement_nav_')}>
+                <NavLink
+                    activeClassName={cx('active_link')}
+                    to="/seller/hidden_products"
+                    className={({ isActive }) => cx('productManagement_nav_', { active_link: isActive })}
+                >
                     Chưa được đăng
                 </NavLink>
             </nav>

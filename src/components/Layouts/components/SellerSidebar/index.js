@@ -25,7 +25,7 @@ function SellerSidebar() {
                     </label>
                     <ul className={cx('seller_sidebar_submenu')}>
                         <li className={cx('seller_sidebar_submenu_item')}>
-                            <Link to="/seller/all_product" className={cx('seller_sidebar_submenu_item_')}>
+                            <Link to="/seller/all_products" className={cx('seller_sidebar_submenu_item_')}>
                                 Tất Cả Sản Phẩm
                             </Link>
                         </li>

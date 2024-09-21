@@ -21,15 +21,65 @@ export const getProductDetail = async (slug) => {
     return response.data;
 };
 
-export const getSellerLatestProducts = async () => {
-    const response = await axios.post(
-        'http://localhost:5000/products/seller/latest_products',
-        {},
+export const getSellerLatestProducts = async (page, limit) => {
+    const response = await axios.get(
+        `http://localhost:5000/products/seller/latest_products?page=${page}&limit=${limit}`,
         {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
         },
     );
+    return response.data;
+};
+
+export const getSellerActiveProducts = async (page, limit) => {
+    const response = await axios.get(
+        `http://localhost:5000/products/seller/active_products?page=${page}&limit=${limit}`,
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        },
+    );
+    return response.data;
+};
+
+export const getSellerHiddenProducts = async (page, limit) => {
+    const response = await axios.get(
+        `http://localhost:5000/products/seller/hidden_products?page=${page}&limit=${limit}`,
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        },
+    );
+    return response.data;
+};
+
+export const getSellerTotalProducts = async () => {
+    const response = await axios.get('http://localhost:5000/products/seller/total_products', {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+    return response.data;
+};
+
+export const getSellerTotalActiveProducts = async () => {
+    const response = await axios.get('http://localhost:5000/products/seller/total_active_products', {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+    return response.data;
+};
+
+export const getSellerTotalHiddenProducts = async () => {
+    const response = await axios.get('http://localhost:5000/products/seller/total_hidden_products', {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
     return response.data;
 };

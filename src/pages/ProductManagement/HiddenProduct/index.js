@@ -3,10 +3,10 @@
 import { ProductManagementLayout } from '../../../components/Layouts';
 import ProductList from '../../../components/ProductList/ProductList';
 import { useEffect, useState } from 'react';
-import { getSellerLatestProducts, getSellerTotalProducts } from '../../../services/productService';
+import { getSellerHiddenProducts, getSellerTotalHiddenProducts } from '../../../services/productService';
 // const cx = classNames.bind(styles);
 
-const AllProduct = () => {
+const HiddenProduct = () => {
     const [productsData, setProductsData] = useState([]);
     const [totalProducts, setTotalProducts] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +15,7 @@ const AllProduct = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getSellerLatestProducts(currentPage, limit);
+            const response = await getSellerHiddenProducts(currentPage, limit);
             console.log(response);
             setProductsData(response);
         };
@@ -29,9 +29,9 @@ const AllProduct = () => {
     useEffect(() => {
         const fetchTotalProducts = async () => {
             try {
-                const response = await getSellerTotalProducts();
+                const response = await getSellerTotalHiddenProducts();
                 console.log(response);
-                setTotalProducts(response.totalProducts);
+                setTotalProducts(response.totalHiddenProducts);
             } catch (error) {
                 console.error('Errors fetching total products:', error);
             }
@@ -54,4 +54,4 @@ const AllProduct = () => {
     );
 };
 
-export default AllProduct;
+export default HiddenProduct;

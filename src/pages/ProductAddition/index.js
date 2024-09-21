@@ -62,7 +62,7 @@ function ProductAddition() {
 
         try {
             await addProduct(newFormData);
-            navigate('/seller/all_product');
+            navigate('/seller/all_products');
         } catch (error) {
             console.log(error);
         }

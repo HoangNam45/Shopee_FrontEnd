@@ -3,7 +3,7 @@
 import { ProductManagementLayout } from '../../../components/Layouts';
 import ProductList from '../../../components/ProductList/ProductList';
 import { useEffect, useState } from 'react';
-import { getSellerLatestProducts, getSellerTotalProducts } from '../../../services/productService';
+import { getSellerActiveProducts, getSellerTotalActiveProducts } from '../../../services/productService';
 // const cx = classNames.bind(styles);
 
 const AllProduct = () => {
@@ -15,7 +15,7 @@ const AllProduct = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getSellerLatestProducts(currentPage, limit);
+            const response = await getSellerActiveProducts(currentPage, limit);
             console.log(response);
             setProductsData(response);
         };
@@ -29,9 +29,9 @@ const AllProduct = () => {
     useEffect(() => {
         const fetchTotalProducts = async () => {
             try {
-                const response = await getSellerTotalProducts();
+                const response = await getSellerTotalActiveProducts();
                 console.log(response);
-                setTotalProducts(response.totalProducts);
+                setTotalProducts(response.totalActiveProducts);
             } catch (error) {
                 console.error('Errors fetching total products:', error);
             }

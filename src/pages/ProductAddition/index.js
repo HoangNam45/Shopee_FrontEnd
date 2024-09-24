@@ -4,13 +4,18 @@ import ImageUploader from '../../components/ImageUploader/ImageUploader';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import PriceRange from '../../components/PriceRange/PriceRange';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { addProduct } from '../../services/productService';
+import { useParams } from 'react-router-dom';
+import { getSellerDetailProduct } from '../../services/productService';
 
 const cx = classNames.bind(styles);
 
-function ProductAddition() {
+const ProductAddition = () => {
     const navigate = useNavigate();
+
+    const { productId } = useParams();
+    const [loading, setLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         productImages: [],
@@ -22,6 +27,31 @@ function ProductAddition() {
         productPriceRange: [],
         productSKU: '',
     });
+
+    useEffect(() => {
+        if (productId) {
+            const fetchData = async () => {
+                try {
+                    const response = await getSellerDetailProduct(productId);
+
+                    setFormData({
+                        productImages: response.Images || [],
+                        productBackGroundImage: response.BackGroundImage || [],
+                        productName: response.Name || '',
+                        productDescription: response.Description || '',
+                        productPrice: response.Price || '',
+                        productStock: response.Stock || '',
+                        productPriceRange: response.PriceRange || [],
+                        productSKU: response.SKU || '',
+                    });
+                    setLoading(false);
+                } catch (error) {
+                    console.log('Error fetching product details:', error);
+                }
+            };
+            fetchData();
+        }
+    }, [productId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,7 +76,6 @@ function ProductAddition() {
 
     const handleSubmit = async (e, productStatus) => {
         e.preventDefault();
-        console.log(productStatus);
         const newFormData = new FormData();
         formData.productImages.forEach((image) => {
             newFormData.append('productImages', image);
@@ -68,6 +97,7 @@ function ProductAddition() {
         }
     };
     console.log(formData);
+    if (loading && productId) return <div>Loading...</div>;
     return (
         <form onSubmit={handleSubmit} className={cx('product_add_wrap')}>
             <div className={cx('product_add_nav')}>
@@ -128,6 +158,7 @@ function ProductAddition() {
                             type="text"
                             placeholder="Tên sản phẩm + Thương hiệu + Model + Thông số kỹ thuật"
                             className={cx('product_add_info_field_input_name_product')}
+                            value={formData?.productName || ''}
                         />
                     </div>
                 </div>
@@ -142,6 +173,7 @@ function ProductAddition() {
                             onChange={handleChange}
                             type="text"
                             className={cx('product_add_info_field_input_describe_product')}
+                            value={formData?.productDescription || ''}
                         />
                     </div>
                 </div>
@@ -175,6 +207,7 @@ function ProductAddition() {
                             type="text"
                             placeholder="Giá sản phẩm"
                             className={cx('product_add_info_field_input_price')}
+                            value={formData?.productPrice || ''}
                         />
                     </div>
                 </div>
@@ -190,6 +223,7 @@ function ProductAddition() {
                             onChange={handleChange}
                             type="text"
                             className={cx('product_add_info_field_input_price')}
+                            value={formData?.productStock || ''}
                         />
                     </div>
                 </div>
@@ -221,6 +255,7 @@ function ProductAddition() {
                             type="text"
                             placeholder=""
                             className={cx('product_add_info_field_input_price')}
+                            value={formData?.productSKU || ''}
                         />
                     </div>
                 </div>
@@ -249,6 +284,6 @@ function ProductAddition() {
             </div>
         </form>
     );
-}
+};
 
 export default ProductAddition;

@@ -17,7 +17,7 @@ export const getProduct = async () => {
 };
 
 export const getProductDetail = async (slug) => {
-    const response = await axios.get(`http://localhost:5000/products/${slug}`);
+    const response = await axios.get(`http://localhost:5000/products/detail/${slug}`);
     return response.data;
 };
 
@@ -77,6 +77,15 @@ export const getSellerTotalActiveProducts = async () => {
 
 export const getSellerTotalHiddenProducts = async () => {
     const response = await axios.get('http://localhost:5000/products/seller/total_hidden_products', {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+    return response.data;
+};
+
+export const getSellerDetailProduct = async (productId) => {
+    const response = await axios.get(`http://localhost:5000/products/seller/detail_product/${productId}`, {
         headers: {
             Authorization: `Bearer ${getToken()}`,
         },

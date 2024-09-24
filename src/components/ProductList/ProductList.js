@@ -7,6 +7,7 @@ import Button from '../Button/Button';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox } from '@mui/material';
 import formatPrice from '../../utils/formarPrice';
 import { Pagination } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const ProductList = ({ products, totalProducts, limit, handleDataFromPagination, currentPage }) => {
@@ -104,7 +105,12 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                                 </TableCell>
                                 <TableCell className={cx('product_list_body_satistic')}>{product.Stock}</TableCell>
                                 <TableCell>
-                                    <span className={cx('product_list_body_operation')}>Cập nhật</span>
+                                    <Link
+                                        to={`http://localhost:3000/seller/portal_product/${product.Id}`}
+                                        className={cx('product_list_body_operation')}
+                                    >
+                                        Cập nhật
+                                    </Link>
                                 </TableCell>
                             </TableRow>
                         ))}

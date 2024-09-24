@@ -39,7 +39,7 @@ function Header() {
         <header className={cx('shopee-top')}>
             <div className={cx('navbar-wrapper')}>
                 <div className={cx('navbar-link')}>
-                    <Link to="/seller" className={cx('navbar-link_text')}>
+                    <Link to="/seller/all_products" className={cx('navbar-link_text')}>
                         Kênh người bán
                     </Link>
                     <div className={cx('navbar-link_text', 'navbar_drawer')}>Tải ứng dụng</div>

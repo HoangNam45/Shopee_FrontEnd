@@ -14,7 +14,8 @@ const sellerRoutes = [
     { path: '/seller/active_products', component: ActiveProduct, layout: HeaderWithSidebar },
     { path: '/seller/hidden_products', component: HiddenProduct, layout: HeaderWithSidebar },
 
-    { path: '/seller/add_product', component: ProductAddition, layout: HeaderOnly },
+    { path: '/seller/portal_product/:productId', component: ProductAddition, layout: HeaderOnly },
+    { path: '/seller/portal_product', component: ProductAddition, layout: HeaderOnly },
     { path: '/seller/shop_profile', component: ShopProfile, layout: HeaderWithSidebar },
 ];
 

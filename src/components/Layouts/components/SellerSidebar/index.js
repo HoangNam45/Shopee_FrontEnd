@@ -31,7 +31,7 @@ function SellerSidebar() {
                         </li>
                         <li className={cx('seller_sidebar_submenu_item')}>
                             {' '}
-                            <Link to="/seller/add_product" className={cx('seller_sidebar_submenu_item_')}>
+                            <Link to="/seller/portal_product" className={cx('seller_sidebar_submenu_item_')}>
                                 Thêm Sản Phẩm
                             </Link>
                         </li>

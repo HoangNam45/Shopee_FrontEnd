@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Button({
-    to,
-    href,
+    to = false,
+    href = false,
     primary = false,
     sub_primary = false,
     primary_text = false,
@@ -35,6 +35,8 @@ function Button({
     } else if (href) {
         props.href = href;
         Comp = 'a';
+    } else {
+        props.type = 'button';
     }
 
     const classes = cx('button', {

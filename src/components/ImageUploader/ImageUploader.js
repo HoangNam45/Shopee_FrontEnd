@@ -13,16 +13,10 @@ const ImageUploader = ({ text, quantity, inputName, onImageChange }) => {
         const file = event.target.files[0];
         if (file) {
             const newImagePreview = URL.createObjectURL(file);
-            setImagesPreview((prev) => {
-                const updatedPreviews = [...prev, newImagePreview];
-                return updatedPreviews;
-            });
-            setImages((prev) => {
-                const updatedImages = [...prev, file];
-
-                onImageChange(updatedImages, inputName);
-                return updatedImages;
-            });
+            setImagesPreview((prev) => [...prev, newImagePreview]);
+            const updatedImages = [...images, file];
+            setImages(updatedImages);
+            onImageChange(updatedImages, inputName);
         }
 
         event.target.value = null;

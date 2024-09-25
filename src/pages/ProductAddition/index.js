@@ -35,8 +35,8 @@ const ProductAddition = () => {
                     const response = await getSellerDetailProduct(productId);
 
                     setFormData({
-                        productImages: response.Images || [],
-                        productBackGroundImage: response.BackGroundImage || [],
+                        productImages: response.ImageUrl || [],
+                        productBackGroundImage: response.BackGround || [],
                         productName: response.Name || '',
                         productDescription: response.Description || '',
                         productPrice: response.Price || '',
@@ -122,6 +122,7 @@ const ProductAddition = () => {
                             quantity={9}
                             text="Thêm hình ảnh"
                             flex
+                            productImages={formData.productImages}
                         />
                     </div>
                 </div>
@@ -135,6 +136,7 @@ const ProductAddition = () => {
                             inputName="productBackGroundImage"
                             onImageChange={handleImageChange}
                             quantity={1}
+                            productBackGroundImage={formData.productBackGroundImage}
                         />
 
                         <ul className={cx('product_add_info_field_input_back_img_descript')}>

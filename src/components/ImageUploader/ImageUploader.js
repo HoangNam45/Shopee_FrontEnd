@@ -5,7 +5,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
-const ImageUploader = ({ text, quantity, inputName, onImageChange }) => {
+const ImageUploader = ({ text, quantity, inputName, onImageChange, productImages, productBackGroundI }) => {
     const [imagesPreview, setImagesPreview] = useState([]);
     const [images, setImages] = useState([]);
 

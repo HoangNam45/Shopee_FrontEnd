@@ -5,10 +5,12 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
-const ImageUploader = ({ text, quantity, inputName, onImageChange, productImages, productBackGroundI }) => {
+const ImageUploader = ({ text, quantity, inputName, onImageChange, productExistingImages }) => {
     const [imagesPreview, setImagesPreview] = useState([]);
     const [images, setImages] = useState([]);
-
+    const [existingImages, setExistingImages] = useState(productExistingImages || []);
+    console.log(existingImages);
+    if (existingImages===)
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -31,10 +33,30 @@ const ImageUploader = ({ text, quantity, inputName, onImageChange, productImages
         });
     };
 
+    const handleExistingImageDelete = (index) => {
+        setExistingImages((prev) => prev.filter((_, i) => i !== index));
+    };
+
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {imagesPreview.map((image, index) => (
+            {existingImages.map((image, index) => (
                 <div className={cx('render_img_wrap')} key={index}>
+                    <img
+                        className={cx('render_img')}
+                        src={`http://localhost:5000/uploads/images/productImages/${image}`}
+                        alt={`upload-${index}`}
+                    />
+                    <div className={cx('render_img_delete')}>
+                        <FontAwesomeIcon
+                            className={cx('render_img_delete_icon')}
+                            icon={faTrash}
+                            onClick={() => handleExistingImageDelete(index)}
+                        />
+                    </div>
+                </div>
+            ))}
+            {imagesPreview.map((image, index) => (
+                <div className={cx('render_img_wrap')} key={existingImages.length + index}>
                     <img className={cx('render_img')} src={image} alt={`upload-${index}`} />
                     <div className={cx('render_img_delete')}>
                         <FontAwesomeIcon
@@ -45,7 +67,8 @@ const ImageUploader = ({ text, quantity, inputName, onImageChange, productImages
                     </div>
                 </div>
             ))}
-            {imagesPreview.length < quantity && (
+
+            {imagesPreview.length + existingImages.length < quantity && (
                 <div className={cx('add_img')}>
                     <label className={cx('add_img_content')}>
                         <i className={cx('add_img_icon')}>

@@ -26,6 +26,7 @@ const ProductAddition = () => {
         productStock: '',
         productPriceRange: [],
         productSKU: '',
+        productExistingImages: [],
     });
 
     useEffect(() => {
@@ -35,7 +36,8 @@ const ProductAddition = () => {
                     const response = await getSellerDetailProduct(productId);
 
                     setFormData({
-                        productImages: response.ImageUrl || [],
+                        productExistingImages: response.ImageUrl || [],
+                        productImages: [],
                         productBackGroundImage: response.BackGround || [],
                         productName: response.Name || '',
                         productDescription: response.Description || '',
@@ -122,7 +124,7 @@ const ProductAddition = () => {
                             quantity={9}
                             text="Thêm hình ảnh"
                             flex
-                            productImages={formData.productImages}
+                            productExistingImages={formData.productExistingImages}
                         />
                     </div>
                 </div>
@@ -136,7 +138,7 @@ const ProductAddition = () => {
                             inputName="productBackGroundImage"
                             onImageChange={handleImageChange}
                             quantity={1}
-                            productBackGroundImage={formData.productBackGroundImage}
+                            productExistingImages={formData.productBackGroundImage}
                         />
 
                         <ul className={cx('product_add_info_field_input_back_img_descript')}>

@@ -35,6 +35,8 @@ function Button({
     } else if (href) {
         props.href = href;
         Comp = 'a';
+    } else {
+        Comp = 'button';
     }
 
     const classes = cx('button', {
@@ -53,7 +55,8 @@ function Button({
     });
 
     return (
-        <Comp type className={classes} {...props}>
+        //type
+        <Comp className={classes} {...props}>
             <span>{children}</span>
         </Comp>
     );

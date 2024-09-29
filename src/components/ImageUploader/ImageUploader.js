@@ -5,12 +5,19 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
-const ImageUploader = ({ text, quantity, inputName, onImageChange, productExistingImages }) => {
+const ImageUploader = ({
+    text,
+    quantity,
+    inputName,
+    onImageChange,
+    productExistingImages,
+    productExistingBackGroundImage,
+}) => {
     const [imagesPreview, setImagesPreview] = useState([]);
     const [images, setImages] = useState([]);
     const [existingImages, setExistingImages] = useState(productExistingImages || []);
-    console.log(existingImages);
-    if (existingImages===)
+    const [existingBackGroundImage, setExistingBackGroundImage] = useState(productExistingBackGroundImage || null);
+
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -37,6 +44,10 @@ const ImageUploader = ({ text, quantity, inputName, onImageChange, productExisti
         setExistingImages((prev) => prev.filter((_, i) => i !== index));
     };
 
+    const handleExistingBackGroundImageDelete = () => {
+        setExistingBackGroundImage(null);
+    };
+
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {existingImages.map((image, index) => (
@@ -55,6 +66,22 @@ const ImageUploader = ({ text, quantity, inputName, onImageChange, productExisti
                     </div>
                 </div>
             ))}
+            {existingBackGroundImage && (
+                <div className={cx('render_img_wrap')}>
+                    <img
+                        className={cx('render_img')}
+                        src={`http://localhost:5000/uploads/images/productBackGroundImage/${existingBackGroundImage}`}
+                        alt={`upload`}
+                    />
+                    <div className={cx('render_img_delete')}>
+                        <FontAwesomeIcon
+                            className={cx('render_img_delete_icon')}
+                            icon={faTrash}
+                            onClick={() => handleExistingBackGroundImageDelete()}
+                        />
+                    </div>
+                </div>
+            )}
             {imagesPreview.map((image, index) => (
                 <div className={cx('render_img_wrap')} key={existingImages.length + index}>
                     <img className={cx('render_img')} src={image} alt={`upload-${index}`} />
@@ -78,7 +105,7 @@ const ImageUploader = ({ text, quantity, inputName, onImageChange, productExisti
                             </svg>
                         </i>
                         <div className={cx('add_img_count')}>
-                            {text} ({imagesPreview.length}/{quantity})
+                            {text} ({imagesPreview.length + existingImages.length}/{quantity})
                         </div>
                         <input name={inputName} type="file" style={{ display: 'none' }} onChange={handleImageUpload} />
                     </label>

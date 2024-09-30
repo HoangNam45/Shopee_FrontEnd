@@ -16,7 +16,7 @@ const ImageUploader = ({
     const [imagesPreview, setImagesPreview] = useState([]);
     const [images, setImages] = useState([]);
     const [existingImages, setExistingImages] = useState(productExistingImages || []);
-    const [existingBackGroundImage, setExistingBackGroundImage] = useState(productExistingBackGroundImage || null);
+    const [existingBackGroundImage, setExistingBackGroundImage] = useState(productExistingBackGroundImage || '');
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -41,13 +41,23 @@ const ImageUploader = ({
     };
 
     const handleExistingImageDelete = (index) => {
-        setExistingImages((prev) => prev.filter((_, i) => i !== index));
+        setExistingImages((prev) => {
+            const updatedExistingImages = prev.filter((_, i) => i !== index);
+            onImageChange(updatedExistingImages, 'productExistingImages');
+            console.log(updatedExistingImages);
+            return updatedExistingImages;
+        });
     };
 
     const handleExistingBackGroundImageDelete = () => {
-        setExistingBackGroundImage(null);
+        setExistingBackGroundImage((prev) => {
+            const updatedExistingBackGroundImage = '';
+            onImageChange(updatedExistingBackGroundImage, 'productExistingBackGroundImage');
+            return updatedExistingBackGroundImage;
+        });
     };
-
+    // console.log('existingImages', existingImages);
+    // console.log('existingbackImages', existingBackGroundImage !== '' ? 1 : 0);
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {existingImages.map((image, index) => (
@@ -95,7 +105,7 @@ const ImageUploader = ({
                 </div>
             ))}
 
-            {imagesPreview.length + existingImages.length < quantity && (
+            {imagesPreview.length + existingImages.length + (existingBackGroundImage !== '' ? 1 : 0) < quantity && (
                 <div className={cx('add_img')}>
                     <label className={cx('add_img_content')}>
                         <i className={cx('add_img_icon')}>
@@ -105,7 +115,9 @@ const ImageUploader = ({
                             </svg>
                         </i>
                         <div className={cx('add_img_count')}>
-                            {text} ({imagesPreview.length + existingImages.length}/{quantity})
+                            {text} (
+                            {imagesPreview.length + existingImages.length + (existingBackGroundImage !== '' ? 1 : 0)}/
+                            {quantity})
                         </div>
                         <input name={inputName} type="file" style={{ display: 'none' }} onChange={handleImageUpload} />
                     </label>

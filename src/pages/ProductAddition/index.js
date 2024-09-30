@@ -66,6 +66,8 @@ const ProductAddition = () => {
         });
     };
     const handleImageChange = (image, name) => {
+        console.log('image', image);
+        console.log('name', name);
         setFormData({
             ...formData,
             [name]: image,
@@ -100,7 +102,7 @@ const ProductAddition = () => {
             console.log(error);
         }
     };
-    console.log(formData);
+    console.log('formData', formData);
     if (loading && productId) return <div>Loading...</div>;
     return (
         <form onSubmit={handleSubmit} className={cx('product_add_wrap')}>

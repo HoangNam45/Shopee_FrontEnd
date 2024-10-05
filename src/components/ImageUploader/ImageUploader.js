@@ -33,31 +33,23 @@ const ImageUploader = ({
 
     const handleImageDelete = (index) => {
         setImagesPreview((prev) => prev.filter((_, i) => i !== index));
-        setImages((prev) => {
-            const updatedImages = prev.filter((_, i) => i !== index);
-            onImageChange(updatedImages, inputName);
-            return updatedImages;
-        });
+        const updatedImages = imagesPreview.filter((_, i) => i !== index);
+        setImages(updatedImages);
+        onImageChange(updatedImages, inputName);
     };
 
     const handleExistingImageDelete = (index) => {
-        setExistingImages((prev) => {
-            const updatedExistingImages = prev.filter((_, i) => i !== index);
-            onImageChange(updatedExistingImages, 'productExistingImages');
-            console.log(updatedExistingImages);
-            return updatedExistingImages;
-        });
+        const updatedExistingImages = existingImages.filter((_, i) => i !== index);
+        setExistingImages(updatedExistingImages);
+        onImageChange(updatedExistingImages, 'productExistingImages');
     };
 
     const handleExistingBackGroundImageDelete = () => {
-        setExistingBackGroundImage((prev) => {
-            const updatedExistingBackGroundImage = '';
-            onImageChange(updatedExistingBackGroundImage, 'productExistingBackGroundImage');
-            return updatedExistingBackGroundImage;
-        });
+        const updatedExistingBackGroundImage = '';
+        setExistingBackGroundImage(updatedExistingBackGroundImage);
+        onImageChange(updatedExistingBackGroundImage, 'productExistingBackGroundImage');
     };
-    // console.log('existingImages', existingImages);
-    // console.log('existingbackImages', existingBackGroundImage !== '' ? 1 : 0);
+
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {existingImages.map((image, index) => (

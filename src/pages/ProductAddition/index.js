@@ -5,7 +5,7 @@ import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import PriceRange from '../../components/PriceRange/PriceRange';
 import { useState, useEffect } from 'react';
-import { addProduct } from '../../services/productService';
+import { addProduct, updateProduct } from '../../services/productService';
 import { useParams } from 'react-router-dom';
 import { getSellerDetailProduct } from '../../services/productService';
 
@@ -39,8 +39,6 @@ const ProductAddition = () => {
                     setFormData({
                         productExistingImages: response.ImageUrl || [],
                         productExistingBackGroundImage: response.BackGround || '',
-                        productImages: [],
-                        productBackGroundImage: [],
                         productName: response.Name || '',
                         productDescription: response.Description || '',
                         productPrice: response.Price || '',
@@ -87,6 +85,8 @@ const ProductAddition = () => {
             newFormData.append('productImages', image);
         });
         newFormData.append('productBackGroundImage', formData.productBackGroundImage[0]); // Chỉ có 1 hình nền
+        newFormData.append('productExistingImages', formData.productExistingImages);
+        newFormData.append('productExistingBackgroundImage', formData.productExistingBackgroundImage[0]);
         newFormData.append('productName', formData.productName);
         newFormData.append('productDescription', formData.productDescription);
         newFormData.append('productPrice', formData.productPrice);
@@ -96,7 +96,11 @@ const ProductAddition = () => {
         newFormData.append('productStatus', productStatus);
 
         try {
-            await addProduct(newFormData);
+            if (productId) {
+                await updateProduct(productId, newFormData);
+            } else {
+                await addProduct(newFormData);
+            }
             navigate('/seller/all_products');
         } catch (error) {
             console.log(error);

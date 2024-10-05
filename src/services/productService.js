@@ -11,6 +11,16 @@ export const addProduct = async (productData) => {
     return response;
 };
 
+export const updateProduct = async (productId, productData) => {
+    const response = await axios.put(`http://localhost:5000/products/update_product/${productId}`, productData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+    return response;
+};
+
 export const getProduct = async () => {
     const response = await axios.get('http://localhost:5000/products');
     return response.data;

@@ -81,12 +81,23 @@ const ProductAddition = () => {
     const handleSubmit = async (e, productStatus) => {
         e.preventDefault();
         const newFormData = new FormData();
-        formData.productImages.forEach((image) => {
-            newFormData.append('productImages', image);
-        });
-        newFormData.append('productBackGroundImage', formData.productBackGroundImage[0]); // Chỉ có 1 hình nền
-        newFormData.append('productExistingImages', formData.productExistingImages);
-        newFormData.append('productExistingBackgroundImage', formData.productExistingBackgroundImage[0]);
+        if (formData.productImages) {
+            formData.productImages.forEach((image) => {
+                newFormData.append('productImages', image);
+            });
+        }
+        if (formData.productBackGroundImage) {
+            newFormData.append('productBackGroundImage', formData.productBackGroundImage[0]); // Chỉ có 1 hình nền
+        }
+
+        if (formData.productExistingImages && formData.productExistingImages.length > 0) {
+            formData.productExistingImages.forEach((existingImage) => {
+                newFormData.append('productExistingImages', existingImage);
+            });
+        }
+
+        newFormData.append('productExistingBackGroundImage', formData.productExistingBackGroundImage);
+
         newFormData.append('productName', formData.productName);
         newFormData.append('productDescription', formData.productDescription);
         newFormData.append('productPrice', formData.productPrice);

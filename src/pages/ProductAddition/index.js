@@ -5,7 +5,7 @@ import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import PriceRange from '../../components/PriceRange/PriceRange';
 import { useState, useEffect } from 'react';
-import { addProduct, updateProduct } from '../../services/productService';
+import { addProduct, updateProduct, updateProductStatus, deleteProduct } from '../../services/productService';
 import { useParams } from 'react-router-dom';
 import { getSellerDetailProduct } from '../../services/productService';
 
@@ -28,6 +28,7 @@ const ProductAddition = () => {
         productSKU: '',
         productExistingImages: [],
         productExistingBackGroundImage: '',
+        productStatus: '',
     });
 
     useEffect(() => {
@@ -45,6 +46,7 @@ const ProductAddition = () => {
                         productStock: response.Stock || '',
                         productPriceRange: response.PriceRange || [],
                         productSKU: response.SKU || '',
+                        productStatus: response.Status || '',
                     });
                     setLoading(false);
                 } catch (error) {
@@ -64,8 +66,6 @@ const ProductAddition = () => {
         });
     };
     const handleImageChange = (image, name) => {
-        console.log('image', image);
-        console.log('name', name);
         setFormData({
             ...formData,
             [name]: image,
@@ -97,7 +97,6 @@ const ProductAddition = () => {
         }
 
         newFormData.append('productExistingBackGroundImage', formData.productExistingBackGroundImage);
-
         newFormData.append('productName', formData.productName);
         newFormData.append('productDescription', formData.productDescription);
         newFormData.append('productPrice', formData.productPrice);
@@ -117,6 +116,32 @@ const ProductAddition = () => {
             console.log(error);
         }
     };
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        navigate('/seller/all_products');
+    };
+
+    const handleUpdateStatus = (e, status) => {
+        e.preventDefault();
+        try {
+            updateProductStatus(productId, status);
+            navigate('/seller/all_products');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        try {
+            deleteProduct(productId);
+            navigate('/seller/all_products');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     console.log('formData', formData);
     if (loading && productId) return <div>Loading...</div>;
     return (
@@ -285,25 +310,67 @@ const ProductAddition = () => {
             </div>
 
             <div className={cx('product_add_save')}>
-                <Button text quite_small className={cx('product_add_save_btn')}>
+                <Button onClick={handleCancel} text quite_small className={cx('product_add_save_btn')}>
                     Hủy
                 </Button>
-                <Button
-                    onClick={(e) => handleSubmit(e, 'hidden')}
-                    text
-                    quite_small
-                    className={cx('product_add_save_btn')}
-                >
-                    Lưu & Ẩn
-                </Button>
-                <Button
-                    onClick={(e) => handleSubmit(e, 'active')}
-                    primary
-                    quite_small
-                    className={cx('product_add_save_btn')}
-                >
-                    Lưu & Hiển thị
-                </Button>
+                {productId ? (
+                    <>
+                        <Button
+                            onClick={(e) => handleDelete(e)}
+                            text
+                            quite_small
+                            className={cx('product_add_save_btn')}
+                        >
+                            Xóa
+                        </Button>
+                        {formData.productStatus === 'active' ? (
+                            <Button
+                                onClick={(e) => handleUpdateStatus(e, 'hidden')}
+                                text
+                                quite_small
+                                className={cx('product_add_save_btn')}
+                            >
+                                Ẩn
+                            </Button>
+                        ) : formData.productStatus === 'hidden' ? (
+                            <Button
+                                onClick={(e) => handleUpdateStatus(e, 'active')}
+                                primary
+                                quite_small
+                                className={cx('product_add_save_btn')}
+                            >
+                                Hiển thị
+                            </Button>
+                        ) : null}
+                        <Button
+                            onClick={(e) => handleSubmit(e, 'active')}
+                            primary
+                            quite_small
+                            className={cx('product_add_save_btn')}
+                        >
+                            Cập nhật
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            onClick={(e) => handleSubmit(e, 'hidden')}
+                            text
+                            quite_small
+                            className={cx('product_add_save_btn')}
+                        >
+                            Lưu & Ẩn
+                        </Button>
+                        <Button
+                            onClick={(e) => handleSubmit(e, 'active')}
+                            primary
+                            quite_small
+                            className={cx('product_add_save_btn')}
+                        >
+                            Lưu & Hiển thị
+                        </Button>
+                    </>
+                )}
             </div>
         </form>
     );

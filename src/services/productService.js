@@ -21,6 +21,19 @@ export const updateProduct = async (productId, productData) => {
     return response;
 };
 
+export const updateProductStatus = async (productId, productStatus) => {
+    const response = await axios.put(
+        `http://localhost:5000/products/update_product_status/${productId}`,
+        { productStatus },
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        },
+    );
+    return response;
+};
+
 export const getProduct = async () => {
     const response = await axios.get('http://localhost:5000/products');
     return response.data;
@@ -52,6 +65,15 @@ export const getSellerActiveProducts = async (page, limit) => {
             },
         },
     );
+    return response.data;
+};
+
+export const deleteProduct = async (productId) => {
+    const response = await axios.delete(`http://localhost:5000/products/delete_product/${productId}`, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
     return response.data;
 };
 
@@ -100,5 +122,10 @@ export const getSellerDetailProduct = async (productId) => {
             Authorization: `Bearer ${getToken()}`,
         },
     });
+    return response.data;
+};
+
+export const getProductsBySearch = async (query) => {
+    const response = await axios.get(`http://localhost:5000/products/search/`, { params: { query } });
     return response.data;
 };

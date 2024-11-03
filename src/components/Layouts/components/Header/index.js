@@ -15,10 +15,17 @@ import { Popover } from '@mui/material';
 
 import { removeToken, isAuthenticated } from '../../../../services/tokenService';
 
+import useProductSearch from '../../../../hooks/useProductSearch';
+
 const cx = classNames.bind(styles);
 
 function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [query, setQuery] = useState('');
+    const { results } = useProductSearch(query);
+    const handleInputChange = (e) => {
+        setQuery(e.target.value);
+    };
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -115,7 +122,19 @@ function Header() {
                             type="text"
                             placeholder="Tìm kiếm trên Shopee"
                             className={cx('header-with-search_bar_input')}
+                            onChange={handleInputChange}
                         />
+                        <div className={cx('header-with-search_bar_suggestion_wrap')}>
+                            {results.length > 0 && (
+                                <div className={cx('header-with-search_bar_suggestion')}>
+                                    {results.map((result) => (
+                                        <a key={result.Id} className={cx('header-with-search_bar_suggestion_result')}>
+                                            {result.Name}
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <Button small primary>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />

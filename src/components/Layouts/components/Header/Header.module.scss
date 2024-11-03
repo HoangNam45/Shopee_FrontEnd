@@ -96,6 +96,7 @@
             .header-with-search_bar {
                 display: flex;
                 flex: 1 1 0%;
+                position: relative;
                 .header-with-search_bar_input {
                     align-items: center;
                     border: 0px;
@@ -104,6 +105,37 @@
                     font-size: 1.5rem;
                     outline: none;
                     padding: 0 10px;
+                    &:focus ~ .header-with-search_bar_suggestion_wrap {
+                        display: block;
+                    }
+                }
+                .header-with-search_bar_suggestion_wrap {
+                    position: absolute;
+                    top: 34px;
+                    left: 0px;
+                    width: 754px;
+                    z-index: 100;
+                    display: none;
+                    .header-with-search_bar_suggestion {
+                        background-color: #fff;
+                        border-radius: 2px;
+                        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26);
+                        margin-left: -0.1875rem;
+                        margin-top: 0.5rem;
+                        overflow: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        .header-with-search_bar_suggestion_result {
+                            padding: 10px;
+                            text-decoration: none;
+                            color: #000;
+                            font-size: 1.38rem;
+                            overflow: hidden;
+                            &:hover {
+                                background-color: rgb(246, 246, 246);
+                            }
+                        }
+                    }
                 }
             }
         }

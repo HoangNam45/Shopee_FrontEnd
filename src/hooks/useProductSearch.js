@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getProductsBySearch } from '../services/productService';
 
 const useProductSearch = (query) => {
     const [results, setResults] = useState([]);
@@ -14,8 +14,8 @@ const useProductSearch = (query) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`/api/products/search`, { params: { query } });
-                setResults(response.data);
+                const response = await getProductsBySearch(query);
+                setResults(response);
             } catch (error) {
                 console.error('Error fetching product search results:', error);
             } finally {

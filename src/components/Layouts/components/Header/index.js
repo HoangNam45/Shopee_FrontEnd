@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
@@ -9,7 +9,7 @@ import { faMagnifyingGlass, faCartShopping } from '@fortawesome/free-solid-svg-i
 
 import { Button } from '../../../Button';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Popover } from '@mui/material';
 
@@ -22,13 +22,34 @@ const cx = classNames.bind(styles);
 function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [query, setQuery] = useState('');
+    const [inputValue, setInputValue] = useState('');
     const { results } = useProductSearch(query);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const keyword = queryParams.get('keyword');
+
+    useEffect(() => {
+        setQuery('');
+    }, [keyword]);
+
     const handleInputChange = (e) => {
         setQuery(e.target.value);
+        setInputValue(e.target.value);
     };
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+    };
+
+    const handleSearchingSubmit = (e) => {
+        e.preventDefault();
+        handleSearch(inputValue);
+    };
+
+    const handleSearch = (searchQuery) => {
+        navigate(`/search?keyword=${encodeURIComponent(searchQuery)}`);
     };
 
     const handleClose = () => {
@@ -116,7 +137,7 @@ function Header() {
                         </g>
                     </svg>
                 </div>
-                <form className={cx('header-with-search_input')}>
+                <form className={cx('header-with-search_input')} onSubmit={handleSearchingSubmit}>
                     <div className={cx('header-with-search_bar')}>
                         <input
                             type="text"
@@ -124,13 +145,20 @@ function Header() {
                             className={cx('header-with-search_bar_input')}
                             onChange={handleInputChange}
                         />
-                        <div className={cx('header-with-search_bar_suggestion_wrap')}>
+                        <div
+                            className={cx('header-with-search_bar_suggestion_wrap')}
+                            onMouseDown={(e) => e.preventDefault()}
+                        >
                             {results.length > 0 && (
                                 <div className={cx('header-with-search_bar_suggestion')}>
                                     {results.map((result) => (
-                                        <a key={result.Id} className={cx('header-with-search_bar_suggestion_result')}>
+                                        <Link
+                                            to={`/search?keyword=${encodeURIComponent(result.Name)}`}
+                                            key={result.Id}
+                                            className={cx('header-with-search_bar_suggestion_result')}
+                                        >
                                             {result.Name}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             )}

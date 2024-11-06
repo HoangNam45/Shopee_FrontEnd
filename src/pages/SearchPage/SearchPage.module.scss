@@ -1,0 +1,33 @@
+.custom_container_search {
+    box-sizing: content-box;
+    @media (min-width: 1200px) {
+        max-width: 1200px !important;
+    }
+}
+.custom_col_search {
+    padding: 5px !important;
+}
+.custom_row_search {
+    margin: 0 -5px !important;
+}
+.today_suggest {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background-color: #fff;
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 1.65rem;
+    position: relative;
+    margin-bottom: 5px;
+    &::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary);
+        position: absolute;
+        bottom: 0;
+    }
+}

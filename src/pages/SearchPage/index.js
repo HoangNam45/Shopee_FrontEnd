@@ -5,6 +5,9 @@ import Product from '../../components/Product/Product';
 import { useEffect, useState } from 'react';
 import { getProductsBySearch } from '../../services/productService';
 import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 const cx = classNames.bind(styles);
 
 function SearchPage() {
@@ -28,11 +31,17 @@ function SearchPage() {
     }, [keyword]);
     return (
         <Container className={cx('custom_container_search')}>
-            {/* <Row>
+            <Row>
                 <Col>
-                    <div className={cx('today_suggest')}>GỢI Ý HÔM NAY</div>
+                    <div className={cx('search_result_header_wrap')}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} className={cx('icon_search')} />
+                        <div className={cx('search_result_header')}>
+                            Kết quả tìm kiếm cho từ khóa
+                            <span className={cx('keyword')}> "{keyword}"</span>
+                        </div>
+                    </div>
                 </Col>
-            </Row> */}
+            </Row>
             <Row xl={6} className={cx('custom_row_search')}>
                 {products.map((product) => (
                     <Col key={product.Id} className={cx('custom_col_search')}>

@@ -7,8 +7,6 @@ import {
     faArrowLeft,
     faArrowRight,
     faStar,
-    faPlus,
-    faMinus,
     faCartShopping,
     faMessage,
     faStore,
@@ -17,13 +15,13 @@ import { Button } from '../../components/Button';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductDetail } from '../../services/productService';
+import QuantityButton from '../../components/QuantityButton/QuantityButton';
 
 import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
 function ProductDetail() {
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
-    const [quantity, setQuantity] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
 
     const [currentImage, setCurrentImage] = useState(null);
@@ -39,22 +37,6 @@ function ProductDetail() {
         };
         fetchData();
     }, [slug]);
-
-    const handleIncrease = () => {
-        setQuantity((prevQuantity) => prevQuantity + 1);
-    };
-
-    const handleDecrease = () => {
-        setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-    };
-
-    const handleChange = (e) => {
-        const value = e.target.value;
-        if (/^\d*$/.test(value)) {
-            // Chỉ cho phép nhập số dương
-            setQuantity(Number(value) > 0 ? Number(value) : 1);
-        }
-    };
 
     const imagesPerPage = 5;
 
@@ -168,32 +150,7 @@ function ProductDetail() {
                         <div className={cx('product_info_choices_field', 'count_field')}>
                             <div className={cx('product_info_choices_field_')}>Số lượng</div>
                             <div className={cx('product_info_choices_field_amout')}>
-                                <div className={cx('product_info_choices_field_amout_adjust')}>
-                                    <button
-                                        className={cx('product_info_choices_field_amout_adjust_btn')}
-                                        onClick={handleDecrease}
-                                    >
-                                        <FontAwesomeIcon
-                                            className={cx('product_info_choices_field_amout_adjust_btn_icon')}
-                                            icon={faMinus}
-                                        />
-                                    </button>
-                                    <input
-                                        type="number"
-                                        className={cx('product_info_choices_field_amout_adjust_input')}
-                                        value={quantity}
-                                        onChange={handleChange}
-                                    ></input>
-                                    <button
-                                        className={cx('product_info_choices_field_amout_adjust_btn')}
-                                        onClick={handleIncrease}
-                                    >
-                                        <FontAwesomeIcon
-                                            className={cx('product_info_choices_field_amout_adjust_btn_icon')}
-                                            icon={faPlus}
-                                        />
-                                    </button>
-                                </div>
+                                <QuantityButton />
                                 <div className={cx('product_info_choices_field_amout_remain')}>
                                     {product.Stock} sản phẩm có sẵn
                                 </div>

@@ -1,0 +1,94 @@
+.create_discount_header {
+    font-size: 1.85rem;
+}
+.create_discount_sub_header {
+    font-size: 1.35rem;
+    color: #999999;
+    margin-bottom: 24px;
+}
+.create_discount_wrap {
+    padding: 24px;
+}
+.create_shop_discount_box_wrap {
+    display: flex;
+}
+.create_shop_discount_box {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 16px;
+}
+.discount_icon {
+    color: var(--primary);
+}
+.create_shop_discount_box_header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.create_shop_discount_box_header_text {
+    margin-left: 4px;
+    font-size: 1.5rem;
+}
+.create_shop_discount_box_subheader {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+}
+.create_discount_button {
+    border-radius: 4px;
+    text-decoration: none;
+}
+.create_discount_button_wrap {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.discount_program_list_wrap {
+    padding: 24px;
+    margin-top: 16px;
+}
+.discount_program_list_header {
+    font-size: 1.85rem;
+    margin-bottom: 24px;
+}
+.discount_program_list_tabel_header {
+    font-size: 1.25rem !important;
+}
+
+.tabel_body_product_name_wrap {
+    display: flex;
+}
+.tabel_body_product_name_img {
+    min-width: 36px;
+    height: 36px;
+    margin-right: 8px;
+    .product_list_body_name_img_ {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+.tabel_body_product_name {
+    font-size: 1.25rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tabel_body_product_info {
+    font-size: 1.35rem;
+}
+.date_time {
+    display: flex;
+    flex-direction: column;
+}
+.link_button {
+    text-decoration: none;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    display: block;
+}

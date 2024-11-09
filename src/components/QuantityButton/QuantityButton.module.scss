@@ -1,0 +1,49 @@
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.product_info_choices_field_amout_adjust {
+    display: flex;
+    // margin: auto;
+    justify-content: center;
+}
+.product_info_choices_field_amout_adjust_btn {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 2px;
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+}
+.product_info_choices_field_amout_adjust_btn_icon {
+    font-size: 1.4rem;
+    color: #4d4d4d;
+}
+.product_info_choices_field_amout_adjust_input {
+    border-left: 0;
+    border-radius: 0;
+    border-right: 0;
+    cursor: text;
+    font-size: 16px;
+    font-weight: 400;
+    height: 32px;
+    text-align: center;
+    width: 50px;
+    // outline: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.09);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+}
+// .test {
+//     display: flex !important;
+//     justify-content: center !important;
+// }

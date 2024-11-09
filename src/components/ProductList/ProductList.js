@@ -1,10 +1,10 @@
 import classNames from 'classnames/bind';
 import styles from './ProductList.module.scss';
 import '../../assets/styles/globalClass.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import Button from '../Button/Button';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox } from '@mui/material';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+// import Button from '../Button/Button';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import formatPrice from '../../utils/formarPrice';
 import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
 
     return (
         <div className={cx('board', 'product_list_container')}>
-            <div className={cx('product_list_search')}>
+            {/* <div className={cx('product_list_search')}>
                 <div className={cx('product_list_search_')}>
                     <FontAwesomeIcon className={cx('search_icon')} icon={faMagnifyingGlass} />
                     <input
@@ -32,7 +32,7 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                 <Button className={cx('product_list_search_button')} quite_small text>
                     Nhập lại
                 </Button>
-            </div>
+            </div> */}
 
             <div className={cx('product_list_amout')}>{totalProducts} Sản Phẩm</div>
 
@@ -49,9 +49,9 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                         }}
                     >
                         <TableRow>
-                            <TableCell className={cx('product_list_header')} style={{ width: '2%' }}>
+                            {/* <TableCell className={cx('product_list_header')} style={{ width: '2%' }}>
                                 <Checkbox />
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell className={cx('product_list_header')} style={{ width: '38%' }}>
                                 Tên sản phẩm
                             </TableCell>
@@ -72,9 +72,9 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                     <TableBody>
                         {products.map((product, index) => (
                             <TableRow key={index}>
-                                <TableCell>
+                                {/* <TableCell>
                                     <Checkbox />
-                                </TableCell>
+                                </TableCell> */}
                                 <TableCell>
                                     <div className={cx('product_list_body_name')}>
                                         <div className={cx('product_list_body_name_img')}>

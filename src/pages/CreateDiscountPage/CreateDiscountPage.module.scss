@@ -37,3 +37,68 @@
     margin-left: 16px;
     margin-right: 30px;
 }
+.create_discount_info_time_picker {
+    display: flex;
+    align-items: center;
+}
+.dashed_icon {
+    margin: 0 8px;
+    color: #999;
+}
+.product_list_wrap {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    padding: 24px;
+    width: 950px;
+}
+.product_list_header {
+    font-size: 1.85rem;
+}
+.product_list_header_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cancel_icon {
+    font-size: 2rem;
+    color: #999;
+    cursor: pointer;
+}
+.product_list_header_wrap {
+    margin-bottom: 15px;
+}
+.active_product {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+}
+.product_list_table_header {
+    font-size: 1.35rem !important;
+}
+
+.tabel_body_product_name_wrap {
+    display: flex;
+}
+.tabel_body_product_name_img {
+    min-width: 36px;
+    height: 36px;
+    margin-right: 8px;
+    .product_list_body_name_img_ {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+.tabel_body_product_name {
+    font-size: 1.35rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tabel_body_product_info {
+    font-size: 1.35rem;
+}

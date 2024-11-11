@@ -5,14 +5,48 @@ import Button from '../../components/Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Pagination } from '@mui/material';
+import { getSellerActiveProducts, getSellerTotalActiveProducts } from '../../services/productService';
 const cx = classNames.bind(styles);
 function CreateDiscountPage() {
     const [showProductList, setShowProductList] = useState(false);
+    const [productsData, setProductsData] = useState([]);
+    const [totalProducts, setTotalProducts] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const limit = 8;
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await getSellerActiveProducts(currentPage, limit);
+            setProductsData(response);
+        };
+        fetchData();
+    }, [currentPage]);
+
+    useEffect(() => {
+        const fetchTotalProducts = async () => {
+            try {
+                const response = await getSellerTotalActiveProducts();
+                setTotalProducts(response.totalActiveProducts);
+            } catch (error) {
+                console.error('Errors fetching total products:', error);
+            }
+        };
+        fetchTotalProducts();
+    }, []);
+
     const toggleProductList = () => {
         setShowProductList(!showProductList);
     };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+    const handleCheckboxChange = (product) => {
+        setSelectedProduct(selectedProduct?.Id === product.Id ? null : product);
+    };
+
     return (
         <>
             <div className={cx('board', 'create_discount_info_wrap')}>
@@ -88,37 +122,47 @@ function CreateDiscountPage() {
                                 </TableHead>
 
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell>
-                                            <Checkbox />
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className={cx('tabel_body_product_name_wrap')}>
-                                                <div className={cx('tabel_body_product_name_img')}>
-                                                    <img
-                                                        className={cx('product_list_body_name_img_')}
-                                                        src={`/images/authBackground.png`}
-                                                        alt="img"
-                                                    />
+                                    {productsData.map((product, index) => (
+                                        <TableRow key={product.Id}>
+                                            <TableCell>
+                                                <Checkbox
+                                                    onChange={() => handleCheckboxChange(product)}
+                                                    checked={selectedProduct?.Id === product.Id}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className={cx('tabel_body_product_name_wrap')}>
+                                                    <div className={cx('tabel_body_product_name_img')}>
+                                                        <img
+                                                            className={cx('product_list_body_name_img_')}
+                                                            src={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
+                                                            alt="img"
+                                                        />
+                                                    </div>
+                                                    <div className={cx('tabel_body_product_name')}>{product.Name}</div>
                                                 </div>
-                                                <div className={cx('tabel_body_product_name')}>
-                                                    Truyện - Arya Bàn Bên Thỉnh Thoảng Lại Trêu Ghẹo Tôi Bằng Tiếng Nga
-                                                    Tập ABCDXYZ
-                                                </div>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className={cx('tabel_body_product_info')}>0</div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className={cx('tabel_body_product_info')}>123123</div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className={cx('tabel_body_product_info')}>11</div>
-                                        </TableCell>
-                                    </TableRow>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className={cx('tabel_body_product_info')}>0</div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className={cx('tabel_body_product_info')}>{product.Price}</div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className={cx('tabel_body_product_info')}>{product.Stock}</div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
+                            <Pagination
+                                count={Math.ceil(totalProducts / limit)}
+                                page={currentPage}
+                                className={cx('product_list_pagination')}
+                                size="large"
+                                shape="rounded"
+                                onChange={handlePageChange}
+                            />
                         </TableContainer>
                     </div>
                 </>

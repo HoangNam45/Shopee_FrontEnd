@@ -39,6 +39,7 @@ function CreateDiscountPage() {
 
     const toggleProductList = () => {
         setShowProductList(!showProductList);
+        setSelectedProduct(null);
     };
 
     const handlePageChange = (event, value) => {
@@ -175,7 +176,7 @@ function CreateDiscountPage() {
                             >
                                 Xác nhận
                             </Button>
-                            <Button small text>
+                            <Button onClick={toggleProductList} small text>
                                 Hủy
                             </Button>
                         </div>

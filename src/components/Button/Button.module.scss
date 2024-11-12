@@ -89,3 +89,8 @@
     box-shadow: none;
     color: var(--primary);
 }
+.disabled {
+    background-color: rgb(246, 166, 150);
+    color: #fff;
+    cursor: default !important;
+}

@@ -8,6 +8,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Pagination } from '@mui/material';
 import { getSellerActiveProducts, getSellerTotalActiveProducts } from '../../services/productService';
+
 const cx = classNames.bind(styles);
 function CreateDiscountPage() {
     const [showProductList, setShowProductList] = useState(false);
@@ -164,6 +165,20 @@ function CreateDiscountPage() {
                                 onChange={handlePageChange}
                             />
                         </TableContainer>
+
+                        <div className={cx('product_list_action_button')}>
+                            <Button
+                                className={cx('product_list_action_button_confirm')}
+                                small
+                                disabled={!selectedProduct}
+                                primary={selectedProduct}
+                            >
+                                Xác nhận
+                            </Button>
+                            <Button small text>
+                                Hủy
+                            </Button>
+                        </div>
                     </div>
                 </>
             )}

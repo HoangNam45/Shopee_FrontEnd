@@ -8,6 +8,7 @@ function Button({
     to,
     href,
     primary = false,
+    disabled = false,
     sub_primary = false,
     primary_text = false,
     small = false,
@@ -51,6 +52,7 @@ function Button({
         quite_small,
         primary_text,
         sub_primary,
+        disabled,
         [className]: className,
     });
 

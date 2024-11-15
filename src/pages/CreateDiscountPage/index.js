@@ -16,7 +16,10 @@ function CreateDiscountPage() {
     const [totalProducts, setTotalProducts] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [currentProduct, setCurrentProduct] = useState(null);
+    console.log('product:', currentProduct);
     const limit = 8;
+    console.log('selectedProduct:', selectedProduct);
     useEffect(() => {
         const fetchData = async () => {
             const response = await getSellerActiveProducts(currentPage, limit);
@@ -37,9 +40,21 @@ function CreateDiscountPage() {
         fetchTotalProducts();
     }, []);
 
-    const toggleProductList = () => {
+    const closeProductList = () => {
         setShowProductList(!showProductList);
         setSelectedProduct(null);
+    };
+
+    const openProductList = () => {
+        setShowProductList(!showProductList);
+        setSelectedProduct(currentProduct);
+    };
+
+    const handleConfirm = () => {
+        if (selectedProduct) {
+            setShowProductList(!showProductList);
+            setCurrentProduct(selectedProduct);
+        }
     };
 
     const handlePageChange = (event, value) => {
@@ -68,10 +83,63 @@ function CreateDiscountPage() {
                 <h3 className={cx('board_sub_header')}>
                     Thêm sản phẩm vào chương trình khuyến mãi và thiết lập giá khuyến mãi.
                 </h3>
-                <Button onClick={toggleProductList} className={cx('add_product_info_button')} primary_text medium>
-                    <FontAwesomeIcon className={cx('add_product_info_icon')} icon={faPlus} />
-                    <span>Thêm sản phẩm</span>
-                </Button>
+
+                {currentProduct ? (
+                    <TableContainer
+                        sx={{
+                            borderRadius: '4px',
+                            border: '1px solid #e5e5e5',
+                        }}
+                    >
+                        <Table>
+                            <TableHead
+                                sx={{
+                                    backgroundColor: '#F6F6F6',
+                                }}
+                            >
+                                <TableRow>
+                                    <TableCell style={{ width: '5%' }}></TableCell>
+                                    <TableCell style={{ width: '35%' }} className={cx('product_list_table_header')}>
+                                        Tên sản phẩm
+                                    </TableCell>
+                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                        Giá gốc
+                                    </TableCell>
+                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                        Giá sau giảm
+                                    </TableCell>
+                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                        Giảm giá
+                                    </TableCell>
+                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                        Kho hàng
+                                    </TableCell>
+                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                        Số lượng sản phẩm khuyến mãi
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+
+                            <TableBody>
+                                <div className={cx('tabel_body_product_name_wrap')}>
+                                    <div className={cx('tabel_body_product_name_img')}>
+                                        <img
+                                            className={cx('product_list_body_name_img_')}
+                                            src={`http://localhost:5000/uploads/images/productBackGroundImage/${currentProduct.BackGround}`}
+                                            alt="img"
+                                        />
+                                    </div>
+                                    <div className={cx('tabel_body_product_name')}>{currentProduct.Name}</div>
+                                </div>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                ) : (
+                    <Button onClick={openProductList} className={cx('add_product_info_button')} primary_text medium>
+                        <FontAwesomeIcon className={cx('add_product_info_icon')} icon={faPlus} />
+                        <span>Thêm sản phẩm</span>
+                    </Button>
+                )}
             </div>
 
             <div className={cx('action_button')}>
@@ -89,7 +157,7 @@ function CreateDiscountPage() {
                     <div className={cx('board', 'product_list_wrap')}>
                         <div className={cx('product_list_header_wrap')}>
                             <h2 className={cx('product_list_header')}>Chọn sản phẩm</h2>
-                            <FontAwesomeIcon className={cx('cancel_icon')} onClick={toggleProductList} icon={faXmark} />
+                            <FontAwesomeIcon className={cx('cancel_icon')} onClick={closeProductList} icon={faXmark} />
                         </div>
 
                         <div className={cx('active_product')}>Sản phẩm đang hoạt động</div>
@@ -173,10 +241,11 @@ function CreateDiscountPage() {
                                 small
                                 disabled={!selectedProduct}
                                 primary={selectedProduct}
+                                onClick={handleConfirm}
                             >
                                 Xác nhận
                             </Button>
-                            <Button onClick={toggleProductList} small text>
+                            <Button onClick={closeProductList} small text>
                                 Hủy
                             </Button>
                         </div>

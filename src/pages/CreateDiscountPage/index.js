@@ -17,9 +17,8 @@ function CreateDiscountPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentProduct, setCurrentProduct] = useState(null);
-    console.log('product:', currentProduct);
+    const [discountValue, setDiscountValue] = useState('0');
     const limit = 8;
-    console.log('selectedProduct:', selectedProduct);
     useEffect(() => {
         const fetchData = async () => {
             const response = await getSellerActiveProducts(currentPage, limit);
@@ -64,6 +63,17 @@ function CreateDiscountPage() {
         setSelectedProduct(selectedProduct?.Id === product.Id ? null : product);
     };
 
+    const handleDiscountValueChange = (e) => {
+        const inputValue = e.target.value;
+
+        // Kiểm tra nếu giá trị là số nguyên không âm và <= 100
+        if (/^\d+$/.test(inputValue) && Number(inputValue) <= 100) {
+            setDiscountValue(inputValue);
+        } else if (inputValue === '') {
+            setDiscountValue('');
+        }
+    };
+
     return (
         <>
             <div className={cx('board', 'create_discount_info_wrap')}>
@@ -79,10 +89,20 @@ function CreateDiscountPage() {
             </div>
 
             <div className={cx('board', 'add_product_info_wrap')}>
-                <h2 className={cx('board_header')}>Thông tin cơ bản</h2>
-                <h3 className={cx('board_sub_header')}>
-                    Thêm sản phẩm vào chương trình khuyến mãi và thiết lập giá khuyến mãi.
-                </h3>
+                <div className={cx('board_header_wrapper')}>
+                    <div>
+                        <h2 className={cx('board_header')}>Thông tin cơ bản</h2>
+                        <h3 className={cx('board_sub_header')}>
+                            Thêm sản phẩm vào chương trình khuyến mãi và thiết lập giá khuyến mãi.
+                        </h3>
+                    </div>
+                    {currentProduct && (
+                        <Button onClick={openProductList} className={cx('add_product_info_button')} primary_text medium>
+                            <FontAwesomeIcon className={cx('add_product_info_icon')} icon={faPlus} />
+                            <span>Sản phẩm khác</span>
+                        </Button>
+                    )}
+                </div>
 
                 {currentProduct ? (
                     <TableContainer
@@ -98,7 +118,7 @@ function CreateDiscountPage() {
                                 }}
                             >
                                 <TableRow>
-                                    <TableCell style={{ width: '5%' }}></TableCell>
+                                    {/* <TableCell style={{ width: '5%' }}></TableCell> */}
                                     <TableCell style={{ width: '35%' }} className={cx('product_list_table_header')}>
                                         Tên sản phẩm
                                     </TableCell>
@@ -108,29 +128,59 @@ function CreateDiscountPage() {
                                     <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
                                         Giá sau giảm
                                     </TableCell>
-                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                    <TableCell style={{ width: '9%' }} className={cx('product_list_table_header')}>
                                         Giảm giá
                                     </TableCell>
                                     <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
                                         Kho hàng
                                     </TableCell>
-                                    <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
+                                    <TableCell style={{ width: '16%' }} className={cx('product_list_table_header')}>
                                         Số lượng sản phẩm khuyến mãi
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
 
                             <TableBody>
-                                <div className={cx('tabel_body_product_name_wrap')}>
-                                    <div className={cx('tabel_body_product_name_img')}>
-                                        <img
-                                            className={cx('product_list_body_name_img_')}
-                                            src={`http://localhost:5000/uploads/images/productBackGroundImage/${currentProduct.BackGround}`}
-                                            alt="img"
-                                        />
-                                    </div>
-                                    <div className={cx('tabel_body_product_name')}>{currentProduct.Name}</div>
-                                </div>
+                                <TableRow>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_name_wrap')}>
+                                            <div className={cx('tabel_body_product_name_img')}>
+                                                <img
+                                                    className={cx('product_list_body_name_img_')}
+                                                    src={`http://localhost:5000/uploads/images/productBackGroundImage/${currentProduct.BackGround}`}
+                                                    alt="img"
+                                                />
+                                            </div>
+                                            <div className={cx('tabel_body_product_name')}>{currentProduct.Name}</div>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>{currentProduct.Price}</div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>
+                                            {currentProduct.Price - (currentProduct.Price * discountValue) / 100}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>
+                                            <div className={cx('input_wrap')}>
+                                                <input
+                                                    onChange={handleDiscountValueChange}
+                                                    value={discountValue}
+                                                    className={cx('input')}
+                                                    type="text"
+                                                />
+                                                <div className={cx('input_discount_percent')}>
+                                                    <span>%GIẢM</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>{currentProduct.Stock}</div>
+                                    </TableCell>
+                                </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>

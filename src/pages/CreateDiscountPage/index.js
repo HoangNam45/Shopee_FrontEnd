@@ -6,8 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Pagination } from '@mui/material';
 import { getSellerActiveProducts, getSellerTotalActiveProducts } from '../../services/productService';
+import { createDiscount } from '../../services/sellerService';
+import dayjs from 'dayjs';
 
 const cx = classNames.bind(styles);
 function CreateDiscountPage() {
@@ -18,7 +21,10 @@ function CreateDiscountPage() {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentProduct, setCurrentProduct] = useState(null);
     const [discountValue, setDiscountValue] = useState('0');
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const limit = 8;
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             const response = await getSellerActiveProducts(currentPage, limit);
@@ -74,6 +80,56 @@ function CreateDiscountPage() {
         }
     };
 
+    const handleCreateDiscount = async () => {
+        if (!selectedProduct || !startDate || !endDate || !discountValue || discountValue === '0') {
+            alert('Hãy nhập đầy đủ thông tin');
+            return;
+        }
+
+        if (dayjs(endDate).isBefore(dayjs(startDate))) {
+            alert('Ngày kết thúc phải muộn hơn ngày bắt đầu');
+            return;
+        }
+
+        const formattedStartDate = dayjs(startDate).format('YYYY-MM-DDTHH:mm:ss');
+        const formattedEndDate = dayjs(endDate).format('YYYY-MM-DDTHH:mm:ss');
+
+        // Fetch existing discounts for the selected product
+        const existingDiscounts = await getDiscountsByProductId(selectedProduct.Id);
+
+        // Check for overlapping discount periods
+        const isOverlapping = existingDiscounts.some((discount) => {
+            const existingStartDate = dayjs(discount.startDate);
+            const existingEndDate = dayjs(discount.endDate);
+            return (
+                dayjs(startDate).isBetween(existingStartDate, existingEndDate, null, '[]') ||
+                dayjs(endDate).isBetween(existingStartDate, existingEndDate, null, '[]') ||
+                existingStartDate.isBetween(dayjs(startDate), dayjs(endDate), null, '[]') ||
+                existingEndDate.isBetween(dayjs(startDate), dayjs(endDate), null, '[]')
+            );
+        });
+
+        if (isOverlapping) {
+            alert('Thời gian khuyến mãi trùng với chương trình khuyến mãi trước đó');
+            return;
+        }
+
+        const discountData = {
+            productId: selectedProduct.Id,
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+            discountPercentage: parseFloat(discountValue),
+        };
+
+        try {
+            await createDiscount(discountData);
+            alert('Discount created successfully');
+            navigate('/seller/discount');
+        } catch (error) {
+            console.error('Error creating discount:', error);
+        }
+    };
+
     return (
         <>
             <div className={cx('board', 'create_discount_info_wrap')}>
@@ -81,9 +137,9 @@ function CreateDiscountPage() {
                 <div className={cx('create_discount_info_time_wrap')}>
                     <div className={cx('create_discount_info_time')}>Thời gian khuyến mãi</div>
                     <div className={cx('create_discount_info_time_picker')}>
-                        <DateTimePicker disablePast small label="Bắt đầu" />
+                        <DateTimePicker disablePast small label="Bắt đầu" value={startDate} onChange={setStartDate} />
                         <FontAwesomeIcon className={cx('dashed_icon')} icon={faMinus} />
-                        <DateTimePicker disablePast small label="Kết thúc" />
+                        <DateTimePicker disablePast small label="Kết thúc" value={endDate} onChange={setEndDate} />
                     </div>
                 </div>
             </div>
@@ -128,15 +184,15 @@ function CreateDiscountPage() {
                                     <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
                                         Giá sau giảm
                                     </TableCell>
-                                    <TableCell style={{ width: '9%' }} className={cx('product_list_table_header')}>
+                                    <TableCell style={{ width: '16%' }} className={cx('product_list_table_header')}>
                                         Giảm giá
                                     </TableCell>
                                     <TableCell style={{ width: '13%' }} className={cx('product_list_table_header')}>
                                         Kho hàng
                                     </TableCell>
-                                    <TableCell style={{ width: '16%' }} className={cx('product_list_table_header')}>
+                                    {/* <TableCell style={{ width: '16%' }} className={cx('product_list_table_header')}>
                                         Số lượng sản phẩm khuyến mãi
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
                             </TableHead>
 
@@ -159,7 +215,10 @@ function CreateDiscountPage() {
                                     </TableCell>
                                     <TableCell>
                                         <div className={cx('tabel_body_product_info')}>
-                                            {currentProduct.Price - (currentProduct.Price * discountValue) / 100}
+                                            {(
+                                                currentProduct.Price -
+                                                (currentProduct.Price * discountValue) / 100
+                                            ).toFixed(2)}
                                         </div>
                                     </TableCell>
                                     <TableCell>
@@ -193,10 +252,10 @@ function CreateDiscountPage() {
             </div>
 
             <div className={cx('action_button')}>
-                <Button className={cx('action_button_item')} primary small>
+                <Button onClick={handleCreateDiscount} className={cx('action_button_item')} primary small>
                     Xác nhận
                 </Button>
-                <Button text small>
+                <Button to="/seller/discount" text small>
                     Hủy
                 </Button>
             </div>

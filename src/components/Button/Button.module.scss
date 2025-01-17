@@ -13,6 +13,7 @@
     position: relative;
     height: 40px;
     white-space: nowrap;
+    text-decoration: none;
     &:hover::before {
         content: '';
         position: absolute;

@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Checkbox, Pagination } from '@mui/material';
 import { getSellerActiveProducts, getSellerTotalActiveProducts } from '../../services/productService';
-import { createDiscount } from '../../services/sellerService';
+import { createDiscount, getDiscountsByProductId } from '../../services/discountService';
 import dayjs from 'dayjs';
 
 const cx = classNames.bind(styles);
@@ -96,11 +96,11 @@ function CreateDiscountPage() {
 
         // Fetch existing discounts for the selected product
         const existingDiscounts = await getDiscountsByProductId(selectedProduct.Id);
-
+        console.log('existingDiscounts:', existingDiscounts);
         // Check for overlapping discount periods
         const isOverlapping = existingDiscounts.some((discount) => {
-            const existingStartDate = dayjs(discount.startDate);
-            const existingEndDate = dayjs(discount.endDate);
+            const existingStartDate = dayjs(discount.Start_date);
+            const existingEndDate = dayjs(discount.End_date);
             return (
                 dayjs(startDate).isBetween(existingStartDate, existingEndDate, null, '[]') ||
                 dayjs(endDate).isBetween(existingStartDate, existingEndDate, null, '[]') ||

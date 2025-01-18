@@ -2,10 +2,25 @@ import styles from './SellerDiscountPage.module.scss';
 import classNames from 'classnames/bind';
 import '../../assets/styles/globalClass.scss';
 import Button from '../../components/Button/Button';
+import { useEffect, useState } from 'react';
+import { getSellerDiscounts } from '../../services/discountService';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 const cx = classNames.bind(styles);
 
 function SellerDiscountPage() {
+    const [sellerDiscounts, setSellerDiscounts] = useState([]);
+    useEffect(() => {
+        const fetchSellerDiscountsData = async () => {
+            try {
+                const response = await getSellerDiscounts();
+                console.log(response);
+                setSellerDiscounts(response);
+            } catch (error) {
+                console.error('Error getting seller discounts:', error);
+            }
+        };
+        fetchSellerDiscountsData();
+    }, []);
     return (
         <>
             <div className={cx('board', 'create_discount_wrap')}>

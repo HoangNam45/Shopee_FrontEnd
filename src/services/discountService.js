@@ -24,3 +24,12 @@ export const getDiscountsByProductId = async (productId) => {
     });
     return response.data;
 };
+
+export const getSellerDiscounts = async () => {
+    const response = await axios.get(`http://localhost:5000/discount/getSellerDiscounts`, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+    return response.data;
+};

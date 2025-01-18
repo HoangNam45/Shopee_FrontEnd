@@ -61,19 +61,19 @@ function SellerDiscountPage() {
                                 </TableCell>
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
-                                    style={{ width: '13.3333%' }}
+                                    style={{ width: '10%' }}
                                 >
                                     Giá gốc
                                 </TableCell>
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
-                                    style={{ width: '13.3333%' }}
+                                    style={{ width: '10%' }}
                                 >
                                     Giá sau giảm
                                 </TableCell>
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
-                                    style={{ width: '13.3333%' }}
+                                    style={{ width: '10%' }}
                                 >
                                     Giảm giá
                                 </TableCell>
@@ -94,6 +94,12 @@ function SellerDiscountPage() {
                                     style={{ width: '13.3333%' }}
                                 >
                                     Trạng thái
+                                </TableCell>
+                                <TableCell
+                                    className={cx('discount_program_list_tabel_header')}
+                                    style={{ width: '10%' }}
+                                >
+                                    Thao tác
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -136,6 +142,9 @@ function SellerDiscountPage() {
                                 </TableCell>
                                 <TableCell>
                                     <div className={cx('tabel_body_product_info')}>Sắp diễn ra</div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className={cx('tabel_body_product_info', 'delete_action')}>Xóa</div>
                                 </TableCell>
                             </TableRow>
                         </TableBody>

@@ -3,8 +3,10 @@ import classNames from 'classnames/bind';
 import '../../assets/styles/globalClass.scss';
 import Button from '../../components/Button/Button';
 import { useEffect, useState } from 'react';
-import { getSellerDiscounts } from '../../services/discountService';
+import { getSellerDiscountedProducts } from '../../services/discountService';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import formatPrice from '../../utils/formarPrice';
+import dayjs from 'dayjs';
 const cx = classNames.bind(styles);
 
 function SellerDiscountPage() {
@@ -12,8 +14,8 @@ function SellerDiscountPage() {
     useEffect(() => {
         const fetchSellerDiscountsData = async () => {
             try {
-                const response = await getSellerDiscounts();
-                console.log(response);
+                const response = await getSellerDiscountedProducts();
+                console.log('discounted', response);
                 setSellerDiscounts(response);
             } catch (error) {
                 console.error('Error getting seller discounts:', error);
@@ -76,28 +78,28 @@ function SellerDiscountPage() {
                                 </TableCell>
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
-                                    style={{ width: '10%' }}
+                                    style={{ width: '13.3333%' }}
                                 >
                                     Giá gốc
                                 </TableCell>
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
-                                    style={{ width: '10%' }}
+                                    style={{ width: '13.3333%' }}
                                 >
                                     Giá sau giảm
                                 </TableCell>
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
-                                    style={{ width: '10%' }}
+                                    style={{ width: '13.3333%' }}
                                 >
                                     Giảm giá
                                 </TableCell>
-                                <TableCell
+                                {/* <TableCell
                                     className={cx('discount_program_list_tabel_header')}
                                     style={{ width: '13.3333%' }}
                                 >
                                     Số lượng sản phẩm khuyến mãi
-                                </TableCell>
+                                </TableCell> */}
                                 <TableCell
                                     className={cx('discount_program_list_tabel_header')}
                                     style={{ width: '13.3333%' }}
@@ -120,48 +122,59 @@ function SellerDiscountPage() {
                         </TableHead>
 
                         <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_name_wrap')}>
-                                        <div className={cx('tabel_body_product_name_img')}>
-                                            <img
-                                                className={cx('product_list_body_name_img_')}
-                                                src={`/images/authBackground.png`}
-                                                alt="img"
-                                            />
+                            {sellerDiscounts.map((discount, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_name_wrap')}>
+                                            <div className={cx('tabel_body_product_name_img')}>
+                                                <img
+                                                    className={cx('product_list_body_name_img_')}
+                                                    src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${discount.BackGround}`}
+                                                    alt="img"
+                                                />
+                                            </div>
+                                            <div className={cx('tabel_body_product_name')}>{discount.Name}</div>
                                         </div>
-                                        <div className={cx('tabel_body_product_name')}>
-                                            Truyện - Arya Bàn Bên Thỉnh Thoảng Lại Trêu Ghẹo Tôi Bằng Tiếng Nga Tập
-                                            ABCDXYZ
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>
+                                            ₫{formatPrice(discount.Price)}
                                         </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info')}>₫123.123</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info')}>₫121.892</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info')}>3%</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info')}>Không giới hạn</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info', 'date_time')}>
-                                        <span>09/11/2024 02:30</span>
-                                        <span>-</span>
-                                        <span>09/11/2024 03:30</span>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info')}>Sắp diễn ra</div>
-                                </TableCell>
-                                <TableCell>
-                                    <div className={cx('tabel_body_product_info', 'delete_action')}>Xóa</div>
-                                </TableCell>
-                            </TableRow>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>
+                                            ₫
+                                            {formatPrice(
+                                                (
+                                                    discount.Price -
+                                                    (discount.Price * discount.Discount_percentage) / 100
+                                                ).toFixed(2),
+                                            )}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>
+                                            {discount.Discount_percentage}%
+                                        </div>
+                                    </TableCell>
+                                    {/* <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>Không giới hạn</div>
+                                    </TableCell> */}
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info', 'date_time')}>
+                                            <span> {dayjs(discount.start_Date).format('YYYY-MM-DD')}</span>
+                                            <span>-</span>
+                                            <span> {dayjs(discount.end_Date).format('YYYY-MM-DD')}</span>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info')}>Sắp diễn ra</div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className={cx('tabel_body_product_info', 'delete_action')}>Xóa</div>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

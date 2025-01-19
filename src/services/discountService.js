@@ -25,8 +25,8 @@ export const getDiscountsByProductId = async (productId) => {
     return response.data;
 };
 
-export const getSellerDiscounts = async () => {
-    const response = await axios.get(`http://localhost:5000/discount/getSellerDiscounts`, {
+export const getSellerDiscountedProducts = async () => {
+    const response = await axios.get(`http://localhost:5000/discount/getSellerDiscountedProducts`, {
         headers: {
             Authorization: `Bearer ${getToken()}`,
         },

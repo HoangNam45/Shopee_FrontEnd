@@ -33,3 +33,12 @@ export const getSellerDiscountedProducts = async () => {
     });
     return response.data;
 };
+
+export const deleteDiscount = async (discountId) => {
+    const response = await axios.delete(`http://localhost:5000/discount/deleteDiscount/${discountId}`, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+    return response.data;
+};

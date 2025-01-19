@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import '../../assets/styles/globalClass.scss';
 import Button from '../../components/Button/Button';
 import { useEffect, useState } from 'react';
-import { getSellerDiscountedProducts } from '../../services/discountService';
+import { getSellerDiscountedProducts, deleteDiscount } from '../../services/discountService';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import formatPrice from '../../utils/formarPrice';
 import dayjs from 'dayjs';
@@ -15,7 +15,6 @@ function SellerDiscountPage() {
         const fetchSellerDiscountsData = async () => {
             try {
                 const response = await getSellerDiscountedProducts();
-                console.log('discounted', response);
                 setSellerDiscounts(response);
             } catch (error) {
                 console.error('Error getting seller discounts:', error);
@@ -23,6 +22,16 @@ function SellerDiscountPage() {
         };
         fetchSellerDiscountsData();
     }, []);
+
+    const handleDeleteDiscount = async (discountId) => {
+        try {
+            await deleteDiscount(discountId);
+            const updatedDiscounts = sellerDiscounts.filter((discount) => discount.Discount_id !== discountId);
+            setSellerDiscounts(updatedDiscounts);
+        } catch (error) {
+            console.error('Error deleting discount:', error);
+        }
+    };
     return (
         <>
             <div className={cx('board', 'create_discount_wrap')}>
@@ -171,7 +180,12 @@ function SellerDiscountPage() {
                                         <div className={cx('tabel_body_product_info')}>Sắp diễn ra</div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className={cx('tabel_body_product_info', 'delete_action')}>Xóa</div>
+                                        <div
+                                            onClick={() => handleDeleteDiscount(discount.Discount_id)}
+                                            className={cx('tabel_body_product_info', 'delete_action')}
+                                        >
+                                            Xóa
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))}

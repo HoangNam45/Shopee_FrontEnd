@@ -13,7 +13,7 @@ const ProductManagementLayout = ({ children }) => {
             <div className={cx('productManagement_wrap')}>
                 <div className={cx('productManagement_header')}>
                     <span className={cx('productManagement_header_')}>Sản phẩm</span>
-                    <Button primary medium>
+                    <Button to="/seller/portal_product" primary medium>
                         <FontAwesomeIcon className={cx('plus_icon')} icon={faPlus} />
                         Thêm 1 sản phẩm mới
                     </Button>

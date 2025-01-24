@@ -9,6 +9,7 @@
     cursor: pointer;
     text-decoration: none;
     color: #333;
+    position: relative;
 }
 .product_image_wrap {
     width: 100%;
@@ -59,4 +60,23 @@
 }
 .product_description_info_sold {
     font-size: 1.25rem;
+}
+
+.product_discount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 20px;
+    width: 40px;
+    background-color: #ffe97a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: var(--primary);
+}
+.product_description_original_price {
+    color: #929292;
+    text-decoration: line-through;
+    font-size: 1.45rem;
 }

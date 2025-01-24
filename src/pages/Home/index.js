@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 function Home() {
     const [products, setProducts] = useState([]);
-
+    console.log(products);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -30,13 +30,15 @@ function Home() {
             </Row>
             <Row xl={6} className={cx('custom_row_home')}>
                 {products.map((product) => (
-                    <Col key={product.Id} className={cx('custom_col_home')}>
+                    <Col key={product.ProductID} className={cx('custom_col_home')}>
                         <Product
                             img={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
-                            name={product.Name}
-                            price={product.Price}
-                            id={product.Id}
+                            name={product.ProductName}
+                            price={product.ProductPrice}
+                            id={product.ProductID}
                             slug={product.Slug}
+                            discount={product.Discount_percentage}
+                            discountStatus={product.DiscountStatus}
                         />
                     </Col>
                 ))}

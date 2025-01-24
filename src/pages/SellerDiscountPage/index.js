@@ -32,6 +32,16 @@ function SellerDiscountPage() {
             console.error('Error deleting discount:', error);
         }
     };
+    const getStatus = (startDate, endDate) => {
+        const now = dayjs();
+        if (now.isBefore(startDate)) {
+            return 'Sắp diễn ra';
+        } else if (now.isAfter(endDate)) {
+            return 'Đã kết thúc';
+        } else {
+            return 'Đang diễn ra';
+        }
+    };
     return (
         <>
             <div className={cx('board', 'create_discount_wrap')}>
@@ -171,13 +181,15 @@ function SellerDiscountPage() {
                                     </TableCell> */}
                                     <TableCell>
                                         <div className={cx('tabel_body_product_info', 'date_time')}>
-                                            <span> {dayjs(discount.start_Date).format('YYYY-MM-DD')}</span>
+                                            <span>{dayjs(discount.Start_date).format('DD-MM-YYYY HH:mm')}</span>
                                             <span>-</span>
-                                            <span> {dayjs(discount.end_Date).format('YYYY-MM-DD')}</span>
+                                            <span>{dayjs(discount.End_date).format('DD-MM-YYYY HH:mm')}</span>
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className={cx('tabel_body_product_info')}>Sắp diễn ra</div>
+                                        <div className={cx('tabel_body_product_info')}>
+                                            {getStatus(dayjs(discount.Start_date), dayjs(discount.End_date))}
+                                        </div>
                                     </TableCell>
                                     <TableCell>
                                         <div

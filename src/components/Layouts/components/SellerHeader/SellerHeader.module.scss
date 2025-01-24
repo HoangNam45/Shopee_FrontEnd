@@ -1,8 +1,40 @@
 .seller_header {
     width: 100%;
     height: 56px;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 999999;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    .seller_header_content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        .seller_header_content_logo {
+            fill: #ee4d2d;
+            width: 97px;
+            height: 30px;
+        }
+        .seller_header_content_box_wrap {
+            flex: 1;
+            margin-left: 6px;
+            margin-top: 6px;
+            .seller_header_content_box {
+                color: #1d1d1d;
+                font-size: 18px;
+                cursor: default;
+            }
+        }
+        .seller_header_content_return {
+            margin-top: 6px;
+            color: #1d1d1d;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
 }

@@ -3,7 +3,7 @@ import styles from './Product.module.scss';
 import { Link } from 'react-router-dom';
 import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
-function Product({ img, name, price, id, slug }) {
+function Product({ img, name, price, id, slug, discount, discountStatus }) {
     return (
         <Link to={`/products/${slug}`} className={cx('product_wrap')}>
             <div className={cx('product_image_wrap')}>
@@ -11,15 +11,25 @@ function Product({ img, name, price, id, slug }) {
             </div>
             <div className={cx('product_description')}>
                 <div className={cx('product_description_name')}>{name}</div>
+
                 <div className={cx('product_description_space')}></div>
+
+                {discount && discountStatus === 'In Progress' && (
+                    <div className={cx('product_description_original_price')}>₫{formatPrice(price)}</div>
+                )}
+
                 <div className={cx('product_description_info')}>
                     <div className={cx('product_description_info_price')}>
                         <span className={cx('product_description_info_price_', 'price_unit')}>₫</span>
-                        <span className={cx('product_description_info_price_')}>{formatPrice(price)}</span>
+                        <span className={cx('product_description_info_price_')}>
+                            {formatPrice(price - price * discount * 0.01)}
+                        </span>
                     </div>
                     <div className={cx('product_description_info_sold')}>Đã bán 257</div>
                 </div>
             </div>
+
+            {discount && discountStatus === 'In Progress' && <div className={cx('product_discount')}>-{discount}%</div>}
         </Link>
     );
 }

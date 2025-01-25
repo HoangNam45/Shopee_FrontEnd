@@ -48,9 +48,10 @@ function SearchPage() {
                         <Product
                             img={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
                             name={product.Name}
-                            price={product.Price}
-                            id={product.Id}
+                            price={product.Final_price}
+                            id={product.ProductID}
                             slug={product.Slug}
+                            discount={product.Discount_percentage}
                         />
                     </Col>
                 ))}

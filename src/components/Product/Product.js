@@ -3,7 +3,7 @@ import styles from './Product.module.scss';
 import { Link } from 'react-router-dom';
 import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
-function Product({ img, name, price, id, slug, discount, discountStatus }) {
+function Product({ img, name, price, id, slug, discount }) {
     return (
         <Link to={`/products/${slug}`} className={cx('product_wrap')}>
             <div className={cx('product_image_wrap')}>
@@ -14,7 +14,7 @@ function Product({ img, name, price, id, slug, discount, discountStatus }) {
 
                 <div className={cx('product_description_space')}></div>
 
-                {discount && discountStatus === 'In Progress' && (
+                {discount !== 0 && (
                     <div className={cx('product_description_original_price')}>₫{formatPrice(price)}</div>
                 )}
 
@@ -29,7 +29,7 @@ function Product({ img, name, price, id, slug, discount, discountStatus }) {
                 </div>
             </div>
 
-            {discount && discountStatus === 'In Progress' && <div className={cx('product_discount')}>-{discount}%</div>}
+            {discount !== 0 && <div className={cx('product_discount')}>-{discount}%</div>}
         </Link>
     );
 }

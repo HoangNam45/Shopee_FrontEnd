@@ -33,12 +33,11 @@ function Home() {
                     <Col key={product.ProductID} className={cx('custom_col_home')}>
                         <Product
                             img={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
-                            name={product.ProductName}
-                            price={product.ProductPrice}
+                            name={product.Name}
+                            price={product.Original_price}
                             id={product.ProductID}
                             slug={product.Slug}
                             discount={product.Discount_percentage}
-                            discountStatus={product.DiscountStatus}
                         />
                     </Col>
                 ))}

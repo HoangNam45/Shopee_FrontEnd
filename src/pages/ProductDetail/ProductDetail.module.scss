@@ -142,8 +142,29 @@ input[type='number'] {
     background: #fafafa;
     padding: 15px 20px;
     margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+.product_info_final_price {
     color: var(--primary);
     font-size: 2.4rem;
+    margin-right: 10px;
+}
+.product_info_price_discount_wrap {
+    background-color: var(--primary);
+    padding: 0 4px;
+}
+.product_info_price_discount {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1rem;
+}
+.product_info_original_price {
+    font-size: 1.65rem;
+    color: #6b7280;
+    text-decoration: line-through;
+    margin-right: 10px;
 }
 
 .product_info_choices {

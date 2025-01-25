@@ -29,6 +29,7 @@ function ProductDetail() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await getProductDetail(slug);
+            console.log(response);
             setProduct(response);
 
             if (response?.Images?.length > 0) {
@@ -133,17 +134,25 @@ function ProductDetail() {
                         </div>
                     </div>
                     <div className={cx('product_info_price')}>
-                        <span>₫{formatPrice(product.Price)}</span>
+                        {product.Discount !== 0 && (
+                            <span className={cx('product_info_original_price')}>₫{formatPrice(product.Price)}</span>
+                        )}
+                        <span className={cx('product_info_final_price')}>₫{formatPrice(product.Final_price)}</span>
+                        {product.Discount !== 0 && (
+                            <div className={cx('product_info_price_discount_wrap')}>
+                                <span className={cx('product_info_price_discount')}>{product.Discount}% GIẢM</span>
+                            </div>
+                        )}
                     </div>
                     <div className={cx('product_info_choices')}>
-                        <div className={cx('product_info_choices_field')}>
+                        {/* <div className={cx('product_info_choices_field')}>
                             <div className={cx('product_info_choices_field_')}>Mã Giảm Giá Của Shop</div>
                             <div className={cx('product_info_choices_vouchers_')}>
                                 <div className={cx('product_info_choices_vouchers_value')}>Giảm ₫20k</div>
                                 <div className={cx('product_info_choices_vouchers_value')}>Giảm ₫20k</div>
                                 <div className={cx('product_info_choices_vouchers_value')}>Giảm ₫20k</div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={cx('product_info_choices_field')}>
                             <div className={cx('product_info_choices_field_')}>Vận Chuyển</div>
                         </div>

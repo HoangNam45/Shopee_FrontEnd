@@ -10,6 +10,7 @@ import {
     faCartShopping,
     faMessage,
     faStore,
+    faCircleCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../components/Button';
 import { useState, useEffect } from 'react';
@@ -23,9 +24,11 @@ function ProductDetail() {
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
     const [startIndex, setStartIndex] = useState(0);
-
     const [currentImage, setCurrentImage] = useState(null);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [quantity, setQuantity] = useState(1);
 
+    console.log(quantity);
     useEffect(() => {
         const fetchData = async () => {
             const response = await getProductDetail(slug);
@@ -58,6 +61,14 @@ function ProductDetail() {
     // Xử lý sự kiện onMouseEnter để thay đổi hình ảnh preview
     const handleMouseEnter = (imageUrl) => {
         setCurrentImage(imageUrl);
+    };
+
+    const handleAddToCart = () => {
+        setShowSuccessMessage(true);
+
+        setTimeout(() => {
+            setShowSuccessMessage(false);
+        }, 3000);
     };
 
     if (!product) {
@@ -159,7 +170,7 @@ function ProductDetail() {
                         <div className={cx('product_info_choices_field', 'count_field')}>
                             <div className={cx('product_info_choices_field_')}>Số lượng</div>
                             <div className={cx('product_info_choices_field_amout')}>
-                                <QuantityButton />
+                                <QuantityButton stock={product.Stock} onQuantityChange={setQuantity} />
                                 <div className={cx('product_info_choices_field_amout_remain')}>
                                     {product.Stock} sản phẩm có sẵn
                                 </div>
@@ -168,7 +179,7 @@ function ProductDetail() {
                     </div>
 
                     <div className={cx('product_info_actions')}>
-                        <Button large sub_primary className={cx('product_info_actions_btn')}>
+                        <Button onClick={handleAddToCart} large sub_primary className={cx('product_info_actions_btn')}>
                             <FontAwesomeIcon icon={faCartShopping} className={cx('product_info_actions_icon')} />
                             Thêm Vào Giỏ Hàng
                         </Button>
@@ -178,6 +189,13 @@ function ProductDetail() {
                     </div>
                 </div>
             </div>
+
+            {showSuccessMessage && (
+                <div className={cx('success_message')}>
+                    <FontAwesomeIcon className={cx('success_icon')} icon={faCircleCheck} />
+                    <span>Thêm vào giỏ hàng thành công</span>
+                </div>
+            )}
 
             <div className={cx('board', 'shop')}>
                 <div className={cx('shop_info')}>

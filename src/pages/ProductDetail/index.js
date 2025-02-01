@@ -16,6 +16,7 @@ import { Button } from '../../components/Button';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductDetail } from '../../services/productService';
+import { addProductToCard } from '../../services/userService';
 import QuantityButton from '../../components/QuantityButton/QuantityButton';
 
 import formatPrice from '../../utils/formarPrice';
@@ -28,7 +29,6 @@ function ProductDetail() {
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
-    console.log(quantity);
     useEffect(() => {
         const fetchData = async () => {
             const response = await getProductDetail(slug);
@@ -63,7 +63,13 @@ function ProductDetail() {
         setCurrentImage(imageUrl);
     };
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
+        const productData = {
+            product_id: product.ProductId,
+            quantity: quantity,
+        };
+        console.log(productData);
+        await addProductToCard(productData);
         setShowSuccessMessage(true);
 
         setTimeout(() => {

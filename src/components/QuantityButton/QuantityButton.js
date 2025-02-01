@@ -5,11 +5,11 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 const cx = classNames.bind(styles);
 
-function QuantityButton({ stock, onQuantityChange }) {
-    const [quantity, setQuantity] = useState(1);
+function QuantityButton({ stock, onQuantityChange, initialQuantity }) {
+    const [quantity, setQuantity] = useState(initialQuantity || 1);
     useEffect(() => {
         onQuantityChange(quantity);
-    }, [quantity, onQuantityChange]);
+    }, [quantity]);
 
     const handleIncrease = () => {
         setQuantity((prevQuantity) => (prevQuantity + 1 > stock ? stock : prevQuantity + 1));

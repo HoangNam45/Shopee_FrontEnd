@@ -29,3 +29,32 @@ export const getUserCartItems = async () => {
         throw error;
     }
 };
+
+export const updateCartItemQuantity = async (productData) => {
+    try {
+        const response = await axios.put('http://localhost:5000/user/update_cart_item_quantity', productData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating cart item quantity:', error);
+        throw error;
+    }
+};
+
+export const deleteCartItem = async (productId) => {
+    try {
+        const response = await axios.delete(`http://localhost:5000/user/delete_cart_item/${productId}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting cart item:', error);
+        throw error;
+    }
+};

@@ -18,13 +18,15 @@ import { getUserCartItems, updateCartItemQuantity, deleteCartItem } from '../../
 import formatPrice from '../../utils/formarPrice';
 import Button from '../../components/Button/Button';
 import useQuantityChange from '../../hooks/useQuantityChange';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Cart() {
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState({});
-    console.log(cartItems);
+    console.log(checkedItems);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             const response = await getUserCartItems();
@@ -82,6 +84,16 @@ function Cart() {
         if (response) {
             setCartItems((prevItems) => prevItems.filter((item) => item.Id !== id));
         }
+    };
+
+    const handleProceedToCheckout = () => {
+        const checkedProducts = cartItems.filter((item) => checkedItems[item.Id]);
+        console.log(checkedProducts);
+        if (checkedProducts.length === 0) {
+            alert('Vui lòng chọn sản phẩm để thanh toán');
+            return;
+        }
+        navigate('/checkout', { state: { checkedProducts } });
     };
 
     const checkedProductCount = Object.values(checkedItems).filter((isChecked) => isChecked).length;
@@ -168,7 +180,6 @@ function Cart() {
                                     <div className={cx('price_wrapper')}>
                                         {item.Discount_percentage > 0 && (
                                             <div className={cx('cart_product_sub_info', 'original_price')}>
-                                                {' '}
                                                 ₫{formatPrice(item.Original_price)}
                                             </div>
                                         )}
@@ -220,7 +231,7 @@ function Cart() {
                                 </div>
                             </TableCell>
                             <TableCell colSpan={1} align="right">
-                                <Button medium primary>
+                                <Button onClick={handleProceedToCheckout} medium primary>
                                     Thanh Toán
                                 </Button>
                             </TableCell>

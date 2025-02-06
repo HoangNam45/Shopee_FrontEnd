@@ -58,3 +58,18 @@ export const deleteCartItem = async (productId) => {
         throw error;
     }
 };
+
+export const createOrder = async (orderData) => {
+    try {
+        const response = await axios.post('http://localhost:5000/user/create_order', orderData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating order:', error);
+        throw error;
+    }
+};

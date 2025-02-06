@@ -18,6 +18,7 @@ import { useParams } from 'react-router-dom';
 import { getProductDetail } from '../../services/productService';
 import { addProductToCard } from '../../services/userService';
 import QuantityButton from '../../components/QuantityButton/QuantityButton';
+import { useNavigate } from 'react-router-dom';
 
 import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
@@ -28,6 +29,7 @@ function ProductDetail() {
     const [currentImage, setCurrentImage] = useState(null);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [quantity, setQuantity] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -75,6 +77,15 @@ function ProductDetail() {
         setTimeout(() => {
             setShowSuccessMessage(false);
         }, 3000);
+    };
+
+    const handleBuy = () => {
+        const checkedProducts = {
+            ...product,
+            quantity: quantity,
+        };
+        console.log(checkedProducts);
+        navigate('/checkout', { state: { checkedProducts: [checkedProducts] } });
     };
 
     if (!product) {
@@ -189,7 +200,7 @@ function ProductDetail() {
                             <FontAwesomeIcon icon={faCartShopping} className={cx('product_info_actions_icon')} />
                             Thêm Vào Giỏ Hàng
                         </Button>
-                        <Button large primary className={cx('product_info_actions_btn')}>
+                        <Button onClick={handleBuy} large primary className={cx('product_info_actions_btn')}>
                             Mua Ngay
                         </Button>
                     </div>

@@ -109,7 +109,9 @@ function Header() {
                                 >
                                     <ul className={cx('header_user_option')}>
                                         <li className={cx('header_user_option_')}>Tài khoản của tôi</li>
-                                        <li className={cx('header_user_option_')}>Đơn mưa</li>
+                                        <Link to="/user/all_purchases" className={cx('header_user_option_')}>
+                                            Đơn mưa
+                                        </Link>
                                         <li className={cx('header_user_option_')} onClick={handleLogout}>
                                             Đăng xuất
                                         </li>

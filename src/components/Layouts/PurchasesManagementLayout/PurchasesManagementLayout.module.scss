@@ -1,0 +1,39 @@
+.purchases-management-header {
+    background: #fff;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    display: flex;
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+.purchases-management-header_status {
+    align-items: center;
+    background: #fff;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.09);
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    font-size: 16px;
+    justify-content: center;
+    line-height: 19px;
+    overflow: hidden;
+    padding: 16px 0;
+    text-align: center;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+.custom_container_purchases_management {
+    box-sizing: content-box;
+    @media (min-width: 1200px) {
+        max-width: 1200px !important;
+    }
+}
+.active_link {
+    color: var(--primary);
+    border-color: var(--primary);
+}

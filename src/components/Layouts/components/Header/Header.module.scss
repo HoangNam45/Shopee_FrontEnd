@@ -179,6 +179,10 @@
         font-size: 1.48rem;
         padding: 8px;
         cursor: pointer;
+        text-decoration: none;
+        color: #000;
+        width: 100%;
+        display: block;
         &:hover {
             background-color: rgb(246, 246, 246);
         }

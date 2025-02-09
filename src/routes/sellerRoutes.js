@@ -11,6 +11,9 @@ const ShopProfile = lazy(() => import('../pages/ShopProfile'));
 const SellerDiscountPage = lazy(() => import('../pages/SellerDiscountPage'));
 const CreateDiscountPage = lazy(() => import('../pages/CreateDiscountPage'));
 
+const AllOrders = lazy(() => import('../pages/OrdersManagement/AllOrders'));
+const PendingOrders = lazy(() => import('../pages/OrdersManagement/PendingOrders'));
+
 const sellerRoutes = [
     { path: '/seller', component: SellerHome, layout: HeaderWithSidebar },
     { path: '/seller/all_products', component: AllProduct, layout: HeaderWithSidebar },
@@ -22,6 +25,9 @@ const sellerRoutes = [
     { path: '/seller/shop_profile', component: ShopProfile, layout: HeaderWithSidebar },
     { path: '/seller/discount', component: SellerDiscountPage, layout: HeaderWithSidebar },
     { path: '/seller/discount/create', component: CreateDiscountPage, layout: HeaderWithSidebar },
+
+    { path: '/seller/all_orders', component: AllOrders, layout: HeaderWithSidebar },
+    { path: '/seller/pending_orders', component: PendingOrders, layout: HeaderWithSidebar },
 ];
 
 export default sellerRoutes;

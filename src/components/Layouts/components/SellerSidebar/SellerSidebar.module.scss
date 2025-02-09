@@ -76,3 +76,6 @@
 .seller_sidebar_menu_checkbox:checked + .seller_sidebar_menu_item + .seller_sidebar_submenu {
     display: block;
 }
+.active_link {
+    color: var(--primary) !important;
+}

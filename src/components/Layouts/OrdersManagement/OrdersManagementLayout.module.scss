@@ -1,0 +1,27 @@
+.orders-management_wrapper {
+    padding: 24px 24px 12px;
+}
+.orders-management_header_wrapper {
+    display: flex;
+    align-items: center;
+}
+.orders-management_header {
+    align-items: center;
+    background: #fff;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.09);
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    line-height: 19px;
+    overflow: hidden;
+    padding: 16px 14px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.active_link {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}

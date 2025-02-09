@@ -81,7 +81,11 @@ function ProductDetail() {
 
     const handleBuy = () => {
         const checkedProducts = {
-            ...product,
+            Id: product.ProductId,
+            BackGround: product.BackGround,
+            Name: product.Name,
+            Discount: product.Discount,
+            Final_price: product.Final_price,
             quantity: quantity,
         };
         console.log(checkedProducts);

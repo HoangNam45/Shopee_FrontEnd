@@ -39,3 +39,17 @@ export const createDiscount = async (discountData) => {
         throw error;
     }
 };
+
+export const getSellerPendingOrders = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/seller/pending_orders`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting seller pending orders:', error);
+        throw error;
+    }
+};

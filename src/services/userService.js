@@ -73,3 +73,31 @@ export const createOrder = async (orderData) => {
         throw error;
     }
 };
+
+export const getUserPendingPurchases = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/pending_purchases', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user pending purchases:', error);
+        throw error;
+    }
+};
+
+export const getUserAllPurchases = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/all_purchases', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user pending purchases:', error);
+        throw error;
+    }
+};

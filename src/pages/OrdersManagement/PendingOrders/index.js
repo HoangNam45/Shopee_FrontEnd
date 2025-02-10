@@ -15,7 +15,7 @@ function PendingOrders() {
     }, []);
     return (
         <OrdersManagementLayout>
-            <OrdersList />
+            <OrdersList orderData={pendingOrders} />
         </OrdersManagementLayout>
     );
 }

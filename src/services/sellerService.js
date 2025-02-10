@@ -53,3 +53,17 @@ export const getSellerPendingOrders = async () => {
         throw error;
     }
 };
+
+export const getSellerAllOrders = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/seller/all_orders`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting seller pending orders:', error);
+        throw error;
+    }
+};

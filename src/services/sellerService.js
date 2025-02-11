@@ -67,3 +67,78 @@ export const getSellerAllOrders = async () => {
         throw error;
     }
 };
+
+export const getSellerShippingOrders = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/seller/shipping_orders`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting seller shipping orders:', error);
+        throw error;
+    }
+};
+
+export const getSellerCanceledOrders = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/seller/canceled_orders`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting seller canceled orders:', error);
+        throw error;
+    }
+};
+
+export const getSellerFailedDeliveryOrders = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/seller/failed_delivery_orders`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting seller failed delivery orders:', error);
+        throw error;
+    }
+};
+
+export const getSellerCompletedOrders = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/seller/completed_orders`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting seller completed orders:', error);
+        throw error;
+    }
+};
+
+export const updateOrderStatus = async (orderId, status) => {
+    try {
+        const response = await axios.put(
+            `http://localhost:5000/seller/update_order_status/${orderId}`,
+            { status },
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        throw error;
+    }
+};

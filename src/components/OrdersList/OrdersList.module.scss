@@ -37,8 +37,12 @@
 }
 .orders_list_body_total_price {
     font-size: 1.5rem;
+    height: 56px;
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
 }
-.orders_list_body_product_status {
+.orders_list_body_product_status_confirm {
     font-size: 1.4rem;
     padding: 4px 8px;
     border: 1px solid #ffec84;
@@ -46,6 +50,47 @@
     border-radius: 4px;
     display: inline-block;
     color: #ffd900;
+    font-weight: 600;
+}
+.orders_list_body_product_status_ship {
+    font-size: 1.4rem;
+    padding: 4px 8px;
+    border: 1px solid #84caff; /* Light blue border */
+    background-color: #e6f7ff; /* Light blue background */
+    border-radius: 4px;
+    display: inline-block;
+    color: #007bff; /* Blue text */
+    font-weight: 600;
+}
+.orders_list_body_product_status_complete {
+    font-size: 1.4rem;
+    padding: 4px 8px;
+    border: 1px solid #84ff84; /* Light green border */
+    background-color: #e6ffe6; /* Light green background */
+    border-radius: 4px;
+    display: inline-block;
+    color: #00ff00; /* Green text */
+    font-weight: 600;
+}
+
+.orders_list_body_product_status_cancel {
+    font-size: 1.4rem;
+    padding: 4px 8px;
+    border: 1px solid #ff8a8a; /* Light red border */
+    background-color: #ffe6e6; /* Light red background */
+    border-radius: 4px;
+    display: inline-block;
+    color: #ff0000; /* Red text */
+    font-weight: 600;
+}
+.orders_list_body_product_status_failed_delivery {
+    font-size: 1.4rem;
+    padding: 4px 8px;
+    border: 1px solid #ff8a8a; /* Light red border */
+    background-color: #ffe6e6; /* Light red background */
+    border-radius: 4px;
+    display: inline-block;
+    color: #ff0000; /* Red text */
     font-weight: 600;
 }
 .orders_list_body_product_action_btn {
@@ -58,4 +103,16 @@
 .orders_list_footer_product_shipping_info_detail {
     font-size: 1.4rem;
     margin-top: 8px;
+}
+
+.orders_list_body_product_wrapper {
+    margin-bottom: 20px;
+}
+
+.orders_list_footer_product_shipping_total_price {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.orders_list_footer_product_shipping_total_price_ {
+    color: var(--primary);
 }

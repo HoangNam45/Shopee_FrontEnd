@@ -21,7 +21,12 @@ function PurchasesManagementLayout({ children }) {
                 >
                     Chờ xác nhận
                 </NavLink>
-                <div className={cx('purchases-management-header_status')}>Chờ giao hàng</div>
+                <NavLink
+                    to="/user/shipping_purchases"
+                    className={({ isActive }) => cx('purchases-management-header_status', { active_link: isActive })}
+                >
+                    Chờ giao hàng
+                </NavLink>
                 <div className={cx('purchases-management-header_status')}>Hoàn thành</div>
                 <div className={cx('purchases-management-header_status')}>Đã hủy</div>
                 <div className={cx('purchases-management-header_status')}>Trả hàng</div>

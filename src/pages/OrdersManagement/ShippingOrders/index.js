@@ -1,23 +1,23 @@
 import OrdersManagementLayout from '../../../components/Layouts/OrdersManagement';
 import OrdersList from '../../../components/OrdersList/OrdersList';
 import { useEffect, useState } from 'react';
-import { getSellerPendingOrders } from '../../../services/sellerService';
+import { getSellerShippingOrders } from '../../../services/sellerService';
 
-function PendingOrders() {
-    const [pendingOrders, setPendingOrders] = useState([]);
+function ShippingOrders() {
+    const [shippingOrders, setShippingOrders] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getSellerPendingOrders();
+            const response = await getSellerShippingOrders();
             console.log(response);
-            setPendingOrders(response);
+            setShippingOrders(response);
         };
         fetchData();
     }, []);
     return (
         <OrdersManagementLayout>
-            <OrdersList orderData={pendingOrders} setOrderData={setPendingOrders} />
+            <OrdersList orderData={shippingOrders} setOrderData={setShippingOrders} />
         </OrdersManagementLayout>
     );
 }
 
-export default PendingOrders;
+export default ShippingOrders;

@@ -13,6 +13,10 @@ const CreateDiscountPage = lazy(() => import('../pages/CreateDiscountPage'));
 
 const AllOrders = lazy(() => import('../pages/OrdersManagement/AllOrders'));
 const PendingOrders = lazy(() => import('../pages/OrdersManagement/PendingOrders'));
+const ShippingOrders = lazy(() => import('../pages/OrdersManagement/ShippingOrders'));
+const CanceledOrders = lazy(() => import('../pages/OrdersManagement/CanceledOrders'));
+const FailedDeliveryOrders = lazy(() => import('../pages/OrdersManagement/FailedDeliveryOrders'));
+const CompletedOrders = lazy(() => import('../pages/OrdersManagement/CompletedOrders'));
 
 const sellerRoutes = [
     { path: '/seller', component: SellerHome, layout: HeaderWithSidebar },
@@ -28,6 +32,10 @@ const sellerRoutes = [
 
     { path: '/seller/all_orders', component: AllOrders, layout: HeaderWithSidebar },
     { path: '/seller/pending_orders', component: PendingOrders, layout: HeaderWithSidebar },
+    { path: '/seller/shipping_orders', component: ShippingOrders, layout: HeaderWithSidebar },
+    { path: '/seller/canceled_orders', component: CanceledOrders, layout: HeaderWithSidebar },
+    { path: '/seller/failed_delivery_orders', component: FailedDeliveryOrders, layout: HeaderWithSidebar },
+    { path: '/seller/completed_orders', component: CompletedOrders, layout: HeaderWithSidebar },
 ];
 
 export default sellerRoutes;

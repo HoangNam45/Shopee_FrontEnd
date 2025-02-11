@@ -22,25 +22,25 @@ function OrdersManagementLayout({ children }) {
                     Chờ xác nhận
                 </NavLink>
                 <NavLink
-                    to="/seller/all_orders/1"
+                    to="/seller/shipping_orders"
                     className={({ isActive }) => cx('orders-management_header', { active_link: isActive })}
                 >
                     Đang giao
                 </NavLink>
                 <NavLink
-                    to="/seller/all_orders/1"
+                    to="/seller/completed_orders"
                     className={({ isActive }) => cx('orders-management_header', { active_link: isActive })}
                 >
                     Đã giao
                 </NavLink>
                 <NavLink
-                    to="/seller/all_orders/1"
+                    to="/seller/failed_delivery_orders"
                     className={({ isActive }) => cx('orders-management_header', { active_link: isActive })}
                 >
                     Giao không thành công
                 </NavLink>
                 <NavLink
-                    to="/seller/all_orders/1"
+                    to="/seller/canceled_orders/"
                     className={({ isActive }) => cx('orders-management_header', { active_link: isActive })}
                 >
                     Hủy

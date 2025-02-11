@@ -3,12 +3,15 @@ import styles from './OrdersList.module.scss';
 import '../../assets/styles/globalClass.scss';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableFooter } from '@mui/material';
 import formatPrice from '../../utils/formarPrice';
-import { Pagination } from '@mui/material';
-import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
-
+import { updateOrderStatus } from '../../services/sellerService';
 const cx = classNames.bind(styles);
-const OrdersList = ({ orderData }) => {
+const OrdersList = ({ orderData, setOrderData }) => {
+    const handleUpdateStatus = async (orderId, orderStatus) => {
+        await updateOrderStatus(orderId, orderStatus);
+        const newOrderData = orderData.filter((order) => order.order_id !== orderId);
+        setOrderData(newOrderData);
+    };
     return (
         <>
             <TableContainer
@@ -39,57 +42,7 @@ const OrdersList = ({ orderData }) => {
                             </TableCell>
                         </TableRow>
                     </TableHead>
-                    {/* <TableBody>
-                        {products.map((product, index) => (
-                            <TableRow key={index}>
-                              
-                                <TableCell>
-                                    <div className={cx('product_list_body_name')}>
-                                        <div className={cx('product_list_body_name_img')}>
-                                            <img
-                                                className={cx('product_list_body_name_img_')}
-                                                src={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
-                                                alt="img"
-                                            />
-                                        </div>
-                                        <div className={cx('product_list_body_name_info')}>
-                                            {product.Status === 'hidden' && (
-                                                <span className={cx('product_list_body_name_info_hidden')}>Đã ẩn</span>
-                                            )}
-    
-                                            <div className={cx('product_list_body_name_info_name')}>{product.Name}</div>
-                                            <div className={cx('product_list_body_name_info_SKU')}>
-                                                SKU sản phẩm: - {product.SKU}
-                                            </div>
-                                         
-                                        </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell className={cx('product_list_body_satistic')}>0</TableCell>
-                                <TableCell className={cx('product_list_body_satistic')}>
-                                    ₫{formatPrice(product.Price)}
-                                </TableCell>
-                                <TableCell className={cx('product_list_body_satistic')}>{product.Stock}</TableCell>
-                                <TableCell>
-                                    <Link
-                                        to={`http://localhost:3000/seller/portal_product/${product.Id}`}
-                                        className={cx('product_list_body_operation')}
-                                    >
-                                        Cập nhật
-                                    </Link>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody> */}
                 </Table>
-                {/* <Pagination
-                    count={Math.ceil(totalProducts / limit)}
-                    page={currentPage}
-                    className={cx('product_list_pagination')}
-                    size="large"
-                    shape="rounded"
-                    onChange={handlePageChange}
-                /> */}
             </TableContainer>
             {orderData.map((order, index) => (
                 <TableContainer
@@ -98,7 +51,7 @@ const OrdersList = ({ orderData }) => {
                         border: '1px solid #f9f9f9',
                         marginTop: '30px',
                     }}
-                    index={index}
+                    key={index}
                 >
                     <Table>
                         <TableHead
@@ -125,37 +78,96 @@ const OrdersList = ({ orderData }) => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>
-                                    <div className={cx('orders_list_body_product_wrapper')}>
-                                        <div className={cx('orders_list_body_product')}>
-                                            <img
-                                                src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${order.BackGround}`}
-                                                className={cx('orders_list_body_product_img')}
-                                                alt="product"
-                                            />
-                                            <div className={cx('orders_list_body_product_name')}>
-                                                {order.ProductName}
+                                    {order.order_items.map((item, index) => (
+                                        <div key={index} className={cx('orders_list_body_product_wrapper')}>
+                                            <div className={cx('orders_list_body_product')}>
+                                                <img
+                                                    src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${item.BackGround}`}
+                                                    className={cx('orders_list_body_product_img')}
+                                                    alt="product"
+                                                />
+                                                <div className={cx('orders_list_body_product_name')}>
+                                                    {item.ProductName}
+                                                </div>
+                                            </div>
+                                            <div className={cx('orders_list_body_product_quantity')}>
+                                                x{item.quantity}
                                             </div>
                                         </div>
-                                        <div className={cx('orders_list_body_product_quantity')}>x{order.quantity}</div>
-                                    </div>
+                                    ))}
                                 </TableCell>
                                 <TableCell>
-                                    <div className={cx('orders_list_body_total_price')}>
-                                        ₫{formatPrice(order.price)}
-                                    </div>
+                                    {order.order_items.map((item, index) => (
+                                        <div key={index} className={cx('orders_list_body_total_price')}>
+                                            <span>₫{formatPrice(item.price)}</span>
+                                        </div>
+                                    ))}
                                 </TableCell>
                                 <TableCell>
-                                    <div className={cx('orders_list_body_product_status')}>Chờ xác nhận</div>
+                                    {order.status === 'Pending' && (
+                                        <div className={cx('orders_list_body_product_status_confirm')}>
+                                            Chờ xác nhận
+                                        </div>
+                                    )}
+
+                                    {order.status === 'Shipping' && (
+                                        <div className={cx('orders_list_body_product_status_ship')}>Đang giao hàng</div>
+                                    )}
+
+                                    {order.status === 'Completed' && (
+                                        <div className={cx('orders_list_body_product_status_complete')}>Thành công</div>
+                                    )}
+
+                                    {order.status === 'Failed Delivery' && (
+                                        <div className={cx('orders_list_body_product_status_failed_delivery')}>
+                                            Giao hàng không thành công
+                                        </div>
+                                    )}
+
+                                    {order.status === 'Canceled' && (
+                                        <div className={cx('orders_list_body_product_status_cancel')}>Đã hủy</div>
+                                    )}
                                 </TableCell>
                                 <TableCell>
-                                    <div className={cx('orders_list_body_product_action')}>
-                                        <Button primary small className={cx('orders_list_body_product_action_btn')}>
-                                            Xác nhận
-                                        </Button>
-                                        <Button text small>
-                                            Hủy
-                                        </Button>
-                                    </div>
+                                    {order.status === 'Pending' && (
+                                        <div className={cx('orders_list_body_product_action')}>
+                                            <Button
+                                                onClick={() => handleUpdateStatus(order.order_id, 'Shipping')}
+                                                primary
+                                                small
+                                                className={cx('orders_list_body_product_action_btn')}
+                                            >
+                                                Xác nhận
+                                            </Button>
+                                            <Button
+                                                onClick={() => handleUpdateStatus(order.order_id, 'Canceled')}
+                                                text
+                                                small
+                                            >
+                                                Hủy
+                                            </Button>
+                                        </div>
+                                    )}
+
+                                    {order.status === 'Shipping' && (
+                                        <div className={cx('orders_list_body_product_action')}>
+                                            <Button
+                                                onClick={() => handleUpdateStatus(order.order_id, 'Completed')}
+                                                primary
+                                                small
+                                                className={cx('orders_list_body_product_action_btn')}
+                                            >
+                                                Đã giao
+                                            </Button>
+                                            <Button
+                                                text
+                                                small
+                                                onClick={() => handleUpdateStatus(order.order_id, 'Failed Delivery')}
+                                            >
+                                                Giao hàng không thành công
+                                            </Button>
+                                        </div>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -166,7 +178,7 @@ const OrdersList = ({ orderData }) => {
                                         Thông tin giao hàng
                                     </div>
                                     <div className={cx('orders_list_footer_product_shipping_info_detail')}>
-                                        Họ & Tên: {order.name}
+                                        Họ & Tên: {order.order_name}
                                     </div>
                                     <div className={cx('orders_list_footer_product_shipping_info_detail')}>
                                         Số điện thoại: {order.phone}
@@ -178,7 +190,14 @@ const OrdersList = ({ orderData }) => {
                             </TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>
+                                <div className={cx('orders_list_footer_product_shipping_total_price')}>
+                                    Thành tiền:{' '}
+                                    <span className={cx('orders_list_footer_product_shipping_total_price_')}>
+                                        ₫{formatPrice(order.total_price)}
+                                    </span>
+                                </div>
+                            </TableCell>
                         </TableFooter>
                     </Table>
                 </TableContainer>

@@ -109,6 +109,9 @@ function Header() {
                                 >
                                     <ul className={cx('header_user_option')}>
                                         <li className={cx('header_user_option_')}>Tài khoản của tôi</li>
+                                        <Link to="/seller/all_products" className={cx('header_user_option_')}>
+                                            Shop của tôi
+                                        </Link>
                                         <Link to="/user/all_purchases" className={cx('header_user_option_')}>
                                             Đơn mưa
                                         </Link>
@@ -123,7 +126,7 @@ function Header() {
                                 <Link to="/register" className={cx('navbar-user_auth_')}>
                                     Đăng ký
                                 </Link>
-                                <Link to="login" className={cx('navbar-user_auth_', 'navbar_drawer')}>
+                                <Link to="/login" className={cx('navbar-user_auth_', 'navbar_drawer')}>
                                     Đăng nhập
                                 </Link>
                             </>

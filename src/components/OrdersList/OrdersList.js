@@ -5,12 +5,24 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Table
 import formatPrice from '../../utils/formarPrice';
 import Button from '../Button/Button';
 import { updateOrderStatus } from '../../services/sellerService';
+import { updateProductSold, updateProductStock } from '../../services/productService';
 const cx = classNames.bind(styles);
 const OrdersList = ({ orderData, setOrderData }) => {
-    const handleUpdateStatus = async (orderId, orderStatus) => {
-        await updateOrderStatus(orderId, orderStatus);
-        const newOrderData = orderData.filter((order) => order.order_id !== orderId);
-        setOrderData(newOrderData);
+    const handleUpdateStatus = async (orderId, orderStatus, orderItems) => {
+        try {
+            console.log(orderItems);
+            if (orderStatus === 'Completed') {
+                await Promise.all(orderItems.map((item) => updateProductSold(item.ProductId, item.quantity)));
+            }
+            if (orderStatus === 'Canceled' || orderStatus === 'Failed Delivery' || orderStatus === 'Completed') {
+                await Promise.all(orderItems.map((item) => updateProductStock(item.ProductId, item.quantity)));
+            }
+            await updateOrderStatus(orderId, orderStatus);
+            const newOrderData = orderData.filter((order) => order.order_id !== orderId);
+            setOrderData(newOrderData);
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
     };
     return (
         <>
@@ -140,7 +152,9 @@ const OrdersList = ({ orderData, setOrderData }) => {
                                                 Xác nhận
                                             </Button>
                                             <Button
-                                                onClick={() => handleUpdateStatus(order.order_id, 'Canceled')}
+                                                onClick={() =>
+                                                    handleUpdateStatus(order.order_id, 'Canceled', order.order_items)
+                                                }
                                                 text
                                                 small
                                             >
@@ -152,7 +166,9 @@ const OrdersList = ({ orderData, setOrderData }) => {
                                     {order.status === 'Shipping' && (
                                         <div className={cx('orders_list_body_product_action')}>
                                             <Button
-                                                onClick={() => handleUpdateStatus(order.order_id, 'Completed')}
+                                                onClick={() =>
+                                                    handleUpdateStatus(order.order_id, 'Completed', order.order_items)
+                                                }
                                                 primary
                                                 small
                                                 className={cx('orders_list_body_product_action_btn')}
@@ -162,7 +178,13 @@ const OrdersList = ({ orderData, setOrderData }) => {
                                             <Button
                                                 text
                                                 small
-                                                onClick={() => handleUpdateStatus(order.order_id, 'Failed Delivery')}
+                                                onClick={() =>
+                                                    handleUpdateStatus(
+                                                        order.order_id,
+                                                        'Failed Delivery',
+                                                        order.order_items,
+                                                    )
+                                                }
                                             >
                                                 Giao hàng không thành công
                                             </Button>

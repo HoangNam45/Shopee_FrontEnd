@@ -10,9 +10,11 @@ import formatPrice from '../../utils/formarPrice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createOrder } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Checkout() {
+    const navigate = useNavigate();
     const location = useLocation();
     const { checkedProducts } = location.state || { checkedProducts: [] };
     console.log(checkedProducts);
@@ -40,6 +42,7 @@ function Checkout() {
             };
             console.log('Order Data:', orderData);
             await createOrder(orderData);
+            navigate('/user/all_purchases');
         },
     });
 

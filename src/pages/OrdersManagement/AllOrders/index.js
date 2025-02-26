@@ -15,7 +15,7 @@ function AllOrders() {
     }, []);
     return (
         <OrdersManagementLayout>
-            <OrdersList orderData={allOrders} />
+            <OrdersList orderData={allOrders} setOrderData={setAllOrders} />
         </OrdersManagementLayout>
     );
 }

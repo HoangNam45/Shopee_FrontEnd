@@ -15,6 +15,8 @@ import { Popover } from '@mui/material';
 
 import { removeToken, isAuthenticated } from '../../../../services/tokenService';
 
+import { getUserName } from '../../../../services/userService';
+
 import useProductSearch from '../../../../hooks/useProductSearch';
 
 const cx = classNames.bind(styles);
@@ -24,6 +26,7 @@ function Header() {
     const [query, setQuery] = useState('');
     const [inputValue, setInputValue] = useState('');
     const { results } = useProductSearch(query);
+    const [userName, setUserName] = useState(null);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -33,6 +36,22 @@ function Header() {
     useEffect(() => {
         setQuery('');
     }, [keyword]);
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            try {
+                const fetchData = async () => {
+                    const response = await getUserName();
+                    console.log(response);
+                    const name = response.Account;
+                    setUserName(name);
+                };
+                fetchData();
+            } catch (error) {
+                console.error('Error getting user name:', error);
+            }
+        }
+    }, []);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
@@ -92,7 +111,7 @@ function Header() {
                                         src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
                                         alt="avt"
                                     />
-                                    <span className={cx('navbar-user_auth_name')}>lahao457</span>
+                                    <span className={cx('navbar-user_auth_name')}>{userName}</span>
                                 </div>
                                 <Popover
                                     open={open}

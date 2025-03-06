@@ -101,3 +101,17 @@ export const getUserAllPurchases = async () => {
         throw error;
     }
 };
+
+export const getUserName = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/get_user_name', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user name:', error);
+        throw error;
+    }
+};

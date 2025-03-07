@@ -3,12 +3,13 @@ import styles from './PurchasesList.module.scss';
 import '../../assets/styles/globalClass.scss';
 import formatPrice from '../../utils/formarPrice';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import Button from '../Button/Button';
 
 const cx = classNames.bind(styles);
 const PurchasesList = ({ products }) => {
     console.log(products);
     const groupedProducts = products.reduce((acc, product) => {
-        const key = `${product.order_id}-${product.sellerName}`;
+        const key = `${product.order_id}-${product.sellerId}`;
         if (!acc[key]) {
             acc[key] = [];
         }
@@ -118,7 +119,7 @@ const PurchasesList = ({ products }) => {
                                         <div>
                                             <img
                                                 alt="product"
-                                                src="/images/DefaultUser.jpg"
+                                                src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/sellerAvatar/${Avatar}`}
                                                 className={cx('orders_list_body_user_avt')}
                                             />
                                             <span className={cx('orders_list_body_user_name')}>{sellerName}</span>
@@ -145,48 +146,62 @@ const PurchasesList = ({ products }) => {
                                             <div className={cx('orders_list_body_product_wrapper')}>
                                                 <div className={cx('orders_list_body_product')}>
                                                     <img
-                                                        src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage`}
+                                                        src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${product.BackGround}`}
                                                         className={cx('orders_list_body_product_img')}
                                                         alt="product"
                                                     />
-                                                    <div className={cx('orders_list_body_product_name')}>Name</div>
+                                                    <div className={cx('orders_list_body_product_name')}>
+                                                        {product.Name}
+                                                    </div>
                                                 </div>
-                                                <div className={cx('orders_list_body_product_quantity')}>x1</div>
+                                                <div className={cx('orders_list_body_product_quantity')}>
+                                                    x{product.quantity}
+                                                </div>
                                             </div>
                                         </TableCell>
                                         <TableCell>
                                             <div className={cx('orders_list_body_total_price')}>
-                                                <span>₫{formatPrice(10000)}</span>
+                                                <span>₫{formatPrice(product.price)}</span>
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            {products.status === 'Pending' && (
+                                            {product.status === 'Pending' && (
                                                 <div className={cx('orders_list_body_product_status_confirm')}>
                                                     Chờ xác nhận
                                                 </div>
                                             )}
 
-                                            {products.status === 'Shipping' && (
+                                            {product.status === 'Shipping' && (
                                                 <div className={cx('orders_list_body_product_status_ship')}>
                                                     Đang giao hàng
                                                 </div>
                                             )}
 
-                                            {products.status === 'Completed' && (
+                                            {product.status === 'Completed' && (
                                                 <div className={cx('orders_list_body_product_status_complete')}>
                                                     Thành công
                                                 </div>
                                             )}
 
-                                            {products.status === 'Failed Delivery' && (
+                                            {product.status === 'Failed Delivery' && (
                                                 <div className={cx('orders_list_body_product_status_failed_delivery')}>
                                                     Giao hàng không thành công
                                                 </div>
                                             )}
 
-                                            {products.status === 'Canceled' && (
+                                            {product.status === 'Canceled' && (
                                                 <div className={cx('orders_list_body_product_status_cancel')}>
                                                     Đã hủy
+                                                </div>
+                                            )}
+                                        </TableCell>
+
+                                        <TableCell>
+                                            {product.status === 'Pending' && (
+                                                <div className={cx('orders_list_body_product_action')}>
+                                                    <Button text small>
+                                                        Hủy đơn hàng
+                                                    </Button>
                                                 </div>
                                             )}
                                         </TableCell>

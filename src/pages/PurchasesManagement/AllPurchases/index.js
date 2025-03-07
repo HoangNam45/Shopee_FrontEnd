@@ -1,21 +1,21 @@
 import PurchasesManagementLayout from '../../../components/Layouts/PurchasesManagementLayout';
 import PurchasesList from '../../../components/PurchasesList/PurchasesList';
 import { useEffect, useState } from 'react';
-import { getUserPendingPurchases } from '../../../services/userService';
+import { getUserAllPurchases } from '../../../services/userService';
 
 function PendingPurchases() {
-    const [pendingPurchases, setPendingPurchases] = useState([]);
+    const [allPurchases, setAllPurchases] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const pendingPurchases = await getUserPendingPurchases();
-            console.log(pendingPurchases);
-            setPendingPurchases(pendingPurchases);
+            const all_purchases = await getUserAllPurchases();
+            console.log(getUserAllPurchases);
+            setAllPurchases(all_purchases);
         };
         fetchData();
     }, []);
     return (
         <PurchasesManagementLayout>
-            <PurchasesList products={pendingPurchases} />
+            <PurchasesList products={allPurchases} />
         </PurchasesManagementLayout>
     );
 }

@@ -9,7 +9,7 @@ function DefaultLayout({ children }) {
     const location = useLocation();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
     return (
-        <div>
+        <div className={cx('wrapper')}>
             {isAuthPage ? <AuthHeader /> : <Header />}
             <div className={cx('container')}>
                 <div className={cx('content')}>{children}</div>

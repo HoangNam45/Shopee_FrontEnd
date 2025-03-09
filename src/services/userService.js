@@ -88,6 +88,62 @@ export const getUserPendingPurchases = async () => {
     }
 };
 
+export const getUserShippingPurchases = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/shipping_purchases', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user pending purchases:', error);
+        throw error;
+    }
+};
+
+export const getUserCompletedPurchases = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/completed_purchases', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user pending purchases:', error);
+        throw error;
+    }
+};
+
+export const getUserCanceledPurchases = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/canceled_purchases', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user pending purchases:', error);
+        throw error;
+    }
+};
+
+export const getUserFailDeliveryPurchases = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/user/fail_delivery_purchases', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user pending purchases:', error);
+        throw error;
+    }
+};
+
 export const getUserAllPurchases = async () => {
     try {
         const response = await axios.get('http://localhost:5000/user/all_purchases', {

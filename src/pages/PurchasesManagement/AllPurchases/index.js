@@ -3,7 +3,7 @@ import PurchasesList from '../../../components/PurchasesList/PurchasesList';
 import { useEffect, useState } from 'react';
 import { getUserAllPurchases } from '../../../services/userService';
 
-function PendingPurchases() {
+function AllPurchases() {
     const [allPurchases, setAllPurchases] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
@@ -19,4 +19,4 @@ function PendingPurchases() {
         </PurchasesManagementLayout>
     );
 }
-export default PendingPurchases;
+export default AllPurchases;

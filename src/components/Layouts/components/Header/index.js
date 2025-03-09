@@ -127,7 +127,9 @@ function Header() {
                                     onClose={handleClose}
                                 >
                                     <ul className={cx('header_user_option')}>
-                                        <li className={cx('header_user_option_')}>Tài khoản của tôi</li>
+                                        <Link to="/user/profile" className={cx('header_user_option_')}>
+                                            Tài khoản của tôi
+                                        </Link>
                                         <Link to="/seller/all_products" className={cx('header_user_option_')}>
                                             Shop của tôi
                                         </Link>

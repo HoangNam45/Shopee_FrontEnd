@@ -15,7 +15,7 @@ import { Popover } from '@mui/material';
 
 import { removeToken, isAuthenticated } from '../../../../services/tokenService';
 
-import { getUserName } from '../../../../services/userService';
+import { getUserInfo } from '../../../../services/userService';
 
 import useProductSearch from '../../../../hooks/useProductSearch';
 
@@ -41,9 +41,9 @@ function Header() {
         if (isAuthenticated()) {
             try {
                 const fetchData = async () => {
-                    const response = await getUserName();
+                    const response = await getUserInfo();
                     console.log(response);
-                    const name = response.Account;
+                    const name = response.Name;
                     setUserName(name);
                 };
                 fetchData();

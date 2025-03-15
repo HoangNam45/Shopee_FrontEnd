@@ -158,9 +158,9 @@ export const getUserAllPurchases = async () => {
     }
 };
 
-export const getUserName = async () => {
+export const getUserInfo = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/get_user_name', {
+        const response = await axios.get('http://localhost:5000/user/get_user_info', {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -168,6 +168,21 @@ export const getUserName = async () => {
         return response.data;
     } catch (error) {
         console.error('Error getting user name:', error);
+        throw error;
+    }
+};
+
+export const updateUserInfo = async (userData) => {
+    try {
+        const response = await axios.put('http://localhost:5000/user/update_user_info', userData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating user info:', error);
         throw error;
     }
 };

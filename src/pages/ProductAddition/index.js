@@ -3,7 +3,7 @@ import styles from './ProductAddition.module.scss';
 import ImageUploader from '../../components/ImageUploader/ImageUploader';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
-import PriceRange from '../../components/PriceRange/PriceRange';
+// import PriceRange from '../../components/PriceRange/PriceRange';
 import { useState, useEffect } from 'react';
 import { addProduct, updateProduct, updateProductStatus, deleteProduct } from '../../services/productService';
 import { useParams } from 'react-router-dom';
@@ -276,7 +276,7 @@ const ProductAddition = () => {
                     </div>
                 </div>
 
-                <div className={cx('product_add_info_')}>
+                {/* <div className={cx('product_add_info_')}>
                     <div className={cx('product_add_info_field')}>
                         <span>* </span>
                         <span>Khoảng giá</span>
@@ -285,10 +285,10 @@ const ProductAddition = () => {
                     <div className={cx('price_range_wrap')}>
                         <PriceRange onPriceRangeChange={handlePriceRangeChange} />
                     </div>
-                </div>
+                </div> */}
             </div>
 
-            <div className={cx('product_add_info')}>
+            {/* <div className={cx('product_add_info')}>
                 <div className={cx('product_add_info_header')}>Thông tin khác</div>
 
                 <div className={cx('product_add_info_')}>
@@ -307,7 +307,7 @@ const ProductAddition = () => {
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className={cx('product_add_save')}>
                 <Button onClick={handleCancel} text quite_small className={cx('product_add_save_btn')}>

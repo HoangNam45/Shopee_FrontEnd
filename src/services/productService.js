@@ -38,8 +38,13 @@ export const updateProductStatus = async (productId, productStatus) => {
     return response;
 };
 
-export const getProduct = async () => {
-    const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products`);
+export const getProduct = async (page, limit) => {
+    const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products`, {
+        params: {
+            page,
+            limit,
+        },
+    });
     return response.data;
 };
 

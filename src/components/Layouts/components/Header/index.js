@@ -27,6 +27,7 @@ function Header() {
     const [inputValue, setInputValue] = useState('');
     const { results } = useProductSearch(query);
     const [userName, setUserName] = useState(null);
+    const [userAvt, setUserAvt] = useState(null);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,9 +43,10 @@ function Header() {
             try {
                 const fetchData = async () => {
                     const response = await getUserInfo();
-                    console.log(response);
                     const name = response.Name;
                     setUserName(name);
+                    const avatar = response.Avatar;
+                    setUserAvt(avatar);
                 };
                 fetchData();
             } catch (error) {
@@ -108,7 +110,7 @@ function Header() {
                                 <div onClick={handleClick} className={cx('navigate_popover')}>
                                     <img
                                         className={cx('navbar-user_auth_avt')}
-                                        src="/images/7fe2f43c07284c892375dbb80d0ca93d.jpg"
+                                        src={`http://localhost:5000/uploads/images/userAvatar/${userAvt}`}
                                         alt="avt"
                                     />
                                     <span className={cx('navbar-user_auth_name')}>{userName}</span>

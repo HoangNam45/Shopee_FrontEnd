@@ -3,7 +3,7 @@ import styles from './Home.module.scss';
 import { Container, Col, Row } from 'react-bootstrap';
 import Product from '../../components/Product/Product';
 import { useEffect, useState } from 'react';
-import { getProduct } from '../../services/productService';
+import { getProduct, getTotalProducts } from '../../services/productService';
 import Pagination from '@mui/material/Pagination';
 
 const cx = classNames.bind(styles);
@@ -12,15 +12,14 @@ function Home() {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0); // Total number of products
     const [currentPage, setCurrentPage] = useState(1); // Current page
-    const productsPerPage = 42; // Limit to 42 products per page
+    const productsPerPage = 30; // Limit to 42 products per page
     console.log(products);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await getProduct(currentPage, productsPerPage);
-                setProducts(response.products); // Assuming the API returns { products, total }
-                setTotalProducts(response.total); // Total number of products
+                setProducts(response);
             } catch (error) {
                 console.error('Error fetching products', error);
             }
@@ -28,6 +27,19 @@ function Home() {
 
         fetchProducts();
     }, [currentPage]);
+
+    useEffect(() => {
+        const fetchTotalProducts = async () => {
+            try {
+                const response = await getTotalProducts();
+                setTotalProducts(response);
+            } catch (error) {
+                console.error('Error fetching total products', error);
+            }
+        };
+
+        fetchTotalProducts();
+    }, []);
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
@@ -60,8 +72,9 @@ function Home() {
                         count={Math.ceil(totalProducts / productsPerPage)} // Total pages
                         page={currentPage}
                         onChange={handlePageChange}
-                        color="primary"
                         size="large"
+                        className={cx('product_list_pagination')}
+                        shape="rounded"
                     />
                 </Col>
             </Row>

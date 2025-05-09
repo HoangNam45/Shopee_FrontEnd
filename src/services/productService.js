@@ -39,12 +39,17 @@ export const updateProductStatus = async (productId, productStatus) => {
 };
 
 export const getProduct = async (page, limit) => {
-    const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products`, {
+    const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products/`, {
         params: {
             page,
             limit,
         },
     });
+    return response.data;
+};
+
+export const getTotalProducts = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products/total`);
     return response.data;
 };
 

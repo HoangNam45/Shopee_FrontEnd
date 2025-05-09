@@ -55,13 +55,14 @@ function UserProfile() {
         }
 
         const formDataObject = Object.fromEntries(formData.entries());
-        console.log(formDataObject);
 
         try {
             const response = await updateUserInfo(formData);
             setOriginalUserName(userName);
             setOriginalUserAvt(response.Avatar);
             setSelectedImage(null);
+
+            window.location.reload();
         } catch (error) {
             console.error('Error updating user', error);
         }

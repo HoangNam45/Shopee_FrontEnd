@@ -58,6 +58,7 @@
                     width: 20px;
                     height: 20px;
                     border-radius: 50px;
+                    object-fit: contain;
                 }
                 .navbar-user_auth_name {
                     color: #fff;
@@ -133,6 +134,10 @@
                             overflow: hidden;
                             &:hover {
                                 background-color: rgb(246, 246, 246);
+                            }
+                            &.active {
+                                background-color: #f0f0f0;
+                                color: var(--primary);
                             }
                         }
                     }

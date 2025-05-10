@@ -9,7 +9,7 @@ import { faMagnifyingGlass, faCartShopping } from '@fortawesome/free-solid-svg-i
 
 import { Button } from '../../../Button';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { Popover } from '@mui/material';
 
@@ -25,7 +25,7 @@ function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [query, setQuery] = useState('');
     const [inputValue, setInputValue] = useState('');
-    const { results } = useProductSearch(query);
+    const { results, setResults } = useProductSearch(query);
     const [userName, setUserName] = useState(null);
     const [userAvt, setUserAvt] = useState(null);
 
@@ -33,6 +33,10 @@ function Header() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const keyword = queryParams.get('keyword');
+
+    const [activeIndex, setActiveIndex] = useState(-1);
+
+    const suggestionRef = useRef(null);
 
     useEffect(() => {
         setQuery('');
@@ -56,8 +60,9 @@ function Header() {
     }, []);
 
     const handleInputChange = (e) => {
-        setQuery(e.target.value);
         setInputValue(e.target.value);
+        setQuery(e.target.value);
+        setActiveIndex(-1);
     };
 
     const handleClick = (event) => {
@@ -66,12 +71,19 @@ function Header() {
 
     const handleSearchingSubmit = (e) => {
         e.preventDefault();
-        handleSearch(inputValue);
+        const trimmed = inputValue.trim();
+        if (trimmed === '') return;
+
+        navigate(`/search?keyword=${encodeURIComponent(trimmed)}`);
+        setInputValue('');
+        setQuery('');
+        setResults([]);
+        setActiveIndex(-1);
     };
 
-    const handleSearch = (searchQuery) => {
-        navigate(`/search?keyword=${encodeURIComponent(searchQuery)}`);
-    };
+    // const handleSearch = (searchQuery) => {
+    //     navigate(`/search?keyword=${encodeURIComponent(searchQuery)}`);
+    // };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -83,6 +95,43 @@ function Header() {
         removeToken();
         window.location.reload();
     };
+
+    const handleKeyDown = (e) => {
+        const visibleResults = results.slice(0, 5);
+        if (visibleResults.length > 0) {
+            if (e.key === 'ArrowDown') {
+                const nextIndex = (activeIndex + 1) % visibleResults.length;
+                setActiveIndex(nextIndex);
+                setInputValue(visibleResults[nextIndex].Name);
+                e.preventDefault();
+            } else if (e.key === 'ArrowUp') {
+                const nextIndex = (activeIndex - 1 + visibleResults.length) % visibleResults.length;
+                setActiveIndex(nextIndex);
+                setInputValue(visibleResults[nextIndex].Name);
+                e.preventDefault();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                // Trigger form submit manually
+                document.querySelector('form').requestSubmit();
+            }
+        }
+    };
+
+    const handleClickOutside = (e) => {
+        if (suggestionRef.current && !suggestionRef.current.contains(e.target)) {
+            setInputValue('');
+            setActiveIndex(-1);
+            setQuery('');
+            setResults([]);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
         <header className={cx('shopee-top')}>
@@ -168,12 +217,14 @@ function Header() {
                     </div>
                 </Link>
                 <form className={cx('header-with-search_input')} onSubmit={handleSearchingSubmit}>
-                    <div className={cx('header-with-search_bar')}>
+                    <div ref={suggestionRef} className={cx('header-with-search_bar')}>
                         <input
                             type="text"
                             placeholder="Tìm kiếm trên Shopee"
+                            value={inputValue}
                             className={cx('header-with-search_bar_input')}
                             onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
                         />
                         <div
                             className={cx('header-with-search_bar_suggestion_wrap')}
@@ -181,11 +232,13 @@ function Header() {
                         >
                             {results.length > 0 && (
                                 <div className={cx('header-with-search_bar_suggestion')}>
-                                    {results.map((result) => (
+                                    {results.slice(0, 5).map((result, index) => (
                                         <Link
                                             to={`/search?keyword=${encodeURIComponent(result.Name)}`}
                                             key={result.Id}
-                                            className={cx('header-with-search_bar_suggestion_result')}
+                                            className={cx('header-with-search_bar_suggestion_result', {
+                                                active: index === activeIndex,
+                                            })}
                                         >
                                             {result.Name}
                                         </Link>

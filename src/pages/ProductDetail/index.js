@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import '../../assets/styles/globalClass.scss';
 import styles from './ProductDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { formatDate } from '../../utils/formatDate';
 import {
     faArrowLeft,
     faArrowRight,
@@ -136,7 +137,7 @@ function ProductDetail() {
                 <div className={cx('product_info')}>
                     <div className={cx('product_info_name')}>{product.Name}</div>
                     <div className={cx('product_info_status')}>
-                        <div className={cx('product_info_stars', 'line')}>
+                        {/* <div className={cx('product_info_stars', 'line')}>
                             <div className={cx('product_info_stars_number')}>5.0</div>
                             <div className={cx('product_info_stars_display')}>
                                 <div className={cx('product_info_stars_display_')}>
@@ -155,13 +156,13 @@ function ProductDetail() {
                                     <FontAwesomeIcon icon={faStar} />
                                 </div>
                             </div>
-                        </div>
-                        <div className={cx('product_info_status_')}>
+                        </div> */}
+                        {/* <div className={cx('product_info_status_')}>
                             <div className={cx('product_info_status_count', 'line')}>0</div>
                             <span>Đánh Giá</span>
-                        </div>
+                        </div> */}
                         <div className={cx('product_info_status_')}>
-                            <div className={cx('product_info_status_count')}>0</div>
+                            <div className={cx('product_info_status_count')}>{product.Sold}</div>
                             <span>Đã Bán</span>
                         </div>
                     </div>
@@ -185,9 +186,9 @@ function ProductDetail() {
                                 <div className={cx('product_info_choices_vouchers_value')}>Giảm ₫20k</div>
                             </div>
                         </div> */}
-                        <div className={cx('product_info_choices_field')}>
+                        {/* <div className={cx('product_info_choices_field')}>
                             <div className={cx('product_info_choices_field_')}>Vận Chuyển</div>
-                        </div>
+                        </div> */}
                         <div className={cx('product_info_choices_field', 'count_field')}>
                             <div className={cx('product_info_choices_field_')}>Số lượng</div>
                             <div className={cx('product_info_choices_field_amout')}>
@@ -230,47 +231,49 @@ function ProductDetail() {
                         </div>
                         <div className={cx('shop_info_interact_')}>
                             <div className={cx('shop_info_interact_name')}>{product.SellerName}</div>
-                            <div className={cx('shop_info_interact_last_onl')}>Online 52 Phút Trước</div>
+                            {/* <div className={cx('shop_info_interact_last_onl')}>Online 52 Phút Trước</div> */}
                             <div className={cx('shop_info_interact_actions')}>
-                                <Button small sub_primary className={cx('shop_info_interact_actions_btn')}>
+                                {/* <Button small sub_primary className={cx('shop_info_interact_actions_btn')}>
                                     <FontAwesomeIcon
                                         className={cx('shop_info_interact_actions_icon')}
                                         icon={faMessage}
                                     />
                                     Chat Ngay
-                                </Button>
-                                <Button small text>
+                                </Button> */}
+                                {/* <Button small text>
                                     <FontAwesomeIcon className={cx('shop_info_interact_actions_icon')} icon={faStore} />
                                     Xem Shop
-                                </Button>
+                                </Button> */}
                             </div>
                         </div>
                     </div>
                     <div className={cx('shop_info_more')}>
-                        <div className={cx('shop_info_more_satistics')}>
+                        {/* <div className={cx('shop_info_more_satistics')}>
                             <span>Đánh Giá</span>
                             <span className={cx('shop_info_more_satistics_')}>0</span>
                         </div>
                         <div className={cx('shop_info_more_satistics')}>
                             <span>Tỉ Lệ Phản Hồi</span>
                             <span className={cx('shop_info_more_satistics_')}>0%</span>
-                        </div>
+                        </div> */}
                         <div className={cx('shop_info_more_satistics')}>
                             <span>Tham Gia</span>
-                            <span className={cx('shop_info_more_satistics_')}>0 năm trước</span>
+                            <span className={cx('shop_info_more_satistics_')}>
+                                {formatDate(product.SellerParticipation)}
+                            </span>
                         </div>
-                        <div className={cx('shop_info_more_satistics')}>
+                        {/* <div className={cx('shop_info_more_satistics')}>
                             <span>Sản Phẩm</span>
                             <span className={cx('shop_info_more_satistics_')}>0</span>
-                        </div>
-                        <div className={cx('shop_info_more_satistics')}>
+                        </div> */}
+                        {/* <div className={cx('shop_info_more_satistics')}>
                             <span>Thời Gian Phản Hồi</span>
                             <span className={cx('shop_info_more_satistics_')}>trong vài giờ</span>
                         </div>
                         <div className={cx('shop_info_more_satistics')}>
                             <span>Người Theo Dõi</span>
                             <span className={cx('shop_info_more_satistics_')}>0</span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

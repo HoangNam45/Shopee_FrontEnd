@@ -145,15 +145,14 @@ export const getSellerDetailProduct = async (productId) => {
     return response.data;
 };
 
-export const getProductsBySearch = async (query) => {
+export const getProductsBySearch = async (query, page = 1, limit = 30, sortBy = 'latest') => {
     const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products/search/`, {
-        params: { query },
+        params: { query, page, limit, sortBy },
     });
     return response.data;
 };
 
 export const updateProductSold = async (productId, quantity) => {
-    console.log('Hello');
     console.log(productId);
     console.log(quantity);
     const response = await axios.put(

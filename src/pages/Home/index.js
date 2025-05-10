@@ -13,7 +13,6 @@ function Home() {
     const [totalProducts, setTotalProducts] = useState(0); // Total number of products
     const [currentPage, setCurrentPage] = useState(1); // Current page
     const productsPerPage = 30; // Limit to 42 products per page
-    console.log(products);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -62,6 +61,7 @@ function Home() {
                             id={product.ProductID}
                             slug={product.Slug}
                             discount={product.Discount_percentage}
+                            sold={product.Sold}
                         />
                     </Col>
                 ))}

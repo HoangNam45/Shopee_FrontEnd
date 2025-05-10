@@ -13,9 +13,10 @@ const useProductSearch = (query) => {
 
         const fetchData = async () => {
             // setLoading(true);
+
             try {
                 const response = await getProductsBySearch(query);
-                setResults(response);
+                setResults(response.products);
             } catch (error) {
                 console.error('Error fetching product search results:', error);
             } finally {
@@ -30,7 +31,7 @@ const useProductSearch = (query) => {
         return () => clearTimeout(debounceTimeout);
     }, [query]);
 
-    return { results };
+    return { results, setResults };
 };
 
 export default useProductSearch;

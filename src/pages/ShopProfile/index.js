@@ -20,7 +20,7 @@ function ShopProfile() {
                 const response = await getSellerInfo();
                 setInitialShopName(response.name);
                 setInitialShopAvt(response.avatar);
-                const avatarPreview = `http://localhost:5000/uploads/images/sellerAvatar/${response.avatar}`;
+                const avatarPreview = `${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/sellerAvatar/${response.avatar}`;
                 setShopName(response.name);
                 setShopAvtPreview(avatarPreview);
                 setShopAvt(response.avatar);
@@ -67,7 +67,7 @@ function ShopProfile() {
     };
     const handleCancel = () => {
         setShopName(initialShopName);
-        setShopAvtPreview(`http://localhost:5000/uploads/images/sellerAvatar/${initialShopAvt}`);
+        setShopAvtPreview(`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/sellerAvatar/${initialShopAvt}`);
         setShopAvt(initialShopAvt);
         setIsEditing(false);
     };

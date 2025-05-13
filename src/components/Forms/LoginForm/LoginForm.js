@@ -64,7 +64,7 @@ function LoginForm() {
                         <div className={cx('form_input_or_text')}>HOẶC</div>
                         <div className={cx('form_input_or_line')}></div>
                     </div>
-                    <div className={cx('form_input_method')}>
+                    {/* <div className={cx('form_input_method')}>
                         <Button text medium>
                             <div className={cx('form_input_method_')}>
                                 <div className={cx('form_input_method_img_fb')}></div>
@@ -77,7 +77,7 @@ function LoginForm() {
                                 <span>Google</span>
                             </div>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
                 <div className={cx('form_footer')}>
                     <span>Bạn mới biết đến Shopee?</span>

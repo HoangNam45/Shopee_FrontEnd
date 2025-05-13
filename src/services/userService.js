@@ -3,12 +3,16 @@ import axios from 'axios';
 
 export const addProductToCard = async (productData) => {
     try {
-        const response = await axios.post('http://localhost:5000/user/add_product_to_cart', productData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`,
-                'Content-Type': 'application/json',
+        const response = await axios.post(
+            `${process.env.REACT_APP_SHOPEE_BASE_URL}/user/add_product_to_cart`,
+            productData,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json',
+                },
             },
-        });
+        );
         return response.data;
     } catch (error) {
         console.error('Error adding product to cart:', error);
@@ -18,7 +22,7 @@ export const addProductToCard = async (productData) => {
 
 export const getUserCartItems = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/get_cart_items', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/get_cart_items`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -32,12 +36,16 @@ export const getUserCartItems = async () => {
 
 export const updateCartItemQuantity = async (productData) => {
     try {
-        const response = await axios.put('http://localhost:5000/user/update_cart_item_quantity', productData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`,
-                'Content-Type': 'application/json',
+        const response = await axios.put(
+            `${process.env.REACT_APP_SHOPEE_BASE_URL}/user/update_cart_item_quantity`,
+            productData,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json',
+                },
             },
-        });
+        );
         return response.data;
     } catch (error) {
         console.error('Error updating cart item quantity:', error);
@@ -47,11 +55,14 @@ export const updateCartItemQuantity = async (productData) => {
 
 export const deleteCartItem = async (productId) => {
     try {
-        const response = await axios.delete(`http://localhost:5000/user/delete_cart_item/${productId}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`,
+        const response = await axios.delete(
+            `${process.env.REACT_APP_SHOPEE_BASE_URL}/user/delete_cart_item/${productId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`,
+                },
             },
-        });
+        );
         return response.data;
     } catch (error) {
         console.error('Error deleting cart item:', error);
@@ -61,7 +72,7 @@ export const deleteCartItem = async (productId) => {
 
 export const createOrder = async (orderData) => {
     try {
-        const response = await axios.post('http://localhost:5000/user/create_order', orderData, {
+        const response = await axios.post(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/create_order`, orderData, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
                 'Content-Type': 'application/json',
@@ -76,7 +87,7 @@ export const createOrder = async (orderData) => {
 
 export const getUserPendingPurchases = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/pending_purchases', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/pending_purchases`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -90,7 +101,7 @@ export const getUserPendingPurchases = async () => {
 
 export const getUserShippingPurchases = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/shipping_purchases', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/shipping_purchases`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -104,7 +115,7 @@ export const getUserShippingPurchases = async () => {
 
 export const getUserCompletedPurchases = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/completed_purchases', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/completed_purchases`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -118,7 +129,7 @@ export const getUserCompletedPurchases = async () => {
 
 export const getUserCanceledPurchases = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/canceled_purchases', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/canceled_purchases`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -132,7 +143,7 @@ export const getUserCanceledPurchases = async () => {
 
 export const getUserFailDeliveryPurchases = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/fail_delivery_purchases', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/fail_delivery_purchases`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -146,7 +157,7 @@ export const getUserFailDeliveryPurchases = async () => {
 
 export const getUserAllPurchases = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/all_purchases', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/all_purchases`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -160,7 +171,7 @@ export const getUserAllPurchases = async () => {
 
 export const getUserInfo = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/user/get_user_info', {
+        const response = await axios.get(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/get_user_info`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -174,7 +185,7 @@ export const getUserInfo = async () => {
 
 export const updateUserInfo = async (userData) => {
     try {
-        const response = await axios.put('http://localhost:5000/user/update_user_info', userData, {
+        const response = await axios.put(`${process.env.REACT_APP_SHOPEE_BASE_URL}/user/update_user_info`, userData, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
                 'Content-Type': 'multipart/form-data',

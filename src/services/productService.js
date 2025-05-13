@@ -2,12 +2,16 @@ import axios from 'axios';
 import { getToken } from './tokenService';
 
 export const addProduct = async (productData) => {
-    const response = await axios.post(`${process.env.REACT_APP_SHOPEE_BASE_URL}/products/add_product`, productData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${getToken()}`,
+    const response = await axios.post(
+        `${process.env.REACT_APP_SHOPEE_BASE_URL}/products/seller/add_product`,
+        productData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${getToken()}`,
+            },
         },
-    });
+    );
     return response;
 };
 

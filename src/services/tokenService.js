@@ -1,13 +1,17 @@
+import { getCookie, setCookie, deleteCookie } from '../services/cookieService';
+
+// Now, export your functions
 export const getToken = () => {
-    return localStorage.getItem('token');
+    return getCookie('token');
 };
 
 export const setToken = (token) => {
-    localStorage.setItem('token', token);
+    // Set token cookie with 2 days expiration to match your JWT
+    setCookie('token', token, 2);
 };
 
 export const removeToken = () => {
-    localStorage.removeItem('token');
+    deleteCookie('token');
 };
 
 export const isAuthenticated = () => {

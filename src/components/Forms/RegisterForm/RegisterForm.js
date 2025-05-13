@@ -3,6 +3,8 @@ import styles from './RegisterForm.module.scss';
 import '../../../assets/styles/authForm.scss';
 import { Button } from '../../Button';
 import { Link } from 'react-router-dom';
+import { setToken } from '../../../services/tokenService';
+import { useNavigate } from 'react-router';
 
 import { register } from '../../../services/authService';
 // import { useState } from 'react';
@@ -12,14 +14,17 @@ import validationSchema from '../../../utils/registerValidationSchema';
 const cx = classNames.bind(styles);
 
 function RegisterForm() {
+    const navigate = useNavigate();
     return (
         <Formik
             initialValues={{ account: '', password: '', confirmPassword: '' }}
             validationSchema={validationSchema}
             onSubmit={async (values) => {
                 try {
-                    const response = register(values);
-                    console.log(response);
+                    const response = await register(values);
+                    const token = response.token;
+                    setToken(token);
+                    navigate('/');
                 } catch (error) {
                     console.error('Error register', error);
                 }
@@ -77,7 +82,7 @@ function RegisterForm() {
                         <div className={cx('form_input_or_text')}>HOẶC</div>
                         <div className={cx('form_input_or_line')}></div>
                     </div>
-                    <div className={cx('form_input_method')}>
+                    {/* <div className={cx('form_input_method')}>
                         <Button text medium>
                             <div className={cx('form_input_method_')}>
                                 <div className={cx('form_input_method_img_fb')}></div>
@@ -90,7 +95,7 @@ function RegisterForm() {
                                 <span>Google</span>
                             </div>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
                 <div className={cx('form_footer')}>
                     <span>Bạn đã có tài khoản?</span>

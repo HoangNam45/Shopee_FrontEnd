@@ -55,7 +55,7 @@ function Home() {
                 {products.map((product) => (
                     <Col key={product.ProductID} className={cx('custom_col_home')}>
                         <Product
-                            img={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
+                            img={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${product.BackGround}`}
                             name={product.Name}
                             price={product.Original_price}
                             id={product.ProductID}
@@ -67,16 +67,14 @@ function Home() {
                 ))}
             </Row>
             <Row>
-                <Col className={cx('pagination_wrapper')}>
-                    <Pagination
-                        count={Math.ceil(totalProducts / productsPerPage)} // Total pages
-                        page={currentPage}
-                        onChange={handlePageChange}
-                        size="large"
-                        className={cx('product_list_pagination')}
-                        shape="rounded"
-                    />
-                </Col>
+                <Pagination
+                    count={Math.ceil(totalProducts / productsPerPage)} // Total pages
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    size="large"
+                    className={cx('product_list_pagination')}
+                    shape="rounded"
+                />
             </Row>
         </Container>
     );

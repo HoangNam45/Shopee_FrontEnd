@@ -149,17 +149,17 @@ function Header() {
                 </div>
                 <div className={cx('navbar-spacer')}></div>
                 <div className={cx('navbar-user')}>
-                    <div className={cx('navbar-user_text')}>
+                    {/* <div className={cx('navbar-user_text')}>
                         <FontAwesomeIcon icon={faBell} className={cx('navbar-user_icon')} />
                         <span>Thông báo</span>
-                    </div>
+                    </div> */}
                     <div className={cx('navbar-user_auth')}>
                         {isAuthenticated() ? (
                             <>
                                 <div onClick={handleClick} className={cx('navigate_popover')}>
                                     <img
                                         className={cx('navbar-user_auth_avt')}
-                                        src={`http://localhost:5000/uploads/images/userAvatar/${userAvt}`}
+                                        src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/userAvatar/${userAvt}`}
                                         alt="avt"
                                     />
                                     <span className={cx('navbar-user_auth_name')}>{userName}</span>

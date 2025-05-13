@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Pagination from '@mui/material/Pagination';
+import NoResults from '../../components/NoResults/NoResults';
 
 const cx = classNames.bind(styles);
 
@@ -59,59 +60,63 @@ function SearchPage() {
                     </div>
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <div className={cx('result_sort_wrapper')}>
-                        <div className={cx('result_sort_text')}>Sắp xếp theo</div>
-                        <Button
-                            primary={sortBy === 'latest'}
-                            text={sortBy !== 'latest'}
-                            small
-                            className={cx('btn_sort')}
-                            onClick={() => handleSort('latest')}
-                        >
-                            Mới nhất
-                        </Button>
-                        <Button
-                            primary={sortBy === 'sold'}
-                            text={sortBy !== 'sold'}
-                            small
-                            className={cx('btn_sort')}
-                            onClick={() => handleSort('sold')}
-                        >
-                            Bán chạy
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
-            <Row xl={6} className={cx('custom_row_search')}>
-                {products.map((product) => (
-                    <Col key={product.Id} className={cx('custom_col_search')}>
-                        <Product
-                            img={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
-                            name={product.Name}
-                            price={product.Final_price}
-                            id={product.ProductID}
-                            slug={product.Slug}
-                            discount={product.Discount_percentage}
-                            sold={product.Sold}
-                        />
-                    </Col>
-                ))}
-            </Row>
+            {products.length === 0 ? (
+                <NoResults message="Không tìm thấy kết quả nào :'(" />
+            ) : (
+                <>
+                    <Row>
+                        <Col>
+                            <div className={cx('result_sort_wrapper')}>
+                                <div className={cx('result_sort_text')}>Sắp xếp theo</div>
+                                <Button
+                                    primary={sortBy === 'latest'}
+                                    text={sortBy !== 'latest'}
+                                    small
+                                    className={cx('btn_sort')}
+                                    onClick={() => handleSort('latest')}
+                                >
+                                    Mới nhất
+                                </Button>
+                                <Button
+                                    primary={sortBy === 'sold'}
+                                    text={sortBy !== 'sold'}
+                                    small
+                                    className={cx('btn_sort')}
+                                    onClick={() => handleSort('sold')}
+                                >
+                                    Bán chạy
+                                </Button>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row xl={6} className={cx('custom_row_search')}>
+                        {products.map((product) => (
+                            <Col key={product.Id} className={cx('custom_col_search')}>
+                                <Product
+                                    img={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${product.BackGround}`}
+                                    name={product.Name}
+                                    price={product.Final_price}
+                                    id={product.ProductID}
+                                    slug={product.Slug}
+                                    discount={product.Discount_percentage}
+                                    sold={product.Sold}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
 
-            <Row>
-                <Col className={cx('pagination_wrapper')}>
-                    <Pagination
-                        count={Math.ceil(total / productsPerPage)}
-                        page={currentPage}
-                        onChange={handlePageChange}
-                        size="large"
-                        shape="rounded"
-                        className={cx('product_list_pagination')}
-                    />
-                </Col>
-            </Row>
+                    <Row>
+                        <Pagination
+                            count={Math.ceil(total / productsPerPage)}
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            size="large"
+                            shape="rounded"
+                            className={cx('product_list_pagination')}
+                        />
+                    </Row>
+                </>
+            )}
         </Container>
     );
 }

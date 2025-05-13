@@ -4,15 +4,7 @@ import '../../assets/styles/globalClass.scss';
 import styles from './ProductDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatDate } from '../../utils/formatDate';
-import {
-    faArrowLeft,
-    faArrowRight,
-    faStar,
-    faCartShopping,
-    faMessage,
-    faStore,
-    faCircleCheck,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faCartShopping, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../components/Button';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -71,7 +63,6 @@ function ProductDetail() {
             product_id: product.ProductId,
             quantity: quantity,
         };
-        console.log(productData);
         await addProductToCard(productData);
         setShowSuccessMessage(true);
 
@@ -105,7 +96,7 @@ function ProductDetail() {
                         <img
                             alt="..."
                             className={cx('product_img_current')}
-                            src={`http://localhost:5000/uploads/images/productImages/${currentImage}`}
+                            src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productImages/${currentImage}`}
                         />
                     </div>
                     <div className={cx('product_img_preview_wrap')}>
@@ -125,7 +116,7 @@ function ProductDetail() {
                                     className={cx('product_img_preview_', {
                                         active: imageUrl === currentImage,
                                     })}
-                                    src={`http://localhost:5000/uploads/images/productImages/${imageUrl}`}
+                                    src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productImages/${imageUrl}`}
                                     alt="product_img_preview_"
                                     onMouseEnter={() => handleMouseEnter(imageUrl)}
                                 />
@@ -226,7 +217,7 @@ function ProductDetail() {
                             <img
                                 alt="?"
                                 className={cx('shop_info_interact_avt')}
-                                src={`http://localhost:5000/uploads/images/sellerAvatar/${product.SellerAvatar}`}
+                                src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/sellerAvatar/${product.SellerAvatar}`}
                             />
                         </div>
                         <div className={cx('shop_info_interact_')}>
@@ -281,7 +272,9 @@ function ProductDetail() {
             <div className={cx('board', 'product_description')}>
                 <div className={cx('product_description_')}>
                     <div className={cx('product_description_header')}>MÔ TẢ SẢN PHẨM</div>
-                    <div className={cx('product_description_about')}>{product.Description}</div>
+                    <div style={{ whiteSpace: 'pre-line' }} className={cx('product_description_about')}>
+                        {product.Description}
+                    </div>
                 </div>
             </div>
         </Container>

@@ -203,7 +203,7 @@ function CreateDiscountPage() {
                                             <div className={cx('tabel_body_product_name_img')}>
                                                 <img
                                                     className={cx('product_list_body_name_img_')}
-                                                    src={`http://localhost:5000/uploads/images/productBackGroundImage/${currentProduct.BackGround}`}
+                                                    src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${currentProduct.BackGround}`}
                                                     alt="img"
                                                 />
                                             </div>
@@ -314,7 +314,7 @@ function CreateDiscountPage() {
                                                     <div className={cx('tabel_body_product_name_img')}>
                                                         <img
                                                             className={cx('product_list_body_name_img_')}
-                                                            src={`http://localhost:5000/uploads/images/productBackGroundImage/${product.BackGround}`}
+                                                            src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${product.BackGround}`}
                                                             alt="img"
                                                         />
                                                     </div>

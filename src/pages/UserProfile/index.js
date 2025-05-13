@@ -18,7 +18,7 @@ function UserProfile() {
             try {
                 const response = await getUserInfo();
                 console.log(response.Avatar);
-                const avatar = `http://localhost:5000/uploads/images/userAvatar/${response.Avatar}`;
+                const avatar = `${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/userAvatar/${response.Avatar}`;
                 setOriginalUserName(response.Name);
                 setUserAvtPreview(avatar);
                 setUserName(response.Name);

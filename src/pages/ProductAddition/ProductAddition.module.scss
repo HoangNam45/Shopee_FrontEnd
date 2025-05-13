@@ -34,7 +34,7 @@
         }
         .product_add_info_ {
             display: flex;
-            margin-bottom: 24px;
+            margin-bottom: 4px;
         }
     }
 }
@@ -69,7 +69,7 @@
 }
 .product_add_info_field_input_name_product_wrap {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     flex: 1;
 }
 .product_add_info_field_input_name_product {
@@ -82,6 +82,8 @@
     font-size: 1.4rem;
 }
 .product_add_info_field_input_describe_product_wrap {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     flex: 1;
 }
@@ -145,4 +147,15 @@
 }
 .product_add_save_btn {
     margin-left: 16px;
+}
+.error_message {
+    color: #f5222d;
+    font-size: 1.4rem;
+    margin-top: 4px;
+}
+.error_ {
+    margin-left: 160px;
+}
+.product_add_info_stock {
+    margin-top: 24px;
 }

@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { addProduct, updateProduct, updateProductStatus, deleteProduct } from '../../services/productService';
 import { useParams } from 'react-router-dom';
+import { validateField, validateImagesOnSubmit } from '../../utils/validateProductField';
 import { getSellerDetailProduct } from '../../services/productService';
-
 const cx = classNames.bind(styles);
 
 const ProductAddition = () => {
     const navigate = useNavigate();
-
+    const [productImagesError, setProductImagesError] = useState('');
+    const [backGroundImageError, setBackGroundImageError] = useState('');
     const { productId } = useParams();
     const [loading, setLoading] = useState(true);
 
@@ -24,11 +25,17 @@ const ProductAddition = () => {
         productDescription: '',
         productPrice: '',
         productStock: '',
-        productPriceRange: [],
-        productSKU: '',
+        // productSKU: '',
         productExistingImages: [],
         productExistingBackGroundImage: '',
         productStatus: '',
+    });
+
+    const [fieldErrors, setFieldErrors] = useState({
+        productName: '',
+        productDescription: '',
+        productPrice: '',
+        productStock: '',
     });
 
     useEffect(() => {
@@ -44,8 +51,7 @@ const ProductAddition = () => {
                         productDescription: response.Description || '',
                         productPrice: response.Price || '',
                         productStock: response.Stock || '',
-                        productPriceRange: response.PriceRange || [],
-                        productSKU: response.SKU || '',
+                        // productSKU: response.SKU || '',
                         productStatus: response.Status || '',
                     });
                     setLoading(false);
@@ -64,22 +70,56 @@ const ProductAddition = () => {
             ...formData,
             [name]: value,
         });
+
+        setFieldErrors({ ...fieldErrors, [name]: validateField(name, value) });
+    };
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        setFieldErrors({ ...fieldErrors, [name]: validateField(name, value) });
     };
     const handleImageChange = (image, name) => {
         setFormData({
             ...formData,
             [name]: image,
         });
+
+        // Clear error if user adds image(s)
+        if (name === 'productImages' && image.length > 0) {
+            setProductImagesError('');
+        }
+        if (name === 'productBackGroundImage' && image.length > 0) {
+            setBackGroundImageError('');
+        }
     };
-    const handlePriceRangeChange = (priceRanges) => {
-        setFormData({
-            ...formData,
-            productPriceRange: priceRanges,
-        });
-    };
+    // const handlePriceRangeChange = (priceRanges) => {
+    //     setFormData({
+    //         ...formData,
+    //         productPriceRange: priceRanges,
+    //     });
+    // };
 
     const handleSubmit = async (e, productStatus) => {
         e.preventDefault();
+
+        // Validate all fields before submit
+        const newFieldErrors = {
+            productName: validateField('productName', formData.productName),
+            productDescription: validateField('productDescription', formData.productDescription),
+            productPrice: validateField('productPrice', formData.productPrice),
+            productStock: validateField('productStock', formData.productStock),
+        };
+        setFieldErrors(newFieldErrors);
+
+        // Validate images using utility
+        const { productImagesError, backGroundImageError } = validateImagesOnSubmit(formData);
+        setProductImagesError(productImagesError);
+        setBackGroundImageError(backGroundImageError);
+        if (productImagesError || backGroundImageError) return;
+
+        // If any field error, do not submit
+        if (Object.values(newFieldErrors).some((err) => err)) return;
+
         const newFormData = new FormData();
         if (formData.productImages) {
             formData.productImages.forEach((image) => {
@@ -101,8 +141,8 @@ const ProductAddition = () => {
         newFormData.append('productDescription', formData.productDescription);
         newFormData.append('productPrice', formData.productPrice);
         newFormData.append('productStock', formData.productStock);
-        newFormData.append('productPriceRange', JSON.stringify(formData.productPriceRange));
-        newFormData.append('productSKU', formData.productSKU);
+        // newFormData.append('productPriceRange', JSON.stringify(formData.productPriceRange));
+        // newFormData.append('productSKU', formData.productSKU);
         newFormData.append('productStatus', productStatus);
 
         try {
@@ -142,7 +182,6 @@ const ProductAddition = () => {
         }
     };
 
-    console.log('formData', formData);
     if (loading && productId) return <div>Loading...</div>;
     return (
         <form onSubmit={handleSubmit} className={cx('product_add_wrap')}>
@@ -170,6 +209,7 @@ const ProductAddition = () => {
                             flex
                             productExistingImages={formData.productExistingImages}
                         />
+                        {productImagesError && <div className={cx('error_message')}>{productImagesError}</div>}
                     </div>
                 </div>
                 <div className={cx('product_add_info_')}>
@@ -194,6 +234,8 @@ const ProductAddition = () => {
                         </ul>
                     </div>
                 </div>
+                {backGroundImageError && <div className={cx('error_message', 'error_')}>{backGroundImageError}</div>}
+
                 <div className={cx('product_add_info_')}>
                     <div className={cx('product_add_info_field')}>
                         <span>* </span>
@@ -203,11 +245,15 @@ const ProductAddition = () => {
                         <input
                             name="productName"
                             onChange={handleChange}
+                            onBlur={handleBlur}
                             type="text"
                             placeholder="Tên sản phẩm + Thương hiệu + Model + Thông số kỹ thuật"
                             className={cx('product_add_info_field_input_name_product')}
                             value={formData?.productName || ''}
                         />
+                        {fieldErrors.productName && (
+                            <div className={cx('error_message')}>{fieldErrors.productName}</div>
+                        )}
                     </div>
                 </div>
                 <div className={cx('product_add_info_')}>
@@ -219,10 +265,14 @@ const ProductAddition = () => {
                         <textarea
                             name="productDescription"
                             onChange={handleChange}
+                            onBlur={handleBlur}
                             type="text"
                             className={cx('product_add_info_field_input_describe_product')}
                             value={formData?.productDescription || ''}
                         />
+                        {fieldErrors.productDescription && (
+                            <div className={cx('error_message')}>{fieldErrors.productDescription}</div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -252,15 +302,26 @@ const ProductAddition = () => {
                         <input
                             name="productPrice"
                             onChange={handleChange}
-                            type="text"
+                            onBlur={handleBlur}
+                            type="number"
+                            min="1"
                             placeholder="Giá sản phẩm"
                             className={cx('product_add_info_field_input_price')}
                             value={formData?.productPrice || ''}
+                            // Optional: Prevent typing 'e', '+', '-' (for integer only)
+                            onKeyDown={(e) => {
+                                if (['e', 'E', '+', '-'].includes(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                 </div>
+                {fieldErrors.productPrice && (
+                    <div className={cx('error_message', 'error_')}>{fieldErrors.productPrice}</div>
+                )}
 
-                <div className={cx('product_add_info_')}>
+                <div className={cx('product_add_info_', 'product_add_info_stock')}>
                     <div className={cx('product_add_info_field')}>
                         <span>* </span>
                         <span>Kho hàng</span>
@@ -269,12 +330,22 @@ const ProductAddition = () => {
                         <input
                             name="productStock"
                             onChange={handleChange}
-                            type="text"
+                            onBlur={handleBlur}
+                            type="number"
+                            min="1"
+                            onKeyDown={(e) => {
+                                if (['e', 'E', '+', '-'].includes(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
                             className={cx('product_add_info_field_input_price')}
                             value={formData?.productStock || ''}
                         />
                     </div>
                 </div>
+                {fieldErrors.productStock && (
+                    <div className={cx('error_message', 'error_')}>{fieldErrors.productStock}</div>
+                )}
 
                 {/* <div className={cx('product_add_info_')}>
                     <div className={cx('product_add_info_field')}>

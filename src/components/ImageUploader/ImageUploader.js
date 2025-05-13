@@ -56,7 +56,7 @@ const ImageUploader = ({
                 <div className={cx('render_img_wrap')} key={index}>
                     <img
                         className={cx('render_img')}
-                        src={`http://localhost:5000/uploads/images/productImages/${image}`}
+                        src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productImages/${image}`}
                         alt={`upload-${index}`}
                     />
                     <div className={cx('render_img_delete')}>
@@ -72,7 +72,7 @@ const ImageUploader = ({
                 <div className={cx('render_img_wrap')}>
                     <img
                         className={cx('render_img')}
-                        src={`http://localhost:5000/uploads/images/productBackGroundImage/${existingBackGroundImage}`}
+                        src={`${process.env.REACT_APP_SHOPEE_BASE_URL}/uploads/images/productBackGroundImage/${existingBackGroundImage}`}
                         alt={`upload`}
                     />
                     <div className={cx('render_img_delete')}>

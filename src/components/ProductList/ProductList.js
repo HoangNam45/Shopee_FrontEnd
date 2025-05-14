@@ -106,7 +106,7 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                                 <TableCell className={cx('product_list_body_satistic')}>{product.Stock}</TableCell>
                                 <TableCell>
                                     <Link
-                                        to={`http://localhost:3000/seller/portal_product/${product.Id}`}
+                                        to={`/seller/portal_product/${product.Id}`}
                                         className={cx('product_list_body_operation')}
                                     >
                                         Cập nhật

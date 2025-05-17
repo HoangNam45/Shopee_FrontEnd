@@ -12,6 +12,7 @@ import { getProductDetail } from '../../services/productService';
 import { addProductToCard } from '../../services/userService';
 import QuantityButton from '../../components/QuantityButton/QuantityButton';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from '../../services/tokenService';
 
 import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
@@ -59,6 +60,10 @@ function ProductDetail() {
     };
 
     const handleAddToCart = async () => {
+        if (!getToken()) {
+            navigate('/login');
+            return;
+        }
         const productData = {
             product_id: product.ProductId,
             quantity: quantity,
@@ -72,6 +77,10 @@ function ProductDetail() {
     };
 
     const handleBuy = () => {
+        if (!getToken()) {
+            navigate('/login');
+            return;
+        }
         const checkedProducts = {
             Id: product.ProductId,
             BackGround: product.BackGround,

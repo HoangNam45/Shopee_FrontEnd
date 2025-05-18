@@ -177,6 +177,9 @@ const ProductAddition = () => {
         try {
             deleteProduct(productId);
             navigate('/seller/all_products');
+            setTimeout(() => {
+                window.location.reload();
+            }, 100); // 100ms delay to ensure navigation
         } catch (error) {
             console.log(error);
         }

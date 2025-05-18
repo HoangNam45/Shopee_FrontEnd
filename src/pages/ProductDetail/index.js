@@ -12,7 +12,7 @@ import { getProductDetail } from '../../services/productService';
 import { addProductToCard } from '../../services/userService';
 import QuantityButton from '../../components/QuantityButton/QuantityButton';
 import { useNavigate } from 'react-router-dom';
-import { getToken } from '../../services/tokenService';
+import { getToken, getUserIdFromToken } from '../../services/tokenService';
 
 import formatPrice from '../../utils/formarPrice';
 const cx = classNames.bind(styles);
@@ -24,7 +24,8 @@ function ProductDetail() {
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
-
+    const currentUserId = getUserIdFromToken();
+    const isSeller = currentUserId && product && String(currentUserId) === String(product.SellerId);
     useEffect(() => {
         const fetchData = async () => {
             const response = await getProductDetail(slug);
@@ -190,24 +191,40 @@ function ProductDetail() {
                             <div className={cx('product_info_choices_field_')}>Vận Chuyển</div>
                         </div> */}
                         <div className={cx('product_info_choices_field', 'count_field')}>
-                            <div className={cx('product_info_choices_field_')}>Số lượng</div>
-                            <div className={cx('product_info_choices_field_amout')}>
-                                <QuantityButton stock={product.Stock} onQuantityChange={setQuantity} />
-                                <div className={cx('product_info_choices_field_amout_remain')}>
-                                    {product.Stock} sản phẩm có sẵn
-                                </div>
-                            </div>
+                            {!isSeller && (
+                                <>
+                                    <div className={cx('product_info_choices_field_')}>Số lượng</div>
+                                    <div className={cx('product_info_choices_field_amout')}>
+                                        <QuantityButton stock={product.Stock} onQuantityChange={setQuantity} />
+                                        <div className={cx('product_info_choices_field_amout_remain')}>
+                                            {product.Stock} sản phẩm có sẵn
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
 
                     <div className={cx('product_info_actions')}>
-                        <Button onClick={handleAddToCart} large sub_primary className={cx('product_info_actions_btn')}>
-                            <FontAwesomeIcon icon={faCartShopping} className={cx('product_info_actions_icon')} />
-                            Thêm Vào Giỏ Hàng
-                        </Button>
-                        <Button onClick={handleBuy} large primary className={cx('product_info_actions_btn')}>
-                            Mua Ngay
-                        </Button>
+                        {!isSeller && (
+                            <>
+                                <Button
+                                    onClick={handleAddToCart}
+                                    large
+                                    sub_primary
+                                    className={cx('product_info_actions_btn')}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faCartShopping}
+                                        className={cx('product_info_actions_icon')}
+                                    />
+                                    Thêm Vào Giỏ Hàng
+                                </Button>
+                                <Button onClick={handleBuy} large primary className={cx('product_info_actions_btn')}>
+                                    Mua Ngay
+                                </Button>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

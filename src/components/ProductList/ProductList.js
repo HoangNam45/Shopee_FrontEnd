@@ -90,9 +90,9 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                                             )}
 
                                             <div className={cx('product_list_body_name_info_name')}>{product.Name}</div>
-                                            <div className={cx('product_list_body_name_info_SKU')}>
+                                            {/* <div className={cx('product_list_body_name_info_SKU')}>
                                                 SKU sản phẩm: - {product.SKU}
-                                            </div>
+                                            </div> */}
                                             {/* <div className={cx('product_list_body_name_info_ID')}>
                                             ID Sản phẩm: 255123128379
                                         </div> */}

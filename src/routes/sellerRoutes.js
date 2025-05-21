@@ -1,22 +1,18 @@
-import { lazy } from 'react';
 import { HeaderWithSidebar, HeaderOnly } from '../components/Layouts';
-const SellerHome = lazy(() => import('../pages/SellerHome'));
-const AllProduct = lazy(() => import('../pages/ProductManagement/AllProduct'));
-const ActiveProduct = lazy(() => import('../pages/ProductManagement/ActiveProduct'));
-const HiddenProduct = lazy(() => import('../pages/ProductManagement/HiddenProduct'));
-
-const ProductAddition = lazy(() => import('../pages/ProductAddition'));
-const ShopProfile = lazy(() => import('../pages/ShopProfile'));
-
-const SellerDiscountPage = lazy(() => import('../pages/SellerDiscountPage'));
-const CreateDiscountPage = lazy(() => import('../pages/CreateDiscountPage'));
-
-const AllOrders = lazy(() => import('../pages/OrdersManagement/AllOrders'));
-const PendingOrders = lazy(() => import('../pages/OrdersManagement/PendingOrders'));
-const ShippingOrders = lazy(() => import('../pages/OrdersManagement/ShippingOrders'));
-const CanceledOrders = lazy(() => import('../pages/OrdersManagement/CanceledOrders'));
-const FailedDeliveryOrders = lazy(() => import('../pages/OrdersManagement/FailedDeliveryOrders'));
-const CompletedOrders = lazy(() => import('../pages/OrdersManagement/CompletedOrders'));
+import SellerHome from '../pages/SellerHome';
+import AllProduct from '../pages/ProductManagement/AllProduct';
+import ActiveProduct from '../pages/ProductManagement/ActiveProduct';
+import HiddenProduct from '../pages/ProductManagement/HiddenProduct';
+import ProductAddition from '../pages/ProductAddition';
+import ShopProfile from '../pages/ShopProfile';
+import SellerDiscountPage from '../pages/SellerDiscountPage';
+import CreateDiscountPage from '../pages/CreateDiscountPage';
+import AllOrders from '../pages/OrdersManagement/AllOrders';
+import PendingOrders from '../pages/OrdersManagement/PendingOrders';
+import ShippingOrders from '../pages/OrdersManagement/ShippingOrders';
+import CanceledOrders from '../pages/OrdersManagement/CanceledOrders';
+import FailedDeliveryOrders from '../pages/OrdersManagement/FailedDeliveryOrders';
+import CompletedOrders from '../pages/OrdersManagement/CompletedOrders';
 
 const sellerRoutes = [
     { path: '/seller', component: SellerHome, layout: HeaderWithSidebar },

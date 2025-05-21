@@ -78,9 +78,9 @@ function ShopProfile() {
                 <div className={cx('shop_profile_header_info')}>Thông tin cơ bản</div>
                 {!isEditing && (
                     <div className={cx('shop_profile_header_info_btn')}>
-                        <Button className={cx('shop_profile_header_info_btn_')} text small>
+                        {/* <Button className={cx('shop_profile_header_info_btn_')} text small>
                             Xem Shop của tôi
-                        </Button>
+                        </Button> */}
                         <Button onClick={handleEditing} className={cx('shop_profile_header_info_btn_')} text small>
                             Chỉnh Sửa
                         </Button>

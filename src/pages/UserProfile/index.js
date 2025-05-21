@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 function UserProfile() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [userName, setUserName] = useState('');
+    const [userAccount, setUserAccount] = useState('');
     const [originalUserName, setOriginalUserName] = useState('');
     const [originalUserAvt, setOriginalUserAvt] = useState(null);
     const [userAvtPreview, setUserAvtPreview] = useState('/images/DefaultUser.jpg');
@@ -22,6 +23,7 @@ function UserProfile() {
                 setOriginalUserName(response.Name);
                 setUserAvtPreview(avatar);
                 setUserName(response.Name);
+                setUserAccount(response.Account);
                 setOriginalUserAvt(response.Avatar);
             } catch (error) {
                 console.error('Error fetching user', error);
@@ -83,7 +85,7 @@ function UserProfile() {
                                 <div className={cx('user_profile_account_info_field')}>
                                     <span>Tên đăng nhập</span>
                                 </div>
-                                <div className={cx('user_profile_account_info_value')}>lahao357</div>
+                                <div className={cx('user_profile_account_info_value')}>{userAccount}</div>
                             </div>
 
                             <div className={cx('user_profile_account_info')}>

@@ -1,10 +1,9 @@
-import { lazy } from 'react';
 import { DefaultLayout } from '../components/Layouts';
 
-const Home = lazy(() => import('../pages/Home'));
-const SearchPage = lazy(() => import('../pages/SearchPage'));
-const Cart = lazy(() => import('../pages/Cart'));
-const Checkout = lazy(() => import('../pages/Checkout'));
+import Home from '../pages/Home';
+import SearchPage from '../pages/SearchPage';
+import Cart from '../pages/Cart';
+import Checkout from '../pages/Checkout';
 
 const mainRoutes = [
     { path: '/', component: Home, layout: DefaultLayout },

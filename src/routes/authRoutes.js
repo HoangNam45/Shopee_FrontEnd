@@ -1,6 +1,5 @@
-import { lazy } from 'react';
 import { DefaultLayout } from '../components/Layouts';
-const Auth = lazy(() => import('../pages/Auth'));
+import Auth from '../pages/Auth';
 
 const authRoutes = [
     { path: '/login', component: Auth, layout: DefaultLayout },

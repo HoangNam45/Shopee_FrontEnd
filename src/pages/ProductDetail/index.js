@@ -4,7 +4,13 @@ import '../../assets/styles/globalClass.scss';
 import styles from './ProductDetail.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatDate } from '../../utils/formatDate';
-import { faArrowLeft, faArrowRight, faCartShopping, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowLeft,
+    faArrowRight,
+    faCartShopping,
+    faCircleCheck,
+    faCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../../components/Button';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -22,6 +28,7 @@ function ProductDetail() {
     const [startIndex, setStartIndex] = useState(0);
     const [currentImage, setCurrentImage] = useState(null);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [showOutOfStockMessage, setShowOutOfStockMessage] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     const currentUserId = getUserIdFromToken();
@@ -65,6 +72,11 @@ function ProductDetail() {
             navigate('/login');
             return;
         }
+        if (product.Stock === 0) {
+            setShowOutOfStockMessage(true);
+            setTimeout(() => setShowOutOfStockMessage(false), 3000);
+            return;
+        }
         const productData = {
             product_id: product.ProductId,
             quantity: quantity,
@@ -80,6 +92,11 @@ function ProductDetail() {
     const handleBuy = () => {
         if (!getToken()) {
             navigate('/login');
+            return;
+        }
+        if (product.Stock === 0) {
+            setShowOutOfStockMessage(true);
+            setTimeout(() => setShowOutOfStockMessage(false), 3000);
             return;
         }
         const checkedProducts = {
@@ -233,6 +250,16 @@ function ProductDetail() {
                 <div className={cx('success_message')}>
                     <FontAwesomeIcon className={cx('success_icon')} icon={faCircleCheck} />
                     <span>Thêm vào giỏ hàng thành công</span>
+                </div>
+            )}
+
+            {showOutOfStockMessage && (
+                <div className={cx('error')}>
+                    <FontAwesomeIcon className={cx('error_icon')} icon={faCircleXmark} />
+                    <div>
+                        <div>Sản phẩm đã hết hàng :'(</div>
+                        <div>Vui lòng quay lại sau</div>
+                    </div>
                 </div>
             )}
 

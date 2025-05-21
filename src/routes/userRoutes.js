@@ -1,12 +1,12 @@
 import { DefaultLayout } from '../components/Layouts';
-import { lazy } from 'react';
-const AllPurchases = lazy(() => import('../pages/PurchasesManagement/AllPurchases'));
-const CompletedPurchases = lazy(() => import('../pages/PurchasesManagement/CompletedPurchases'));
-const ShippingPurchases = lazy(() => import('../pages/PurchasesManagement/ShippingPurchases'));
-const FailDeliveryPurchases = lazy(() => import('../pages/PurchasesManagement/FailDeliveryPurchases'));
-const PendingPurchases = lazy(() => import('../pages/PurchasesManagement/PendingPurchases'));
-const CanceledPurchases = lazy(() => import('../pages/PurchasesManagement/CanceledPurchases'));
-const UserProfile = lazy(() => import('../pages/UserProfile'));
+
+import AllPurchases from '../pages/PurchasesManagement/AllPurchases';
+import CompletedPurchases from '../pages/PurchasesManagement/CompletedPurchases';
+import ShippingPurchases from '../pages/PurchasesManagement/ShippingPurchases';
+import FailDeliveryPurchases from '../pages/PurchasesManagement/FailDeliveryPurchases';
+import PendingPurchases from '../pages/PurchasesManagement/PendingPurchases';
+import CanceledPurchases from '../pages/PurchasesManagement/CanceledPurchases';
+import UserProfile from '../pages/UserProfile';
 
 const userRoutes = [
     { path: '/user/all_purchases', component: AllPurchases, layout: DefaultLayout },

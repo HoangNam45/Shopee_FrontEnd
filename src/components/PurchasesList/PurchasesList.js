@@ -87,9 +87,9 @@ const PurchasesList = ({ products }) => {
                             <TableCell className={cx('orders_list_header')} style={{ width: '19%' }}>
                                 Trạng thái
                             </TableCell>
-                            <TableCell className={cx('orders_list_header')} style={{ width: '18%' }}>
+                            {/* <TableCell className={cx('orders_list_header')} style={{ width: '18%' }}>
                                 Thao tác
-                            </TableCell>
+                            </TableCell> */}
                         </TableRow>
                     </TableHead>
                 </Table>
@@ -133,10 +133,10 @@ const PurchasesList = ({ products }) => {
                                         className={cx('orders_list_header')}
                                         style={{ width: '19%' }}
                                     ></TableCell>
-                                    <TableCell
+                                    {/* <TableCell
                                         className={cx('orders_list_header')}
                                         style={{ width: '18%' }}
-                                    ></TableCell>
+                                    ></TableCell> */}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -196,7 +196,7 @@ const PurchasesList = ({ products }) => {
                                             )}
                                         </TableCell>
 
-                                        <TableCell>
+                                        {/* <TableCell>
                                             {product.status === 'Pending' && (
                                                 <div className={cx('orders_list_body_product_action')}>
                                                     <Button text small>
@@ -204,7 +204,7 @@ const PurchasesList = ({ products }) => {
                                                     </Button>
                                                 </div>
                                             )}
-                                        </TableCell>
+                                        </TableCell> */}
                                     </TableRow>
                                 ))}
                             </TableBody>

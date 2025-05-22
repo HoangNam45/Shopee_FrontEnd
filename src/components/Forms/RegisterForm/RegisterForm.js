@@ -26,6 +26,7 @@ function RegisterForm() {
                     setToken(token);
                     navigate('/');
                 } catch (error) {
+                    alert('Tên đăng nhập đã được sử dụng, vui lòng thử lại');
                     console.error('Error register', error);
                 }
             }}

@@ -99,7 +99,7 @@ const ProductList = ({ products, totalProducts, limit, handleDataFromPagination,
                                         </div>
                                     </div>
                                 </TableCell>
-                                <TableCell className={cx('product_list_body_satistic')}>0</TableCell>
+                                <TableCell className={cx('product_list_body_satistic')}>{product.Sold}</TableCell>
                                 <TableCell className={cx('product_list_body_satistic')}>
                                     ₫{formatPrice(product.Price)}
                                 </TableCell>

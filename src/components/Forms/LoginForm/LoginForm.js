@@ -24,6 +24,7 @@ function LoginForm() {
                     setToken(token);
                     navigate('/');
                 } catch (error) {
+                    alert('Tên đăng nhập hoặc mật khẩu không chính xác');
                     console.error('Error login', error);
                 }
             }}

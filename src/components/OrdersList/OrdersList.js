@@ -14,11 +14,14 @@ const OrdersList = ({ orderData, setOrderData }) => {
             if (orderStatus === 'Completed') {
                 await Promise.all(orderItems.map((item) => updateProductSold(item.ProductId, item.quantity)));
             }
-            if (orderStatus === 'Canceled' || orderStatus === 'Failed Delivery' || orderStatus === 'Completed') {
+            if (orderStatus === 'Canceled' || orderStatus === 'Failed Delivery') {
                 await Promise.all(orderItems.map((item) => updateProductStock(item.ProductId, item.quantity)));
             }
             await updateOrderStatus(orderId, orderStatus);
             const newOrderData = orderData.filter((order) => order.order_id !== orderId);
+            // if (orderStatus === 'Shipping') {
+            window.location.reload();
+            // }
             setOrderData(newOrderData);
         } catch (error) {
             console.error('Error updating order status:', error);
